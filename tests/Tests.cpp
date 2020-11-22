@@ -3,7 +3,7 @@
 //
 #include <gtest/gtest.h>
 #include "../classes/testedClass.h"
-#include "../code/testedUnit.cpp"
+//#include "../code/testedUnit.cpp"
 #include "../classes/Application.h"
 #include "../classes/LocalDirectory.h"
 
