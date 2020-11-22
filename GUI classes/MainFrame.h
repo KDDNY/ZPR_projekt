@@ -10,6 +10,8 @@
 class MainFrame : public wxFrame{
 public:
     MainFrame(wxPoint pos);
+
+    void changeProfileClicked(wxCommandEvent &event);
 };
 
 

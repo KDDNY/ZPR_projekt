@@ -9,10 +9,9 @@
 
 class MainpApp : public wxApp{
     bool OnInit(){
-        start_frame_ = new StartFrame();
+        wxPoint pos;
+        start_frame_ = new StartFrame(pos);
         start_frame_->Show(true);
-//        ProfileDialog *profileDialog = new ProfileDialog();
-//        profileDialog->Show(true);
         return true;
     }
     StartFrame* start_frame_;

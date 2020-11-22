@@ -9,7 +9,7 @@
 
 class StartFrame : public wxFrame{
 public:
-    StartFrame();
+    StartFrame(wxPoint pos);
     void onAdd(wxCommandEvent& event);
 
     void chooseClicked(wxCommandEvent &event);

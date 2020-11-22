@@ -8,8 +8,8 @@
 
 using namespace std;
 
-StartFrame::StartFrame()
-        : wxFrame(nullptr, wxID_ANY, "Uniklon", wxPoint(30,30), wxSize(350,600) ) {
+StartFrame::StartFrame(wxPoint pos)
+        : wxFrame(nullptr, wxID_ANY, "Uniklon", pos, wxSize(350,600) ) {
     wxPanel *panel = new wxPanel(this, -1);
 
     wxBoxSizer *vbox = new wxBoxSizer(wxVERTICAL);
