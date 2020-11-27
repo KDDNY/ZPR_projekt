@@ -6,11 +6,13 @@
 #define UNTITLED1_MAINFRAME_H
 
 #include <wx/wx.h>
-
+/// Implementuje główne okno programu.
+///
+/// Jest to okno w którym dokonuje się synchronizacji na wybranym profilu.
 class MainFrame : public wxFrame{
 public:
     MainFrame(wxPoint pos);
-
+    ///Zamyka obecne okno i otwiera okno startowe
     void changeProfileClicked(wxCommandEvent &event);
 };
 
