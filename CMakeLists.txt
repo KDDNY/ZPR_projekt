@@ -22,6 +22,6 @@ add_executable(main main.cpp
         "GUI classes/MainFrame.cpp"
         "GUI classes/MainFrame.h"
         "GUI classes/ProfileDialog.cpp"
-        "GUI classes/ProfileDialog.h")
+        "GUI classes/ProfileDialog.h" classes/Application.cpp)
 target_link_libraries(main ${wxWidgets_LIBRARIES})
 

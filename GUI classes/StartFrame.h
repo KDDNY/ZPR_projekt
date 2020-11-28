@@ -13,6 +13,10 @@ public:
     void onAdd(wxCommandEvent& event);
 
     void chooseClicked(wxCommandEvent &event);
+    void updateListBox();
+
+private:
+    wxListBox* lb;
 };
 
 

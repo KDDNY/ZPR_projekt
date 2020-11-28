@@ -5,6 +5,7 @@
 #include "StartFrame.h"
 #include "ProfileDialog.h"
 #include "MainFrame.h"
+#include "../classes/Application.h"
 
 using namespace std;
 
@@ -32,11 +33,12 @@ StartFrame::StartFrame(wxPoint pos)
     vbox->Add(-1, 10);
 
     wxBoxSizer *hbox3 = new wxBoxSizer(wxHORIZONTAL);
-    wxListBox *lb = new wxListBox(panel, wxID_ANY);
-    lb->Insert("Pierwszy",0);
-    lb->Insert("Drugi",1);
-    lb->Insert("Trzeci",2);
-//    wxTextCtrl *tc2 = new wxTextCtrl(panel, wxID_ANY, wxT(""),wxPoint(-1, -1), wxSize(-1, -1), wxTE_MULTILINE);
+    lb = new wxListBox(panel, wxID_ANY);
+    updateListBox();
+//    lb->Insert("Pierwszy",lb->GetCount());
+//    lb->Insert("Drugi",lb->GetCount());
+//    lb->Insert("Trzeci",lb->GetCount());
+//!    wxTextCtrl *tc2 = new wxTextCtrl(panel, wxID_ANY, wxT(""),wxPoint(-1, -1), wxSize(-1, -1), wxTE_MULTILINE);
     hbox3->Add(lb, 1, wxEXPAND);
     vbox->Add(hbox3, 1, wxLEFT | wxRIGHT | wxEXPAND, 10);
 
@@ -67,6 +69,13 @@ void StartFrame::chooseClicked(wxCommandEvent &event){
 }
 
 void StartFrame::onAdd(wxCommandEvent &event) {
-    ProfileDialog *profileDialog = new ProfileDialog();
+    ProfileDialog *profileDialog = new ProfileDialog(this);
     profileDialog->Show(true);
 }
+
+void StartFrame::updateListBox() {
+    for (const auto &prof : Application::getProfiles()){
+        lb->Insert(prof->getName(),lb->GetCount());
+    }
+}
+

@@ -17,7 +17,7 @@ public:
     void addDirectories(std::string path1, std::string path2,unsigned int flag1, unsigned int flag2);
     void summary();
     ~Profile(){delete dir1_; delete dir2_;}
-
+    std::string getName();
 private:
     std::string name_;
     Dir* dir1_;

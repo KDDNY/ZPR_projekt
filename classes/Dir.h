@@ -22,8 +22,6 @@ public:
     static Dir *make_dir(int choice);
     virtual void printTree() = 0;
 
-
-
 private:
     string path_;
 
@@ -67,7 +65,7 @@ public:
     }
     void printTree(){
 
-        cout << "--> WILL PRINT SSH DIR TREE";
+        cout << "--> WILL PRINT SSH DIR TREE" << endl;
 
     }
 private:

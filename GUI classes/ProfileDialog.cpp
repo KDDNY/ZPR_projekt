@@ -3,9 +3,13 @@
 //
 
 #include "ProfileDialog.h"
+#include "../classes/Application.h"
+#include "StartFrame.h"
 
-ProfileDialog::ProfileDialog()
-        : wxFrame(nullptr, wxID_ANY, "Uniklon", wxPoint(30,30), wxSize(400,200) ) {
+using namespace std;
+
+ProfileDialog::ProfileDialog(StartFrame *startFrame)
+        : startFrame_(startFrame),wxFrame(nullptr, wxID_ANY, "Uniklon", wxPoint(30,30), wxSize(400,200) ) {
     SetSizer(getFirstSizer());
 }
 
@@ -14,16 +18,17 @@ wxSizer* ProfileDialog::getFirstSizer(){
 
     wxBoxSizer *hbox1 = new wxBoxSizer(wxHORIZONTAL);
     wxStaticText *st1 = new wxStaticText(this, wxID_ANY, wxT("Wprowadź nazwe:"));
-    wxTextCtrl *tc = new wxTextCtrl(this, wxID_ANY);
+    tc = new wxTextCtrl(this, wxID_ANY);
     hbox1->Add(st1, 0, wxRIGHT, 8);
     hbox1->Add(tc, 1);
     vbox->Add(hbox1, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 10);
     vbox->Add(-1,10);
 
-    wxRadioButton *rb1 = new wxRadioButton(this, wxID_ANY,wxT("Lokalnie"), wxPoint(15, 55));
-    wxRadioButton *rb2 = new wxRadioButton(this, wxID_ANY,wxT("SSH"), wxPoint(15, 80));
+    rb1 = new wxRadioButton(this, wxID_ANY,wxT("Lokalnie"), wxPoint(15, 55));
+    rb2 = new wxRadioButton(this, wxID_ANY,wxT("SSH"), wxPoint(15, 80));
     vbox->Add(rb1);
     vbox->Add(rb2);
+
 
     wxBoxSizer *hbox2 = new wxBoxSizer(wxHORIZONTAL);
     wxButton *btn1 = new wxButton(this, 1, wxT("Dalej"));
@@ -45,14 +50,14 @@ wxSizer* ProfileDialog::getNextSizer(){
 
     wxBoxSizer *hbox1 = new wxBoxSizer(wxHORIZONTAL);
     wxStaticText *st1 = new wxStaticText(this, wxID_ANY, wxT("Sciezka do pierwszego katalogu:"));
-    wxTextCtrl *tc1 = new wxTextCtrl(this, wxID_ANY);
+    tc1 = new wxTextCtrl(this, wxID_ANY);
     hbox1->Add(st1, 0, wxRIGHT, 8);
     hbox1->Add(tc1, 1);
     vbox->Add(hbox1, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 10);
 
     wxBoxSizer *hbox2 = new wxBoxSizer(wxHORIZONTAL);
     wxStaticText *st2 = new wxStaticText(this, wxID_ANY, wxT("Sciezka do drugiego katalogu:"));
-    wxTextCtrl *tc2 = new wxTextCtrl(this, wxID_ANY);
+    tc2 = new wxTextCtrl(this, wxID_ANY);
     hbox2->Add(st2, 0,wxRIGHT, 8);
     hbox2->Add(tc2,1);
     vbox->Add(hbox2, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 10);
@@ -68,6 +73,14 @@ wxSizer* ProfileDialog::getNextSizer(){
 }
 
 void ProfileDialog::NextButtonClicked(wxCommandEvent &event) {
+    if(!rb2->GetValue() | rb1->GetValue()){
+        flag1 = 1;
+        flag2 = 1;
+    }
+    if(rb2->GetValue() | !rb1->GetValue()) {
+        flag1 = 0;
+    }
+    profile_name = string(tc->GetValue().mb_str(wxConvUTF8));
     this->GetSizer()->Clear(true);
     this->SetSizer(getNextSizer(), true);
     Center();
@@ -77,7 +90,13 @@ void ProfileDialog::NextButtonClicked(wxCommandEvent &event) {
 }
 
 void ProfileDialog::ConfrimClicked(wxCommandEvent &event) {
-
+    path1 = string(tc1->GetValue().mb_str(wxConvUTF8));
+    path2 = string(tc2->GetValue().mb_str(wxConvUTF8));
+    Profile* prof = new Profile(nullptr, nullptr,profile_name);
+    prof->addDirectories(path1,path2,flag1,flag2);
+    prof->summary();
+    Application::add_profile(prof);
+    startFrame_->updateListBox();
     this->Close(true);
 }
 

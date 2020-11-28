@@ -6,15 +6,16 @@
 
 /// Inicjuje bibliotekę graficzną
 class MainpApp : public wxApp{
-    /// Wywyoływana w momencie uruchomienia aplikacji. Wyświetla startowe okno programu.
     bool OnInit(){
+        std::cout << "Wait... " << endl;
 
-        //Próba wyświetlenia w konsoli podstawowych metod
-        Profile* prof1 = new Profile(nullptr, nullptr,"___TEST PROFILE___");
-        prof1->addDirectories("/Users/raftry/Desktop/[ZPR]/testFolder1", "/Users/raftry/Desktop/[ZPR]/testFolder2",1,2);
-        prof1->summary();
 
-        delete prof1;
+//        Profile* prof1 = new Profile(nullptr, nullptr,"___TEST PROFILE___");
+//        prof1->addDirectories("/Users/raftry/Desktop/[ZPR]/testFolder1", "/Users/raftry/Desktop/[ZPR]/testFolder2",1,2);
+//        prof1->summary();
+//        Application::add_profile(prof1);
+//        Application::getProfiles().back()->summary();
+//        delete prof1;
 
         wxPoint pos;
         start_frame_ = new StartFrame(pos);
