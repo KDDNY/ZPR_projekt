@@ -1,4 +1,5 @@
 lib/
 cmake-build-debug/
+.idea
 
 

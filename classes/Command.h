@@ -5,7 +5,7 @@
 #ifndef UNTITLED1_COMMAND_H
 #define UNTITLED1_COMMAND_H
 #include <iostream>
-
+#include <memory>
 
 class Command {
 public:
