@@ -43,6 +43,7 @@ MainFrame::MainFrame(wxPoint pos)
     wxListBox *lb1 = new wxListBox(this, wxID_ANY);
     wxListBox *lb2 = new wxListBox(this, wxID_ANY);
     wxListBox *lb3 = new wxListBox(this, wxID_ANY);
+    lb1->Insert("Pierwszy \n drugi \n trzeci \n     xD \n czwartyyyyyyyyy",0);
     vbox1->Add(st1);
     vbox1->Add(lb1,1,wxEXPAND,10);
     vbox2->Add(st2);
