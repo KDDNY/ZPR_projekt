@@ -5,6 +5,9 @@
 #ifndef UNTITLED1_VISITOR_H
 #define UNTITLED1_VISITOR_H
 
+
+
+
 class LocalDirectory;
 
 class Visitor {
