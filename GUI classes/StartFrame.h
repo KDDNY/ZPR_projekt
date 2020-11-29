@@ -10,13 +10,11 @@
 class StartFrame : public wxFrame{
 public:
     StartFrame(wxPoint pos);
-    void onAdd(wxCommandEvent& event);
-
-    void chooseClicked(wxCommandEvent &event);
     void updateListBox();
-
 private:
     wxListBox* lb;
+    void onAdd(wxCommandEvent& event);
+    void chooseClicked(wxCommandEvent &event);
 };
 
 

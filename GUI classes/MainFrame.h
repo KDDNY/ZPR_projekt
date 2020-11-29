@@ -12,7 +12,7 @@
 class MainFrame : public wxFrame{
 public:
     MainFrame(wxPoint pos);
-    ///Zamyka obecne okno i otwiera okno startowe
+private:
     void changeProfileClicked(wxCommandEvent &event);
 };
 

@@ -25,15 +25,8 @@ MainFrame::MainFrame(wxPoint pos)
     SetMenuBar(menuBar);
 
     vbox->Add(-1,10);
-    //  vbox->Add
-//    wxImage::AddHandler(new wxPNGHandler);
-//
-//    wxBitmap exit(wxT("images.png"), wxBITMAP_TYPE_PNG);
-//    wxToolBar *toolbar = CreateToolBar();
-//    toolbar->AddTool(wxID_ANY,wxT("Exit application"), exit);
-//    toolbar->Realize();
-    wxBoxSizer *mainHbox = new wxBoxSizer(wxHORIZONTAL);
 
+    wxBoxSizer *mainHbox = new wxBoxSizer(wxHORIZONTAL);
     wxBoxSizer *vbox1 = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer *vbox2 = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer *vbox3 = new wxBoxSizer(wxVERTICAL);
@@ -55,9 +48,6 @@ MainFrame::MainFrame(wxPoint pos)
     mainHbox->Add(vbox3,0, wxLEFT | wxBOTTOM | wxEXPAND, 10);
 
     vbox->Add(mainHbox,1,wxTOP | wxLEFT , 10);
-
-  //  vbox->Add(-1,10);
-
     this->SetSizer(vbox);
 
     Centre();
