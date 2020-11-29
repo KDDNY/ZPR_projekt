@@ -16,6 +16,8 @@ public:
     void scan();
     void addDirectories(std::string path1, std::string path2,unsigned int flag1, unsigned int flag2);
     void summary();
+    void printTree1();
+    void printTree2();
     ~Profile(){delete dir1_; delete dir2_;}
     std::string getName();
 private:

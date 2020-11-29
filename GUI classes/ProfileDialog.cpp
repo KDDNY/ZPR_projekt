@@ -49,21 +49,21 @@ wxSizer* ProfileDialog::getNextSizer(){
     wxBoxSizer *vbox = new wxBoxSizer(wxVERTICAL);
 
     wxBoxSizer *hbox1 = new wxBoxSizer(wxHORIZONTAL);
-    wxStaticText *st1 = new wxStaticText(this, wxID_ANY, wxT("Sciezka do pierwszego katalogu:"));
+    wxStaticText *st1 = new wxStaticText(this, wxID_ANY, wxT("Ścieżka do pierwszego katalogu:"));
     tc1 = new wxTextCtrl(this, wxID_ANY);
     hbox1->Add(st1, 0, wxRIGHT, 8);
     hbox1->Add(tc1, 1);
     vbox->Add(hbox1, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 10);
 
     wxBoxSizer *hbox2 = new wxBoxSizer(wxHORIZONTAL);
-    wxStaticText *st2 = new wxStaticText(this, wxID_ANY, wxT("Sciezka do drugiego katalogu:"));
+    wxStaticText *st2 = new wxStaticText(this, wxID_ANY, wxT("Ścieżka do drugiego katalogu:"));
     tc2 = new wxTextCtrl(this, wxID_ANY);
     hbox2->Add(st2, 0,wxRIGHT, 8);
     hbox2->Add(tc2,1);
     vbox->Add(hbox2, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 10);
     vbox->Add(-1,10);
 
-    wxButton *btn1 = new wxButton(this, 5, wxT("Zatwierdz"));
+    wxButton *btn1 = new wxButton(this, 5, wxT("Zatwierdź"));
     vbox->Add(btn1,0,wxCENTER | wxBottom,10);
 
 
@@ -94,7 +94,7 @@ void ProfileDialog::ConfrimClicked(wxCommandEvent &event) {
     path2 = string(tc2->GetValue().mb_str(wxConvUTF8));
     Profile* prof = new Profile(nullptr, nullptr,profile_name);
     prof->addDirectories(path1,path2,flag1,flag2);
-    prof->summary();
+ //   prof->summary();
     Application::add_profile(prof);
     startFrame_->updateListBox();
     this->Close(true);

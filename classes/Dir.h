@@ -10,7 +10,6 @@
 
 using namespace std;
 
-
 class Dir {
 public:
 
@@ -26,8 +25,6 @@ private:
     string path_;
 
 };
-
-
 
 class localDir : public Dir
 {
@@ -61,7 +58,6 @@ public:
     void assignPath(string path){
 
         path_ = path;
-
     }
     void printTree(){
 

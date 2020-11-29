@@ -32,3 +32,11 @@ void Profile::summary(){
 std::string Profile::getName() {
     return name_;
 }
+
+void Profile::printTree1() {
+    dir1_->printTree();
+}
+
+void Profile::printTree2() {
+    dir2_->printTree();
+}

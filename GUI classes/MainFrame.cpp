@@ -7,8 +7,12 @@
 
 using namespace std;
 
-MainFrame::MainFrame(wxPoint pos)
-        : wxFrame(nullptr, wxID_ANY, "Uniklon", pos, wxSize(800,600) ) {
+MainFrame::MainFrame(wxPoint pos, int index)
+        : profile_(Application::getProfiles().at(index)) ,wxFrame(nullptr, wxID_ANY, "Uniklon", pos, wxSize(800,600) ) {
+    profile_->summary();
+    profile_->printTree1();
+    profile_->printTree2();
+
     wxBoxSizer *vbox = new wxBoxSizer(wxVERTICAL);
 
     wxMenuBar *menuBar = new wxMenuBar;
@@ -33,14 +37,13 @@ MainFrame::MainFrame(wxPoint pos)
     wxStaticText *st1 = new wxStaticText(this, wxID_ANY, wxT("Pierwszy katalog"));
     wxStaticText *st2 = new wxStaticText(this, wxID_ANY, wxT("Akcja"));
     wxStaticText *st3 = new wxStaticText(this, wxID_ANY, wxT("Drugi katalog"));
-    wxListBox *lb1 = new wxListBox(this, wxID_ANY);
-    wxListBox *lb2 = new wxListBox(this, wxID_ANY);
+    lb1 = new wxListBox(this, wxID_ANY);
+    lb2_ = new wxListBox(this, wxID_ANY);
     wxListBox *lb3 = new wxListBox(this, wxID_ANY);
-    lb1->Insert("Pierwszy \n drugi \n trzeci \n     xD \n czwartyyyyyyyyy",0);
     vbox1->Add(st1);
     vbox1->Add(lb1,1,wxEXPAND,10);
     vbox2->Add(st2);
-    vbox2->Add(lb2,1,wxEXPAND,10);
+    vbox2->Add(lb2_, 1, wxEXPAND, 10);
     vbox3->Add(st3);
     vbox3->Add(lb3,1,wxEXPAND,10);
     mainHbox->Add(vbox1,0, wxLEFT | wxBOTTOM | wxEXPAND, 10);
@@ -52,6 +55,8 @@ MainFrame::MainFrame(wxPoint pos)
 
     Centre();
 
+    updateLb();
+
     Connect(1, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MainFrame::changeProfileClicked));
 }
 
@@ -61,3 +66,9 @@ void MainFrame::changeProfileClicked(wxCommandEvent &event){
     StartFrame *startFrame = new StartFrame(pos);
     startFrame->Show(true);
 }
+
+void MainFrame::updateLb() {
+    lb1->Clear();
+    lb2_->Clear();
+}
+

@@ -1,13 +1,18 @@
 #include <iostream>
 #include <gtest/gtest.h>
 #include "../classes/Application.h"
+#include "../GUI classes/StartFrame.h"
+#include "wx/wx.h"
 
-TEST(test, test1){
-   EXPECT_EQ(nullptr,Application::getProfiles());
+
+TEST(ApplicationTest, ApplicationStartsEmpty){
+    EXPECT_TRUE(Application::getProfiles().empty());
 }
 
-TEST(test , test2){
-    EXPECT_EQ(1,0);
+TEST(ApplicationTest, AddProfile){
+    Profile* prof1 = new Profile(nullptr, nullptr,"___TEST PROFILE___");
+    Application::add_profile(prof1);
+    EXPECT_FALSE(Application::getProfiles().empty());
 }
 
 int main(int argc, char *argv[]) {

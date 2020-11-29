@@ -15,7 +15,7 @@ StartFrame::StartFrame(wxPoint pos)
     wxBoxSizer *vbox = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer *hbox1 = new wxBoxSizer(wxHORIZONTAL);
 
-    wxStaticText *st1 =  new wxStaticText(panel, wxID_ANY, wxT("Wybierz lub stworz nowy profil"));
+    wxStaticText *st1 =  new wxStaticText(panel, wxID_ANY, wxT("Wybierz lub stwórz nowy profil"));
     hbox1->Add(st1, 0, wxRIGHT, 8);
     vbox->Add(hbox1, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 10);
     vbox->Add(-1, 10);
@@ -51,10 +51,12 @@ StartFrame::StartFrame(wxPoint pos)
 }
 
 void StartFrame::chooseClicked(wxCommandEvent &event){
+    if(lb->GetSelection() != wxNOT_FOUND) {
     wxPoint pos = this->GetPosition();
     this->Close(true);
-    MainFrame *mainFrame = new MainFrame(pos);
-    mainFrame->Show(true);
+        MainFrame *mainFrame = new MainFrame(pos, lb->GetSelection());
+        mainFrame->Show(true);
+    }
 }
 
 void StartFrame::onAdd(wxCommandEvent &event) {
