@@ -12,7 +12,6 @@ using namespace std;
 
 class Dir {
 public:
-
     Dir(){}
     Dir(std::string path) : path_(path) {}
     virtual ~Dir() = default;
@@ -20,7 +19,6 @@ public:
     virtual void assignPath(string path) = 0;
     static Dir *make_dir(int choice);
     virtual void printTree() = 0;
-
 private:
     string path_;
 

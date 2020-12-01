@@ -14,6 +14,10 @@ public:
 };
 
 TEST_F(ProfileTests, addTest){
+    testing::internal::CaptureStdout();
     profile->addDirectories("path","path",1,1);
+    profile->summary();
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ("\n---------------------------\n#PROFILE SUMMARY:\n#name: \n#LOCAL DIR PATH: path\n#LOCAL DIR PATH: path\n",output);
 }
 
