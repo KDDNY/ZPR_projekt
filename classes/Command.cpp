@@ -71,3 +71,4 @@ public:
         return std::make_shared<SshRename>();
     }
 };
+

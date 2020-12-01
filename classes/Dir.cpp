@@ -3,16 +3,23 @@
 //
 
 #include "Dir.h"
+#include "Command.cpp"
+
 Dir *Dir::make_dir(int choice)
 {
-    if (choice == 1)
-        return new localDir;
-    else if (choice == 2)
-        return new sshDir;
+    if (choice == 1){
+        localDir* local_directory = new localDir;
+        local_directory->assignFactory(make_shared<LocalFactory>());
+        return local_directory;
+    }
+    else if (choice == 2){
+        sshDir* ssh_directory = new sshDir;
+        ssh_directory->assignFactory(make_shared<SshFactory>());
+        return ssh_directory;
+    }
     else
         return nullptr;
 }
-
 
 
 void localDir::DisplayFileInfo(const filesystem::directory_entry & entry, string & lead, filesystem::path& file_name){

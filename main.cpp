@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 #include "GUI classes/StartFrame.h"
 #include "classes/Application.h"
+#include "classes/Command.cpp"
 
 /// Inicjuje bibliotekę graficzną
 class MainpApp : public wxApp{
@@ -16,6 +17,9 @@ class MainpApp : public wxApp{
 //        Application::addProfile(prof1);
 //        Application::getProfiles().back()->summary();
 //        delete prof1;
+//        Dir* dir = new localDir();
+//        dir->assignFactory(make_shared<LocalFactory>());
+//        dir->addFile();
 
         wxPoint pos;
         start_frame_ = new StartFrame(pos);
