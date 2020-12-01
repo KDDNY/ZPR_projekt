@@ -24,3 +24,50 @@ TEST(DirTests, Assign){
     EXPECT_EQ("#LOCAL DIR PATH: path\n",output);
 }
 
+TEST(DirTests, LocalAddCommand){
+    auto dir = Dir::make_dir(1);
+    testing::internal::CaptureStdout();
+    dir->addFile();
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ("Local add\n",output);
+}
+
+TEST(DirTests, LocalRemoveCommand){
+    auto dir = Dir::make_dir(1);
+    testing::internal::CaptureStdout();
+    dir->removeFile();
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ("Local delete\n",output);
+}
+
+TEST(DirTests, LocalRenameCommand){
+    auto dir = Dir::make_dir(1);
+    testing::internal::CaptureStdout();
+    dir->renameFile();
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ("Local rename\n",output);
+}
+
+TEST(DirTests, SSHRenameCommand){
+    auto dir = Dir::make_dir(2);
+    testing::internal::CaptureStdout();
+    dir->renameFile();
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ("SSH rename\n",output);
+}
+
+TEST(DirTests, SSHRemoveCommand){
+    auto dir = Dir::make_dir(2);
+    testing::internal::CaptureStdout();
+    dir->removeFile();
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ("SSH delete\n",output);
+}
+
+TEST(DirTests, SSHaddCommand){
+    auto dir = Dir::make_dir(2);
+    testing::internal::CaptureStdout();
+    dir->addFile();
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ("SSH add\n",output);
+}
