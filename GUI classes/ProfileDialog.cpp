@@ -73,12 +73,14 @@ wxSizer* ProfileDialog::getNextSizer(){
 }
 
 void ProfileDialog::NextButtonClicked(wxCommandEvent &event) {
+    //Na razie wybranie opcji ssh i tak ustawia flagę na lokalną
     if(!rb2->GetValue() | rb1->GetValue()){
         flag1 = 1;
         flag2 = 1;
     }
     if(rb2->GetValue() | !rb1->GetValue()) {
-        flag1 = 0;
+        flag1 = 1;
+        flag2 = 1;
     }
     profile_name = string(tc->GetValue().mb_str(wxConvUTF8));
     this->GetSizer()->Clear(true);
@@ -94,7 +96,6 @@ void ProfileDialog::ConfrimClicked(wxCommandEvent &event) {
     path2 = string(tc2->GetValue().mb_str(wxConvUTF8));
     Profile* prof = new Profile(nullptr, nullptr,profile_name);
     prof->addDirectories(path1,path2,flag1,flag2);
- //   prof->summary();
     Application::addProfile(prof);
     startFrame_->updateListBox();
     this->Close(true);
