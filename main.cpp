@@ -13,7 +13,7 @@ class MainpApp : public wxApp{
 //        Profile* prof1 = new Profile(nullptr, nullptr,"___TEST PROFILE___");
 //        prof1->addDirectories("/Users/raftry/Desktop/[ZPR]/testFolder1", "/Users/raftry/Desktop/[ZPR]/testFolder2",1,2);
 //        prof1->summary();
-//        Application::add_profile(prof1);
+//        Application::addProfile(prof1);
 //        Application::getProfiles().back()->summary();
 //        delete prof1;
 

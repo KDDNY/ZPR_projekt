@@ -8,7 +8,7 @@ using namespace std;
 
 vector<Profile *> Application::profiles;
 
-void Application::add_profile(Profile* P){
+void Application::addProfile(Profile* P){
     Application::profiles.push_back(P);
 }
 

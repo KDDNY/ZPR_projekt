@@ -14,7 +14,7 @@ class Application {
 public:
     static std::vector<Profile*> profiles;
     static std::vector<Profile*> getProfiles();
-    static void add_profile(Profile* P);
+    static void addProfile(Profile* P);
     void synchronize(std::shared_ptr<Profile> P);
 };
 

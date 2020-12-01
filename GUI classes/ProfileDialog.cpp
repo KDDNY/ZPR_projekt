@@ -95,7 +95,7 @@ void ProfileDialog::ConfrimClicked(wxCommandEvent &event) {
     Profile* prof = new Profile(nullptr, nullptr,profile_name);
     prof->addDirectories(path1,path2,flag1,flag2);
  //   prof->summary();
-    Application::add_profile(prof);
+    Application::addProfile(prof);
     startFrame_->updateListBox();
     this->Close(true);
 }
