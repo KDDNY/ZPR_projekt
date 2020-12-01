@@ -1,8 +1,5 @@
 lib/
 cmake-build-debug/
 .idea
-<<<<<<< HEAD
-=======
-
->>>>>>> mergebranch
+.DS_Store
 
