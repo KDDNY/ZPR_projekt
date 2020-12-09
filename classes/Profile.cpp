@@ -7,7 +7,7 @@
 #include <vector>
 
 
-void Profile::addDirectories(std::string path1, std::string path2,unsigned int flag1, unsigned int flag2){
+void Profile::addDirectories(std::string path1, std::string path2,Choice flag1, Choice flag2){
     dir1_ = Dir::make_dir(flag1);
     dir1_->assignPath(path1);
 

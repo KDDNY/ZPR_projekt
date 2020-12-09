@@ -11,6 +11,10 @@
 
 using namespace std;
 
+enum Choice{
+    LOCAL, SSH
+};
+
 class Dir {
 public:
     Dir(){}
@@ -22,15 +26,14 @@ public:
     virtual void addFile() = 0;
     virtual void removeFile() = 0;
     virtual void renameFile() = 0;
-    static Dir *make_dir(int choice);
+    static Dir *make_dir(Choice flag);
     virtual void printTree() = 0;
 private:
     string path_;
     std::shared_ptr<AbstractFactory> creator_;
 };
 
-class localDir : public Dir
-{
+class localDir : public Dir{
 public:
     void printInfo(){
         std::cout << "#LOCAL DIR PATH: " << path_ <<std::endl;
@@ -68,8 +71,7 @@ private:
 };
 
 
-class sshDir: public Dir
-{
+class sshDir: public Dir{
 public:
     void printInfo(){
         std::cout << "#SSH DIR PATH: " << path_ <<std::endl;

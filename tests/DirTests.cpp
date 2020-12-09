@@ -1,22 +1,22 @@
 //
-// Created by kddny on 01.12.2020.
+// Created by Marcin Piotrowski on 01.12.2020.
 //
 
 #include <gtest/gtest.h>
 #include "../classes/Dir.h"
 
 TEST(DirTests, AddLocal){
-    auto dir = Dir::make_dir(1);
+    auto dir = Dir::make_dir(LOCAL);
     EXPECT_TRUE(dynamic_cast<localDir*>(dir));
 }
 
 TEST(DirTests, AddSSH){
-    auto dir = Dir::make_dir(2);
+    auto dir = Dir::make_dir(SSH);
     EXPECT_TRUE(dynamic_cast<sshDir*>(dir));
 }
 
 TEST(DirTests, Assign){
-    auto dir = Dir::make_dir(1);
+    auto dir = Dir::make_dir(LOCAL);
     dir->assignPath("path");
     testing::internal::CaptureStdout();
     dir->printInfo();
@@ -25,7 +25,7 @@ TEST(DirTests, Assign){
 }
 
 TEST(DirTests, LocalAddCommand){
-    auto dir = Dir::make_dir(1);
+    auto dir = Dir::make_dir(LOCAL);
     testing::internal::CaptureStdout();
     dir->addFile();
     std::string output = testing::internal::GetCapturedStdout();
@@ -33,7 +33,7 @@ TEST(DirTests, LocalAddCommand){
 }
 
 TEST(DirTests, LocalRemoveCommand){
-    auto dir = Dir::make_dir(1);
+    auto dir = Dir::make_dir(LOCAL);
     testing::internal::CaptureStdout();
     dir->removeFile();
     std::string output = testing::internal::GetCapturedStdout();
@@ -41,7 +41,7 @@ TEST(DirTests, LocalRemoveCommand){
 }
 
 TEST(DirTests, LocalRenameCommand){
-    auto dir = Dir::make_dir(1);
+    auto dir = Dir::make_dir(LOCAL);
     testing::internal::CaptureStdout();
     dir->renameFile();
     std::string output = testing::internal::GetCapturedStdout();
@@ -49,7 +49,7 @@ TEST(DirTests, LocalRenameCommand){
 }
 
 TEST(DirTests, SSHRenameCommand){
-    auto dir = Dir::make_dir(2);
+    auto dir = Dir::make_dir(SSH);
     testing::internal::CaptureStdout();
     dir->renameFile();
     std::string output = testing::internal::GetCapturedStdout();
@@ -57,7 +57,7 @@ TEST(DirTests, SSHRenameCommand){
 }
 
 TEST(DirTests, SSHRemoveCommand){
-    auto dir = Dir::make_dir(2);
+    auto dir = Dir::make_dir(SSH);
     testing::internal::CaptureStdout();
     dir->removeFile();
     std::string output = testing::internal::GetCapturedStdout();
@@ -65,7 +65,7 @@ TEST(DirTests, SSHRemoveCommand){
 }
 
 TEST(DirTests, SSHaddCommand){
-    auto dir = Dir::make_dir(2);
+    auto dir = Dir::make_dir(SSH);
     testing::internal::CaptureStdout();
     dir->addFile();
     std::string output = testing::internal::GetCapturedStdout();

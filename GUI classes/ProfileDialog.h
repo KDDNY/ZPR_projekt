@@ -8,6 +8,7 @@
 #include <wx/wx.h>
 #include <memory>
 #include "StartFrame.h"
+#include "../classes/Dir.h"
 
 ///Wyswietla kolejne okna interfejsu dodwania nowego profilu
 class ProfileDialog : public wxFrame{
@@ -22,8 +23,8 @@ private:
     std::string profile_name;
     std::string path1;
     std::string path2;
-    int flag1;
-    int flag2;
+    Choice flag1;
+    Choice flag2;
     wxRadioButton *rb1;
     wxRadioButton *rb2;
     wxTextCtrl* tc;

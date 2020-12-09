@@ -1,5 +1,5 @@
 //
-// Created by kddny on 01.12.2020.
+// Created by Marcin Piotrowski on 01.12.2020.
 //
 
 #include <gtest/gtest.h>
@@ -15,7 +15,7 @@ public:
 
 TEST_F(ProfileTests, addTest){
     testing::internal::CaptureStdout();
-    profile->addDirectories("path","path",1,1);
+    profile->addDirectories("path","path",LOCAL,LOCAL);
     profile->summary();
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_EQ("\n---------------------------\n#PROFILE SUMMARY:\n#name: \n#LOCAL DIR PATH: path\n#LOCAL DIR PATH: path\n",output);

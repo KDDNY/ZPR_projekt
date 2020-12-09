@@ -75,12 +75,12 @@ wxSizer* ProfileDialog::getNextSizer(){
 void ProfileDialog::NextButtonClicked(wxCommandEvent &event) {
     //Na razie wybranie opcji ssh i tak ustawia flagę na lokalną
     if(!rb2->GetValue() | rb1->GetValue()){
-        flag1 = 1;
-        flag2 = 1;
+        flag1 = LOCAL;
+        flag2 = LOCAL;
     }
     if(rb2->GetValue() | !rb1->GetValue()) {
-        flag1 = 1;
-        flag2 = 1;
+        flag1 = LOCAL;
+        flag2 = LOCAL;
     }
     profile_name = string(tc->GetValue().mb_str(wxConvUTF8));
     this->GetSizer()->Clear(true);

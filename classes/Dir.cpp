@@ -5,14 +5,14 @@
 #include "Dir.h"
 #include "Command.cpp"
 
-Dir *Dir::make_dir(int choice)
+Dir *Dir::make_dir(Choice flag)
 {
-    if (choice == 1){
+    if (flag == LOCAL){
         localDir* local_directory = new localDir;
         local_directory->assignFactory(make_shared<LocalFactory>());
         return local_directory;
     }
-    else if (choice == 2){
+    else if (flag == SSH){
         sshDir* ssh_directory = new sshDir;
         ssh_directory->assignFactory(make_shared<SshFactory>());
         return ssh_directory;
