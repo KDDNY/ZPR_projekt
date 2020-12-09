@@ -18,16 +18,16 @@ wxSizer* ProfileDialog::getFirstSizer(){
 
     wxBoxSizer *hbox1 = new wxBoxSizer(wxHORIZONTAL);
     wxStaticText *st1 = new wxStaticText(this, wxID_ANY, wxT("Wprowadź nazwe:"));
-    tc = new wxTextCtrl(this, wxID_ANY);
+    tc_ = new wxTextCtrl(this, wxID_ANY);
     hbox1->Add(st1, 0, wxRIGHT, 8);
-    hbox1->Add(tc, 1);
+    hbox1->Add(tc_, 1);
     vbox->Add(hbox1, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 10);
     vbox->Add(-1,10);
 
-    rb1 = new wxRadioButton(this, wxID_ANY,wxT("Lokalnie"), wxPoint(15, 55));
-    rb2 = new wxRadioButton(this, wxID_ANY,wxT("SSH"), wxPoint(15, 80));
-    vbox->Add(rb1);
-    vbox->Add(rb2);
+    rb1_ = new wxRadioButton(this, wxID_ANY, wxT("Lokalnie"), wxPoint(15, 55));
+    rb2_ = new wxRadioButton(this, wxID_ANY, wxT("SSH"), wxPoint(15, 80));
+    vbox->Add(rb1_);
+    vbox->Add(rb2_);
 
 
     wxBoxSizer *hbox2 = new wxBoxSizer(wxHORIZONTAL);
@@ -50,16 +50,16 @@ wxSizer* ProfileDialog::getNextSizer(){
 
     wxBoxSizer *hbox1 = new wxBoxSizer(wxHORIZONTAL);
     wxStaticText *st1 = new wxStaticText(this, wxID_ANY, wxT("Ścieżka do pierwszego katalogu:"));
-    tc1 = new wxTextCtrl(this, wxID_ANY);
+    tc1_ = new wxTextCtrl(this, wxID_ANY);
     hbox1->Add(st1, 0, wxRIGHT, 8);
-    hbox1->Add(tc1, 1);
+    hbox1->Add(tc1_, 1);
     vbox->Add(hbox1, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 10);
 
     wxBoxSizer *hbox2 = new wxBoxSizer(wxHORIZONTAL);
     wxStaticText *st2 = new wxStaticText(this, wxID_ANY, wxT("Ścieżka do drugiego katalogu:"));
-    tc2 = new wxTextCtrl(this, wxID_ANY);
+    tc2_ = new wxTextCtrl(this, wxID_ANY);
     hbox2->Add(st2, 0,wxRIGHT, 8);
-    hbox2->Add(tc2,1);
+    hbox2->Add(tc2_, 1);
     vbox->Add(hbox2, 0, wxEXPAND | wxLEFT | wxRIGHT | wxTOP, 10);
     vbox->Add(-1,10);
 
@@ -74,15 +74,15 @@ wxSizer* ProfileDialog::getNextSizer(){
 
 void ProfileDialog::NextButtonClicked(wxCommandEvent &event) {
     //Na razie wybranie opcji ssh i tak ustawia flagę na lokalną
-    if(!rb2->GetValue() | rb1->GetValue()){
-        flag1 = LOCAL;
-        flag2 = LOCAL;
+    if(!rb2_->GetValue() | rb1_->GetValue()){
+        flag1_ = LOCAL;
+        flag2_ = LOCAL;
     }
-    if(rb2->GetValue() | !rb1->GetValue()) {
-        flag1 = LOCAL;
-        flag2 = LOCAL;
+    if(rb2_->GetValue() | !rb1_->GetValue()) {
+        flag1_ = LOCAL;
+        flag2_ = LOCAL;
     }
-    profile_name = string(tc->GetValue().mb_str(wxConvUTF8));
+    profile_name_ = string(tc_->GetValue().mb_str(wxConvUTF8));
     this->GetSizer()->Clear(true);
     this->SetSizer(getNextSizer(), true);
     Center();
@@ -92,10 +92,10 @@ void ProfileDialog::NextButtonClicked(wxCommandEvent &event) {
 }
 
 void ProfileDialog::ConfrimClicked(wxCommandEvent &event) {
-    path1 = string(tc1->GetValue().mb_str(wxConvUTF8));
-    path2 = string(tc2->GetValue().mb_str(wxConvUTF8));
-    Profile* prof = new Profile(nullptr, nullptr,profile_name);
-    prof->addDirectories(path1,path2,flag1,flag2);
+    path1_ = string(tc1_->GetValue().mb_str(wxConvUTF8));
+    path2_ = string(tc2_->GetValue().mb_str(wxConvUTF8));
+    Profile* prof = new Profile(nullptr, nullptr, profile_name_);
+    prof->addDirectories(path1_, path2_, flag1_, flag2_);
     Application::addProfile(prof);
     startFrame_->updateListBox();
     this->Close(true);

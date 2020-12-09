@@ -7,12 +7,12 @@
 
 TEST(DirTests, AddLocal){
     auto dir = Dir::make_dir(LOCAL);
-    EXPECT_TRUE(dynamic_cast<localDir*>(dir));
+    EXPECT_TRUE(dynamic_cast<LocalDir*>(dir));
 }
 
 TEST(DirTests, AddSSH){
     auto dir = Dir::make_dir(SSH);
-    EXPECT_TRUE(dynamic_cast<sshDir*>(dir));
+    EXPECT_TRUE(dynamic_cast<SshDir*>(dir));
 }
 
 TEST(DirTests, Assign){

@@ -33,7 +33,7 @@ private:
     std::shared_ptr<AbstractFactory> creator_;
 };
 
-class localDir : public Dir{
+class LocalDir : public Dir{
 public:
     void printInfo(){
         std::cout << "#LOCAL DIR PATH: " << path_ <<std::endl;
@@ -71,7 +71,7 @@ private:
 };
 
 
-class sshDir: public Dir{
+class SshDir: public Dir{
 public:
     void printInfo(){
         std::cout << "#SSH DIR PATH: " << path_ <<std::endl;

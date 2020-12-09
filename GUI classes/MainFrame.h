@@ -18,7 +18,7 @@ public:
 private:
     void changeProfileClicked(wxCommandEvent &event);
     void updateLb();
-    wxListBox* lb1;
+    wxListBox* lb1_;
     wxListBox* lb2_;
     Profile* profile_;
 };

@@ -20,16 +20,16 @@ private:
     wxSizer* getNextSizer();
     wxSizer *getFirstSizer();
     void closeClicked(wxCommandEvent &event);
-    std::string profile_name;
-    std::string path1;
-    std::string path2;
-    Choice flag1;
-    Choice flag2;
-    wxRadioButton *rb1;
-    wxRadioButton *rb2;
-    wxTextCtrl* tc;
-    wxTextCtrl* tc1;
-    wxTextCtrl* tc2;
+    std::string profile_name_;
+    std::string path1_;
+    std::string path2_;
+    Choice flag1_;
+    Choice flag2_;
+    wxRadioButton *rb1_;
+    wxRadioButton *rb2_;
+    wxTextCtrl* tc_;
+    wxTextCtrl* tc1_;
+    wxTextCtrl* tc2_;
     StartFrame* startFrame_;
 };
 

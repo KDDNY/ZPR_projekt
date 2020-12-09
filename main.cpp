@@ -17,7 +17,7 @@ class MainpApp : public wxApp{
 //        Application::addProfile(prof1);
 //        Application::getProfiles().back()->summary();
 //        delete prof1;
-//        Dir* dir = new localDir();
+//        Dir* dir = new LocalDir();
 //        dir->assignFactory(make_shared<LocalFactory>());
 //        dir->addFile();
 

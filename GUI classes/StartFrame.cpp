@@ -28,9 +28,9 @@ StartFrame::StartFrame(wxPoint pos)
     vbox->Add(-1, 10);
 
     wxBoxSizer *hbox3 = new wxBoxSizer(wxHORIZONTAL);
-    lb = new wxListBox(panel, wxID_ANY);
+    lb_ = new wxListBox(panel, wxID_ANY);
     updateListBox();
-    hbox3->Add(lb, 1, wxEXPAND);
+    hbox3->Add(lb_, 1, wxEXPAND);
     vbox->Add(hbox3, 1, wxLEFT | wxRIGHT | wxEXPAND, 10);
     vbox->Add(-1, 25);
     vbox->Add(-1, 25);
@@ -51,10 +51,10 @@ StartFrame::StartFrame(wxPoint pos)
 }
 
 void StartFrame::chooseClicked(wxCommandEvent &event){
-    if(lb->GetSelection() != wxNOT_FOUND) {
+    if(lb_->GetSelection() != wxNOT_FOUND) {
     wxPoint pos = this->GetPosition();
     this->Close(true);
-        MainFrame *mainFrame = new MainFrame(pos, lb->GetSelection());
+        MainFrame *mainFrame = new MainFrame(pos, lb_->GetSelection());
         mainFrame->Show(true);
     }
 }
@@ -65,9 +65,9 @@ void StartFrame::onAdd(wxCommandEvent &event) {
 }
 
 void StartFrame::updateListBox() {
-    lb->Clear();
+    lb_->Clear();
     for (const auto &prof : Application::getProfiles()){
-        lb->Insert(prof->getName(),lb->GetCount());
+        lb_->Insert(prof->getName(), lb_->GetCount());
     }
 }
 

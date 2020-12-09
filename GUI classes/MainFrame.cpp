@@ -37,11 +37,11 @@ MainFrame::MainFrame(wxPoint pos, int index)
     wxStaticText *st1 = new wxStaticText(this, wxID_ANY, wxT("Pierwszy katalog"));
     wxStaticText *st2 = new wxStaticText(this, wxID_ANY, wxT("Akcja"));
     wxStaticText *st3 = new wxStaticText(this, wxID_ANY, wxT("Drugi katalog"));
-    lb1 = new wxListBox(this, wxID_ANY);
+    lb1_ = new wxListBox(this, wxID_ANY);
     lb2_ = new wxListBox(this, wxID_ANY);
     wxListBox *lb3 = new wxListBox(this, wxID_ANY);
     vbox1->Add(st1);
-    vbox1->Add(lb1,1,wxEXPAND,10);
+    vbox1->Add(lb1_, 1, wxEXPAND, 10);
     vbox2->Add(st2);
     vbox2->Add(lb2_, 1, wxEXPAND, 10);
     vbox3->Add(st3);
@@ -68,7 +68,7 @@ void MainFrame::changeProfileClicked(wxCommandEvent &event){
 }
 
 void MainFrame::updateLb() {
-    lb1->Clear();
+    lb1_->Clear();
     lb2_->Clear();
 }
 

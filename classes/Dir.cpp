@@ -8,12 +8,12 @@
 Dir *Dir::make_dir(Choice flag)
 {
     if (flag == LOCAL){
-        localDir* local_directory = new localDir;
+        LocalDir* local_directory = new LocalDir;
         local_directory->assignFactory(make_shared<LocalFactory>());
         return local_directory;
     }
     else if (flag == SSH){
-        sshDir* ssh_directory = new sshDir;
+        SshDir* ssh_directory = new SshDir;
         ssh_directory->assignFactory(make_shared<SshFactory>());
         return ssh_directory;
     }
@@ -22,11 +22,11 @@ Dir *Dir::make_dir(Choice flag)
 }
 
 
-void localDir::DisplayFileInfo(const filesystem::directory_entry & entry, string & lead, filesystem::path& file_name){
+void LocalDir::DisplayFileInfo(const filesystem::directory_entry & entry, string & lead, filesystem::path& file_name){
     cout << lead << " " << file_name;
 }
 
-void localDir::DisplayDirTree(const filesystem::path& pathToShow, int level){
+void LocalDir::DisplayDirTree(const filesystem::path& pathToShow, int level){
     if(filesystem::exists(pathToShow) && filesystem::is_directory(pathToShow)){
         auto lead = std::string(level * 3, ' ');
         for (const auto& entry : filesystem::directory_iterator(pathToShow)){

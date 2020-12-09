@@ -12,7 +12,7 @@ public:
     StartFrame(wxPoint pos);
     void updateListBox();
 private:
-    wxListBox* lb;
+    wxListBox* lb_;
     void onAdd(wxCommandEvent& event);
     void chooseClicked(wxCommandEvent &event);
 };
