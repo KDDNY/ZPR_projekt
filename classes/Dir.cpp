@@ -3,7 +3,11 @@
 //
 
 #include "Dir.h"
+
+#include <utility>
 #include "Command.cpp"
+
+Dir::Dir(std::string path) : path_(std::move(path)) {}
 
 Dir *Dir::make_dir(Choice flag)
 {
@@ -21,7 +25,28 @@ Dir *Dir::make_dir(Choice flag)
         return nullptr;
 }
 
+void Dir::assignPath(string path){
+    path_ = path;
 
+}
+
+void Dir::assignFactory(std::shared_ptr<AbstractFactory> factory) {
+    creator_ = factory;
+}
+void Dir::addFile(){
+    std::shared_ptr<Command> command = creator_->createAdd();
+    command->execute();
+}
+void Dir::removeFile(){
+    std::shared_ptr<Command> command = creator_->createRemove();
+    command->execute();
+}
+void Dir::renameFile(){
+    std::shared_ptr<Command> command = creator_->createRename();
+    command->execute();
+}
+
+/*LocalDir implementations starts here*/
 void LocalDir::DisplayFileInfo(const filesystem::directory_entry & entry, string & lead, filesystem::path& file_name){
     cout << lead << " " << file_name;
 }
@@ -42,3 +67,25 @@ void LocalDir::DisplayDirTree(const filesystem::path& pathToShow, int level){
         }
     }
 }
+
+void LocalDir::printInfo(){
+    std::cout << "#LOCAL DIR PATH: " << path_ <<std::endl;
+}
+void LocalDir::printTree(){
+
+    std::filesystem::path pathToShow(path_);
+    DisplayDirTree(pathToShow,0);
+
+}
+/*LocalDir implementations ends here*/
+
+/*SshDir implementations starts here*/
+void SshDir::printInfo(){
+    std::cout << "#SSH DIR PATH: " << path_ <<std::endl;
+}
+void SshDir::printTree(){
+
+    cout << "--> WILL PRINT SSH DIR TREE" << endl;
+
+}
+/*SshDir implementations ends here*/

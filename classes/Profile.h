@@ -11,8 +11,7 @@
 
 class Profile {
 public:
-    Profile(Dir* directory1, Dir* directory2, std::string name):
-    dir1_(directory1), dir2_(directory2), name_(name) { }
+    Profile(Dir* directory1, Dir* directory2, std::string name);
     void scan();
     void addDirectories(std::string path1, std::string path2,Choice flag1, Choice flag2);
     void summary();

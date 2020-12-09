@@ -17,29 +17,15 @@ enum Choice{
 
 class Dir {
 public:
-    Dir(){}
-    Dir(std::string path) : path_(path) {}
+    Dir() = default;
+    explicit Dir(std::string path);
     virtual ~Dir() = default;
     virtual void printInfo() = 0;
-    void assignPath(string path){
-        path_ = path;
-
-    }
-    void assignFactory(std::shared_ptr<AbstractFactory> factory) {
-        creator_ = factory;
-    }
-    void addFile(){
-        std::shared_ptr<Command> command = creator_->createAdd();
-        command->execute();
-    }
-    void removeFile(){
-        std::shared_ptr<Command> command = creator_->createRemove();
-        command->execute();
-    }
-    void renameFile(){
-        std::shared_ptr<Command> command = creator_->createRename();
-        command->execute();
-    }
+    void assignPath(string path);
+    void assignFactory(std::shared_ptr<AbstractFactory> factory);
+    void addFile();
+    void removeFile();
+    void renameFile();
     static Dir *make_dir(Choice flag);
     virtual void printTree() = 0;
 protected:
@@ -49,15 +35,8 @@ protected:
 
 class LocalDir : public Dir{
 public:
-    void printInfo(){
-        std::cout << "#LOCAL DIR PATH: " << path_ <<std::endl;
-    }
-    void printTree(){
-
-        std::filesystem::path pathToShow(path_);
-        DisplayDirTree(pathToShow,0);
-
-    }
+    void printInfo() override;
+    void printTree() override;
     void DisplayFileInfo(const filesystem::directory_entry & entry, string & lead, filesystem::path& file_name);
     void DisplayDirTree(const filesystem::path& pathToShow, int level);
 };
@@ -65,14 +44,8 @@ public:
 
 class SshDir: public Dir{
 public:
-    void printInfo(){
-        std::cout << "#SSH DIR PATH: " << path_ <<std::endl;
-    }
-    void printTree(){
-
-        cout << "--> WILL PRINT SSH DIR TREE" << endl;
-
-    }
+    void printInfo() override;
+    void printTree() override;
 };
 
 
