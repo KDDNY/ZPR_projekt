@@ -18,11 +18,16 @@ add_executable(tests main.cpp
         ../classes/Profile.cpp
         ../classes/Profile.h
         ../classes/Visitor.h
+        ../classes/File.cpp
+        ../classes/File.h
         "../GUI classes/StartFrame.cpp"
         "../GUI classes/StartFrame.h"
         "../GUI classes/MainFrame.cpp"
         "../GUI classes/MainFrame.h"
         "../GUI classes/ProfileDialog.cpp"
-        "../GUI classes/ProfileDialog.h"  ApplicationTests.cpp ProfileTests.cpp DirTests.cpp)
-
+        "../GUI classes/ProfileDialog.h"
+        ApplicationTests.cpp
+        ProfileTests.cpp
+        DirTests.cpp
+        )
 target_link_libraries(tests ${wxWidgets_LIBRARIES} ${GTEST_LIBRARIES} pthread)

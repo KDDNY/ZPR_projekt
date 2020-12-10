@@ -9,6 +9,7 @@
 #include <iostream>
 #include "Command.h"
 #include <vector>
+#include "File.h"
 
 using namespace std;
 
@@ -41,10 +42,10 @@ public:
     void DisplayFileInfo(const filesystem::directory_entry & entry, string & lead, filesystem::path& file_name);
     void DisplayDirTree(const filesystem::path& pathToShow, int level);
     void search();
-    std::vector<std::string> getFiles();
+    std::vector<std::shared_ptr<File>> getFiles();
 private:
-    void searchTree(const filesystem::path& pathToShow, int level);
-    std::vector<std::string> files_;
+    void searchTree(const filesystem::path& pathToShow, int level, std::vector<std::shared_ptr<File>> &files);
+    std::vector<std::shared_ptr<File>> files_;
 };
 
 class SshDir: public Dir{

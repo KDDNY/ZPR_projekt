@@ -52,24 +52,24 @@ void Dir::renameFile(){
 /*LocalDir implementations starts here*/
 void LocalDir::search() {
     std::filesystem::path pathToShow(path_);
-    searchTree(pathToShow,0);
+    searchTree(pathToShow,0,files_);
 }
 
-void LocalDir::searchTree(const filesystem::path& pathToShow, int level){
+void LocalDir::searchTree(const filesystem::path& pathToShow, int level, vector<shared_ptr<File>> &files){
     if(filesystem::exists(pathToShow) && filesystem::is_directory(pathToShow)){
         auto lead = std::string(level * 3, ' ');
         for (const auto& entry : filesystem::directory_iterator(pathToShow)){
             auto filename = entry.path().filename();
             if(filesystem::is_directory(entry.status()))
             {
-                files_.push_back(filename);
-                searchTree(entry, level + 1);
+                files.push_back(make_shared<File>(filename));
+                searchTree(entry, level + 1,files.back()->files_);
             }
         }
     }
 }
 
-vector<string> LocalDir::getFiles() {
+vector<shared_ptr<File>> LocalDir::getFiles() {
     return files_;
 }
 
