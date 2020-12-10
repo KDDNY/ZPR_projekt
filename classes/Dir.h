@@ -8,6 +8,7 @@
 #include <filesystem>
 #include <iostream>
 #include "Command.h"
+#include <vector>
 
 using namespace std;
 
@@ -39,16 +40,17 @@ public:
     void printTree() override;
     void DisplayFileInfo(const filesystem::directory_entry & entry, string & lead, filesystem::path& file_name);
     void DisplayDirTree(const filesystem::path& pathToShow, int level);
+    void search();
+    std::vector<std::string> getFiles();
+private:
+    void searchTree(const filesystem::path& pathToShow, int level);
+    std::vector<std::string> files_;
 };
-
 
 class SshDir: public Dir{
 public:
     void printInfo() override;
     void printTree() override;
 };
-
-
-
 
 #endif //UNTITLED1_DIR_H

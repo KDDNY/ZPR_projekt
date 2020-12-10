@@ -4,6 +4,39 @@
 
 #include <gtest/gtest.h>
 #include "../classes/Dir.h"
+#include "../classes/Command.cpp"
+
+class LocalDirTests : public ::testing::Test{
+public:
+    std::unique_ptr<LocalDir> dir;
+    LocalDirTests(){
+        dir = std::make_unique<LocalDir>();
+        dir->assignFactory(std::make_shared<LocalFactory>());
+        dir->assignPath("/home/kddny/Desktop/ZPR/ZPR_projekt/tests/cmake-build-debug/dut");
+    }
+};
+
+TEST_F(LocalDirTests, treeTest){
+    testing::internal::CaptureStdout();
+    dir->printTree();
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ("[+] \"test\"\n[+] \"test (copy)\"\n",output);
+}
+
+TEST_F(LocalDirTests, checkIfNotEmpty){
+    dir->search();
+    EXPECT_FALSE(dir->getFiles().empty());
+}
+
+TEST_F(LocalDirTests, checkIfFileExist){
+    dir->search();
+
+    if(!dir->getFiles().empty()){
+        std::vector files = dir->getFiles();
+        EXPECT_EQ("test (copy)",dir->getFiles().back());
+    } else FAIL();
+}
+
 
 TEST(DirTests, AddLocal){
     auto dir = Dir::make_dir(LOCAL);
