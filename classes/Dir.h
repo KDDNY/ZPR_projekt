@@ -30,9 +30,14 @@ public:
     void renameFile();
     static Dir *make_dir(Choice flag);
     virtual void printTree() = 0;
+    virtual void search() = 0;
+protected:
+public:
+    const vector<std::shared_ptr<File>> &getFiles() const;
 protected:
     string path_;
     std::shared_ptr<AbstractFactory> creator_;
+    std::vector<std::shared_ptr<File>> files_;
 };
 
 class LocalDir : public Dir{
@@ -41,17 +46,17 @@ public:
     void printTree() override;
     void DisplayFileInfo(const filesystem::directory_entry & entry, string & lead, filesystem::path& file_name);
     void DisplayDirTree(const filesystem::path& pathToShow, int level);
-    void search();
+    void search() override;
     std::vector<std::shared_ptr<File>> getFiles();
 private:
     void searchTree(const filesystem::path& pathToShow, int level, std::vector<std::shared_ptr<File>> &files);
-    std::vector<std::shared_ptr<File>> files_;
 };
 
 class SshDir: public Dir{
 public:
     void printInfo() override;
     void printTree() override;
+    void search() override;
 };
 
 #endif //UNTITLED1_DIR_H

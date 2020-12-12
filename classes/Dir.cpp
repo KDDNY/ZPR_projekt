@@ -49,6 +49,10 @@ void Dir::renameFile(){
     command->execute();
 }
 
+const vector<std::shared_ptr<File>> &Dir::getFiles() const {
+    return files_;
+}
+
 /*LocalDir implementations starts here*/
 void LocalDir::search() {
     std::filesystem::path pathToShow(path_);
@@ -111,5 +115,9 @@ void SshDir::printInfo(){
 
 void SshDir::printTree(){
     cout << "--> WILL PRINT SSH DIR TREE" << endl;
+}
+
+void SshDir::search() {
+    cout <<"SEARCHING SSH DIR" << endl;
 }
 /*SshDir implementations ends here*/

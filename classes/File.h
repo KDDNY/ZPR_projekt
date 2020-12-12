@@ -16,6 +16,7 @@ public:
     File() = default;
     File(const std::string &name);
     const std::string &getName() const;
+    const std::vector<std::shared_ptr<File>> &getFiles() const;
     std::string name_;
     std::string path_;
     std::vector<std::shared_ptr<File>> files_;

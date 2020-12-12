@@ -19,7 +19,11 @@ public:
     void printTree2();
     ~Profile(){delete dir1_; delete dir2_;}
     std::string getName();
+    const vector<std::string> &getDifferences() const;
+    Dir *getDir1() const;
+    Dir *getDir2() const;
 private:
+    std::vector<std::string> differences;
     std::string name_;
     Dir* dir1_;
     Dir* dir2_;

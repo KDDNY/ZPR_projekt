@@ -9,3 +9,7 @@ const std::string &File::getName() const {
 }
 
 File::File(const std::string &name) : name_(name) {}
+
+const std::vector<std::shared_ptr<File>> &File::getFiles() const {
+    return files_;
+}

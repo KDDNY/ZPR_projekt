@@ -36,7 +36,7 @@ TEST_F(LocalDirTests, checkIfFileExist){
 
 TEST_F(LocalDirTests, weNeedToGoDeeperTest){
     if(!dir->getFiles().back()->files_.empty()){
-        EXPECT_EQ("WeNeedToGoDeeper",dir->getFiles().back()->files_.back()->getName());
+        EXPECT_EQ("WeNeedToGoDeeper",dir->getFiles().back()->getFiles().back()->getName());
     } else FAIL();
 }
 
