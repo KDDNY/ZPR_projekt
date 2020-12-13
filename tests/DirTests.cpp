@@ -40,6 +40,12 @@ TEST_F(LocalDirTests, weNeedToGoDeeperTest){
     } else FAIL();
 }
 
+TEST_F(LocalDirTests, isDirectoryTest){
+    if(!dir->getFiles().back()->files_.empty()){
+        EXPECT_TRUE(dir->getFiles().back()->getFiles().back());
+    } else FAIL();
+}
+
 TEST(DirTests, AddLocal){
     auto dir = Dir::make_dir(LOCAL);
     EXPECT_TRUE(dynamic_cast<LocalDir*>(dir));

@@ -27,6 +27,7 @@ private:
     std::string name_;
     Dir* dir1_;
     Dir* dir2_;
+    void lookForDifference(std::vector<std::shared_ptr<File>> vector1, std::vector<std::shared_ptr<File>> vector2);
 };
 
 

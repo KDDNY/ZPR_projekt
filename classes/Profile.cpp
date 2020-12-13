@@ -52,12 +52,27 @@ const vector<std::string> &Profile::getDifferences() const {
 }
 
 void Profile::scan() {
-    vector<shared_ptr<File>> v(getDir1()->getFiles().size() + getDir2()->getFiles().size());
-    vector<shared_ptr<File>>::iterator it, st;
-    //finding the common elements
-    it = set_intersection(getDir1()->getFiles().begin(), getDir1()->getFiles().end(), getDir2()->getFiles().begin(), getDir2()->getFiles().end(), v.begin());
-    for (st = v.begin(); st != it; ++st) {
-        differences.push_back(st->get()->getName());
+    lookForDifference(dir1_->getFiles(),dir2_->getFiles());
+}
+
+void Profile::lookForDifference(std::vector<std::shared_ptr<File>> vector1, std::vector<std::shared_ptr<File>> vector2) {
+    int counter = 0;
+    for(const auto& el : vector1){
+        if(find(vector2.begin(), vector2.end(), el) != vector2.end()&&el->isDirectory()){
+            lookForDifference(el->getFiles(), vector2.at(counter)->getFiles());
+        } else {
+            differences.emplace_back(el->getName() + " in dir1");
+        }
+        counter++;
+    }
+    counter = 0;
+    for(const auto& el : vector2){
+        if(find(vector1.begin(), vector1.end(), el) != vector1.end()&&el->isDirectory()){
+            lookForDifference(el->getFiles(), vector1.at(counter)->getFiles());
+        } else {
+            differences.emplace_back(el->getName() + " in dir2");
+        }
+        counter++;
     }
 }
 
@@ -68,3 +83,4 @@ Dir *Profile::getDir1() const {
 Dir *Profile::getDir2() const {
     return dir2_;
 }
+

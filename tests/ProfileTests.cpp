@@ -31,8 +31,13 @@ TEST_F(ProfileTests, dir2Test){
 TEST_F(ProfileTests, scanTest1){
     profile->scan();
     if(!profile->getDifferences().empty()) {
-        EXPECT_EQ(profile->getDifferences().back(), "difference");
+        EXPECT_EQ(profile->getDifferences().back(), "difference in dir2");
     } else FAIL();
+}
+
+TEST_F(ProfileTests, scanTest2){
+    profile->scan();
+    EXPECT_EQ(profile->getDifferences().size(),1);
 }
 
 TEST_F(ProfileTests, addTest){

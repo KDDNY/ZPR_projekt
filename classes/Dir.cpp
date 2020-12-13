@@ -66,7 +66,7 @@ void LocalDir::searchTree(const filesystem::path& pathToShow, int level, vector<
             auto filename = entry.path().filename();
             if(filesystem::is_directory(entry.status()))
             {
-                files.push_back(make_shared<File>(filename));
+                files.push_back(make_shared<File>(filename,true));
                 searchTree(entry, level + 1,files.back()->files_);
             }
         }
