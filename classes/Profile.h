@@ -22,12 +22,14 @@ public:
     const vector<std::string> &getDifferences() const;
     Dir *getDir1() const;
     Dir *getDir2() const;
+    bool findInVector(std::vector<std::shared_ptr<File>> vector1, std::shared_ptr<File> file);
+    int getIndex(std::vector<std::shared_ptr<File>> vector1, std::shared_ptr<File> file);
 private:
     std::vector<std::string> differences;
     std::string name_;
     Dir* dir1_;
     Dir* dir2_;
-    void lookForDifference(std::vector<std::shared_ptr<File>> vector1, std::vector<std::shared_ptr<File>> vector2);
+    void lookForDifference(std::vector<std::shared_ptr<File>> vector1, std::vector<std::shared_ptr<File>> vector2, int x);
 };
 
 

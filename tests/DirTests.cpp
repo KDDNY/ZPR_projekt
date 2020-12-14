@@ -17,12 +17,14 @@ public:
     }
 };
 
+/*
 TEST_F(LocalDirTests, treeTest){
     testing::internal::CaptureStdout();
     dir->printTree();
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_EQ("[+] \"test\"\n[+] \"test (copy)\"\n   [+] \"WeNeedToGoDeeper\"\n",output);
 }
+*/
 
 TEST_F(LocalDirTests, checkIfNotEmpty){
     EXPECT_FALSE(dir->getFiles().empty());
@@ -45,6 +47,7 @@ TEST_F(LocalDirTests, isDirectoryTest){
         EXPECT_TRUE(dir->getFiles().back()->getFiles().back());
     } else FAIL();
 }
+
 
 TEST(DirTests, AddLocal){
     auto dir = Dir::make_dir(LOCAL);
