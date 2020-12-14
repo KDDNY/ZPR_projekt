@@ -18,7 +18,6 @@ public:
     const std::string &getName() const;
     const std::vector<std::shared_ptr<File>> &getFiles() const;
     std::string name_;
-
     bool isDirectory() const;
 
     std::string path_;

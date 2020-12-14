@@ -60,6 +60,7 @@ void Profile::lookForDifference(std::vector<std::shared_ptr<File>> vector1, std:
     for(const auto& el : vector1){
         if(find(vector2.begin(), vector2.end(), el) != vector2.end()&&el->isDirectory()){
             lookForDifference(el->getFiles(), vector2.at(counter)->getFiles());
+            cout << "DUPA" << endl;
         } else {
             differences.emplace_back(el->getName() + " in dir1");
         }
