@@ -39,16 +39,6 @@ TEST_F(ProfileTests, findInVectorTest){
     EXPECT_TRUE(profile->findInVector(vector1,vector2.at(0)));
 }
 
-TEST_F(ProfileTests, findInVectorTest2){
-    profile->scan();
-    std::vector<std::shared_ptr<File>> vector1;
-    std::vector<std::shared_ptr<File>> vector2;
-    vector1 = profile->getDir1()->getFiles();
-    vector2 = profile->getDir2()->getFiles();
-    cout << vector2.at(2)->getName() << endl;
-    EXPECT_TRUE(profile->findInVector(vector1,vector2.at(2)));
-}
-
 TEST_F(ProfileTests, scanTest1){
     profile->scan();
     if(!profile->getDifferences().empty()) {
@@ -56,6 +46,7 @@ TEST_F(ProfileTests, scanTest1){
     } else FAIL();
 }
 
+/*
 TEST_F(ProfileTests, scanTest2){
     profile->scan();
     for(const auto& diff : profile->getDifferences()){
@@ -63,6 +54,7 @@ TEST_F(ProfileTests, scanTest2){
     }
     EXPECT_EQ(profile->getDifferences().size(),5);
 }
+*/
 
 TEST_F(ProfileTests, addTest){
     testing::internal::CaptureStdout();
