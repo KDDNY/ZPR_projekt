@@ -42,19 +42,19 @@ TEST_F(ProfileTests, findInVectorTest){
 TEST_F(ProfileTests, scanTest1){
     profile->scan();
     if(!profile->getDifferences().empty()) {
-        EXPECT_EQ(profile->getDifferences().back(), "difference in dir2");
+        EXPECT_EQ(profile->getDifferences().back(), "difference in dir1");
     } else FAIL();
 }
 
-/*
+
 TEST_F(ProfileTests, scanTest2){
     profile->scan();
     for(const auto& diff : profile->getDifferences()){
         cout << diff << endl;
     }
-    EXPECT_EQ(profile->getDifferences().size(),5);
+    EXPECT_EQ(profile->getDifferences().size(),6);
 }
-*/
+
 
 TEST_F(ProfileTests, addTest){
     testing::internal::CaptureStdout();

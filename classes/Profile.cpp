@@ -12,10 +12,10 @@
 void Profile::addDirectories(std::string path1, std::string path2,Choice flag1, Choice flag2){
     dir1_ = Dir::make_dir(flag1);
     dir1_->assignPath(path1);
-    dir1_->search();
+    dir1_->search(FIRST);
     dir2_ = Dir::make_dir(flag2);
     dir2_->assignPath(path2);
-    dir2_->search();
+    dir2_->search(SECOND);
 }
 
 Profile::Profile(Dir* directory1, Dir* directory2, std::string name):
@@ -52,19 +52,19 @@ const vector<std::string> &Profile::getDifferences() const {
 }
 
 void Profile::scan() {
-    lookForDifference(dir1_->getFiles(),dir2_->getFiles(),1);
-    lookForDifference(dir2_->getFiles(),dir1_->getFiles(),2);
+    lookForDifference(dir1_->getFiles(),dir2_->getFiles());
+    lookForDifference(dir2_->getFiles(),dir1_->getFiles());
 }
 
-void Profile::lookForDifference(std::vector<std::shared_ptr<File>> vector1, std::vector<std::shared_ptr<File>> vector2, int x) {
+void Profile::lookForDifference(std::vector<std::shared_ptr<File>> vector1, std::vector<std::shared_ptr<File>> vector2) {
     int index;
     for(const auto& el : vector1){
         index = getIndex(vector2, el);
         if(index >= 0 &&el->isDirectory()){
-            lookForDifference(el->getFiles(), vector2.at(index)->getFiles(),x);
+            lookForDifference(el->getFiles(), vector2.at(index)->getFiles());
         } else if (index==-1){
             string name = el->getName();
-            differences.emplace_back(el->getName() + " in dir" + to_string(x));
+            differences.emplace_back(el->getName() + " in dir" + to_string(el->parent_dir_));
         }
     }
 }

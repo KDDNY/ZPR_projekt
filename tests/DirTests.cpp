@@ -13,7 +13,7 @@ public:
         dir = std::make_unique<LocalDir>();
         dir->assignFactory(std::make_shared<LocalFactory>());
         dir->assignPath("/home/kddny/Desktop/ZPR/ZPR_projekt/tests/cmake-build-debug/dut");
-        dir->search();
+        dir->search(FIRST);
     }
 };
 
