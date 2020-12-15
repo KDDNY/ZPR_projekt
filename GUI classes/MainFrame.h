@@ -17,9 +17,11 @@ public:
     MainFrame(wxPoint pos, int index);
 private:
     void changeProfileClicked(wxCommandEvent &event);
+    void scanClicked(wxCommandEvent &event);
     void updateLb();
     wxListBox* lb1_;
     wxListBox* lb2_;
+    wxListBox* lb3_;
     Profile* profile_;
 };
 
