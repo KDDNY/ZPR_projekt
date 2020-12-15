@@ -22,8 +22,6 @@ TEST_F(ProfileTests, dir1Test){
     } else FAIL();
 }
 
-
-
 TEST_F(ProfileTests, dir2Test){
     if(!profile->getDir2()->getFiles().empty()){
         EXPECT_EQ("difference",profile->getDir2()->getFiles().back()->getName());
@@ -39,13 +37,13 @@ TEST_F(ProfileTests, findInVectorTest){
     EXPECT_TRUE(profile->findInVector(vector1,vector2.at(0)));
 }
 
+/*
 TEST_F(ProfileTests, scanTest1){
     profile->scan();
     if(!profile->getDifferences().empty()) {
         EXPECT_EQ(profile->getDifferences().back(), "difference in dir1");
     } else FAIL();
 }
-
 
 TEST_F(ProfileTests, scanTest2){
     profile->scan();
@@ -54,7 +52,22 @@ TEST_F(ProfileTests, scanTest2){
     }
     EXPECT_EQ(profile->getDifferences().size(),6);
 }
+*/
 
+TEST_F(ProfileTests, betterscanTest1){
+    profile->scan();
+    if(!profile->getDif().empty()) {
+        EXPECT_EQ(profile->getDif().back()->getName(), "difference");
+    } else FAIL();
+}
+
+TEST_F(ProfileTests, betterscanTest2){
+    profile->scan();
+    for(const auto& diff : profile->getDif()){
+        cout << diff->getName() << " in dir" <<diff->parent_dir_ <<endl;
+    }
+    EXPECT_EQ(profile->getDif().size(),6);
+}
 
 TEST_F(ProfileTests, addTest){
     testing::internal::CaptureStdout();
@@ -63,4 +76,3 @@ TEST_F(ProfileTests, addTest){
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_EQ("\n---------------------------\n#PROFILE SUMMARY:\n#name: \n#LOCAL DIR PATH: path\n#LOCAL DIR PATH: path\n",output);
 }
-

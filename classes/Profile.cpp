@@ -47,8 +47,14 @@ void Profile::printTree2() {
     dir2_->printTree();
 }
 
+/*
 const vector<std::string> &Profile::getDifferences() const {
     return differences;
+}
+*/
+
+const vector<shared_ptr<File>> &Profile::getDif() const{
+    return differences_;
 }
 
 void Profile::scan() {
@@ -64,7 +70,8 @@ void Profile::lookForDifference(std::vector<std::shared_ptr<File>> vector1, std:
             lookForDifference(el->getFiles(), vector2.at(index)->getFiles());
         } else if (index==-1){
             string name = el->getName();
-            differences.emplace_back(el->getName() + " in dir" + to_string(el->parent_dir_));
+ //           differences.emplace_back(el->getName() + " in dir" + to_string(el->parent_dir_));
+            differences_.emplace_back(el);
         }
     }
 }
