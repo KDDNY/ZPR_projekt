@@ -10,6 +10,10 @@
 #include "Command.h"
 #include <vector>
 #include "File.h"
+#include <libssh/libssh.h>
+#include <libssh/sftp.h>
+#include <stdlib.h>
+#include <memory.h>
 
 using namespace std;
 
@@ -57,6 +61,11 @@ public:
     void printInfo() override;
     void printTree() override;
     void search() override;
+    int verify_knownhosts(ssh_session session);
+    int sftp_list_dir(ssh_session session, sftp_session sftp, string rootDir);
+    void buildTree(ssh_session session, sftp_session sftp, string rootDir);
+    int checkIfDir(ssh_session session, sftp_session sftp, string rootDir);
+    void listVector(std::vector<std::shared_ptr<File>> files);
 };
 
 #endif //UNTITLED1_DIR_H
