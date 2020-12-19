@@ -34,7 +34,7 @@ public:
     void renameFile();
     static Dir *make_dir(Choice flag);
     virtual void printTree() = 0;
-    virtual void search() = 0;
+    virtual void search(ParentDir parentDir) = 0;
 protected:
 public:
     const vector<std::shared_ptr<File>> &getFiles() const;
@@ -50,22 +50,25 @@ public:
     void printTree() override;
     void DisplayFileInfo(const filesystem::directory_entry & entry, string & lead, filesystem::path& file_name);
     void DisplayDirTree(const filesystem::path& pathToShow, int level);
-    void search() override;
+    void search(ParentDir parentDir) override;
     std::vector<std::shared_ptr<File>> getFiles();
 private:
-    void searchTree(const filesystem::path& pathToShow, int level, std::vector<std::shared_ptr<File>> &files);
+    void searchTree(const filesystem::path& pathToShow, int level, std::vector<std::shared_ptr<File>> &files, ParentDir parentDir);
 };
 
+//TO DO: file ma w konstrutorze informacje w którym dirze się znajduje, uwzględnić to w metodach sshdir
+//Na razie wpisałem wszędzie wartość z enum FIRST aby sie kompilowalo
 class SshDir: public Dir{
 public:
     void printInfo() override;
     void printTree() override;
-    void search() override;
+    void search(ParentDir parentDir) override;
     int verify_knownhosts(ssh_session session);
     int sftp_list_dir(ssh_session session, sftp_session sftp, string rootDir);
     void buildTree(ssh_session session, sftp_session sftp, string rootDir);
     int checkIfDir(ssh_session session, sftp_session sftp, string rootDir);
     void listVector(std::vector<std::shared_ptr<File>> files);
 };
+
 
 #endif //UNTITLED1_DIR_H

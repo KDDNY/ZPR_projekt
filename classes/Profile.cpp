@@ -13,10 +13,10 @@
 void Profile::addDirectories(std::string path1, std::string path2,Choice flag1, Choice flag2){
     dir1_ = Dir::make_dir(flag1);
     dir1_->assignPath(path1);
-    dir1_->search();
+    dir1_->search(FIRST);
     dir2_ = Dir::make_dir(flag2);
     dir2_->assignPath(path2);
-    dir2_->search();
+    dir2_->search(SECOND);
 }
 
 Profile::Profile(Dir* directory1, Dir* directory2, std::string name):
@@ -48,35 +48,56 @@ void Profile::printTree2() {
     dir2_->printTree();
 }
 
+/*
 const vector<std::string> &Profile::getDifferences() const {
     return differences;
+}
+*/
+
+const vector<shared_ptr<File>> &Profile::getDif() const{
+    return differences_;
 }
 
 void Profile::scan() {
     lookForDifference(dir1_->getFiles(),dir2_->getFiles());
+    lookForDifference(dir2_->getFiles(),dir1_->getFiles());
 }
 
 void Profile::lookForDifference(std::vector<std::shared_ptr<File>> vector1, std::vector<std::shared_ptr<File>> vector2) {
-    int counter = 0;
+    int index;
     for(const auto& el : vector1){
-        if(find(vector2.begin(), vector2.end(), el) != vector2.end()&&el->isDirectory()){
-            lookForDifference(el->getFiles(), vector2.at(counter)->getFiles());
-            cout << "DUPA" << endl;
-        } else {
-            differences.emplace_back(el->getName() + " in dir1");
+        index = getIndex(vector2, el);
+        if(index >= 0 &&el->isDirectory()){
+            lookForDifference(el->getFiles(), vector2.at(index)->getFiles());
+        } else if (index==-1){
+            string name = el->getName();
+ //           differences.emplace_back(el->getName() + " in dir" + to_string(el->parent_dir_));
+            differences_.emplace_back(el);
         }
-        counter++;
-    }
-    counter = 0;
-    for(const auto& el : vector2){
-        if(find(vector1.begin(), vector1.end(), el) != vector1.end()&&el->isDirectory()){
-            lookForDifference(el->getFiles(), vector1.at(counter)->getFiles());
-        } else {
-            differences.emplace_back(el->getName() + " in dir2");
-        }
-        counter++;
     }
 }
+
+int Profile::getIndex(std::vector<std::shared_ptr<File>> vector1, std::shared_ptr<File> file) {
+    for(int i=0; i<vector1.size(); i++){
+        string name = file->getName();
+        string name2 = vector1.at(i)->getName();
+        int xd = vector1.size();
+        if(vector1.at(i)->getName() ==file->getName()){
+            return i;
+        }
+    }
+    return -1;
+}
+
+bool Profile::findInVector(std::vector<std::shared_ptr<File>> vector1, std::shared_ptr<File> file) {
+    for(const auto& el : vector1){
+        if(el->getName()==file->getName()){
+            return true;
+        }
+    }
+    return false;
+}
+
 
 Dir *Profile::getDir1() const {
     return dir1_;
@@ -85,4 +106,5 @@ Dir *Profile::getDir1() const {
 Dir *Profile::getDir2() const {
     return dir2_;
 }
+
 

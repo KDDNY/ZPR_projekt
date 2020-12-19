@@ -5,6 +5,15 @@ find_package(wxWidgets REQUIRED COMPONENTS net core base)
 include(${wxWidgets_USE_FILE})
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
+find_package(libssh REQUIRED)
+if (NOT TARGET ssh)
+    add_library(ssh SHARED IMPORTED)
+    set_target_properties(ssh
+            PROPERTIES
+            ​          IMPORTED_LOCATION "${LIBSSH_LIBRARIES}"
+            INTERFACE_INCLUDE_DIRECTORIES "${LIBSSH_INCLUDE_DIR}")
+endif()
+
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -30,4 +39,4 @@ add_executable(tests main.cpp
         ProfileTests.cpp
         DirTests.cpp
         )
-target_link_libraries(tests ${wxWidgets_LIBRARIES} ${GTEST_LIBRARIES} pthread)
+target_link_libraries(tests ${wxWidgets_LIBRARIES} ${GTEST_LIBRARIES} pthread ssh)
