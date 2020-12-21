@@ -59,6 +59,9 @@ const vector<shared_ptr<File>> &Profile::getDif() const{
 }
 
 void Profile::scan() {
+    dir1_->search(FIRST);
+    dir2_->search(SECOND);
+    differences_.clear();
     lookForDifference(dir1_->getFiles(),dir2_->getFiles());
     lookForDifference(dir2_->getFiles(),dir1_->getFiles());
 }

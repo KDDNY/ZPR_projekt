@@ -55,6 +55,7 @@ const vector<std::shared_ptr<File>> &Dir::getFiles() const {
 
 /*LocalDir implementations starts here*/
 void LocalDir::search(ParentDir parentDir) {
+    files_.clear();
     std::filesystem::path pathToShow(path_);
     searchTree(pathToShow,0,files_, parentDir);
 }

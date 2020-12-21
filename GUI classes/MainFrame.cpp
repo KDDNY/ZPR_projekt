@@ -20,10 +20,10 @@ MainFrame::MainFrame(wxPoint pos, int index)
     wxMenu *help = new wxMenu;
     file->Append(1, wxT("&Zmień Profil"));
     file->Append(2, wxT("&Skanuj"));
-    file->Append(wxID_ANY,wxT("&Synchronizuj"));
-    file->Append(wxID_ANY,wxT("&Zmień kierunek"));
-    file->Append(wxID_ANY, wxT("&Wyjście"));
-    help->Append(wxID_ANY,wxT("&O Programie"));
+    file->Append(3,wxT("&Synchronizuj"));
+    file->Append(4,wxT("&Zmień kierunek"));
+    file->Append(5, wxT("&Wyjście"));
+    help->Append(6,wxT("&O Programie"));
     menuBar->Append(file, wxT("&Synchronizacja"));
     menuBar->Append(help,wxT("&Pomoc"));
     SetMenuBar(menuBar);
@@ -31,31 +31,35 @@ MainFrame::MainFrame(wxPoint pos, int index)
     vbox->Add(-1,10);
 
     wxBoxSizer *mainHbox = new wxBoxSizer(wxHORIZONTAL);
-    wxBoxSizer *vbox1 = new wxBoxSizer(wxVERTICAL);
-    wxBoxSizer *vbox2 = new wxBoxSizer(wxVERTICAL);
-    wxBoxSizer *vbox3 = new wxBoxSizer(wxVERTICAL);
-    wxStaticText *st1 = new wxStaticText(this, wxID_ANY, wxT("Pierwszy katalog"));
-    wxStaticText *st2 = new wxStaticText(this, wxID_ANY, wxT("Akcja"));
-    wxStaticText *st3 = new wxStaticText(this, wxID_ANY, wxT("Drugi katalog"));
-    lb1_ = new wxListBox(this, wxID_ANY);
-    lb2_ = new wxListBox(this, wxID_ANY);
-    lb3_ = new wxListBox(this, wxID_ANY);
-    vbox1->Add(st1);
-    vbox1->Add(lb1_, 1, wxEXPAND, 10);
-    vbox2->Add(st2);
-    vbox2->Add(lb2_, 1, wxEXPAND, 10);
-    vbox3->Add(st3);
-    vbox3->Add(lb3_,1,wxEXPAND,10);
-    mainHbox->Add(vbox1,0, wxLEFT | wxBOTTOM | wxEXPAND, 10);
-    mainHbox->Add(vbox2,0, wxLEFT | wxBOTTOM | wxEXPAND, 10);
-    mainHbox->Add(vbox3,0, wxLEFT | wxBOTTOM | wxEXPAND, 10);
+    list_ctrl_ = new wxListCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT);
 
-    vbox->Add(mainHbox,1,wxTOP | wxLEFT , 10);
+    col0_ = new wxListItem();
+    col1_ = new wxListItem();
+    col2_ = new wxListItem();
+    col3_ = new wxListItem();
+    col0_->SetId(7);
+    col1_->SetId(8);
+    col2_->SetId(9);
+    col3_->SetId(10);
+    col0_->SetText( _("Pierwszy katalog") );
+    col1_->SetText( _("Akcja") );
+    col2_->SetText( _("Drugi katalog") );
+    col3_->SetText( _("Sciezka") );
+    col0_->SetWidth(150);
+    col1_->SetWidth(50);
+    col2_->SetWidth(150);
+    col3_->SetWidth(150);
+    list_ctrl_->InsertColumn(0, *col0_);
+    list_ctrl_->InsertColumn(1, *col1_);
+    list_ctrl_->InsertColumn(2, *col2_);
+    list_ctrl_->InsertColumn(3, *col3_);
+
+    mainHbox->Add(list_ctrl_,1, wxEXPAND);
+
+    vbox->Add(mainHbox,1, wxLEFT | wxBOTTOM,15);
     this->SetSizer(vbox);
 
     Centre();
-
-    updateLb();
 
     Connect(1, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MainFrame::changeProfileClicked));
     Connect(2,wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MainFrame::scanClicked));
@@ -68,27 +72,18 @@ void MainFrame::changeProfileClicked(wxCommandEvent &event){
     startFrame->Show(true);
 }
 
-//Lista sie nie czyści jak sie wciśnie jeszcze raz
 void MainFrame::scanClicked(wxCommandEvent &event){
-    lb1_->Clear();
-    lb3_->Clear();
-
+    list_ctrl_->DeleteAllItems();
     profile_->scan();
-    for(const auto& el : profile_->getDif()){
-        cout << el->parent_dir_ << endl;
-    }
-    for(const auto& el : profile_->getDif()){
-        if(el->parent_dir_ == FIRST){
-            lb1_->Insert(el->getName(),lb1_->GetCount());
+    for(const auto& el : profile_->getDif()) {
+        if (el->parent_dir_ == FIRST) {
+            long itemIndex = list_ctrl_->InsertItem(0, el->getName());
+            list_ctrl_->SetItem(itemIndex, 1, "     ->");
         }
-        if(el->parent_dir_ == SECOND){
-            lb3_->Insert(el->getName(),lb3_->GetCount());
+        if (el->parent_dir_ == SECOND) {
+            long itemIndex = list_ctrl_->InsertItem(0, "");
+            list_ctrl_->SetItem(itemIndex, 1, "     <-");
+            list_ctrl_->SetItem(itemIndex, 2, el->getName());
         }
     }
 }
-
-void MainFrame::updateLb() {
-    lb1_->Clear();
-    lb3_->Clear();
-}
-
