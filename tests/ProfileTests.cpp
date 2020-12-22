@@ -64,9 +64,14 @@ TEST_F(ProfileTests, betterscanTest1){
 TEST_F(ProfileTests, betterscanTest2){
     profile->scan();
     for(const auto& diff : profile->getDif()){
-        cout << diff->getName() << " in dir" <<diff->parent_dir_ <<endl;
+        cout << diff->getName() << " in dir" <<diff->which_dir_ <<endl;
     }
     EXPECT_EQ(profile->getDif().size(),6);
+}
+
+TEST_F(ProfileTests, hashCompareTest){
+    profile->scan();
+
 }
 
 TEST_F(ProfileTests, addTest){

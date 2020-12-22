@@ -54,23 +54,23 @@ const vector<std::shared_ptr<File>> &Dir::getFiles() const {
 }
 
 /*LocalDir implementations starts here*/
-void LocalDir::search(ParentDir parentDir) {
+void LocalDir::search(WhichDir whichDir) {
     files_.clear();
     std::filesystem::path pathToShow(path_);
-    searchTree(pathToShow,0,files_, parentDir);
+    searchTree(pathToShow, 0, files_, whichDir);
 }
 
-void LocalDir::searchTree(const filesystem::path& pathToShow, int level, vector<shared_ptr<File>> &files, ParentDir parentDir){
+void LocalDir::searchTree(const filesystem::path& pathToShow, int level, vector<shared_ptr<File>> &files, WhichDir whichDir){
     if(filesystem::exists(pathToShow) && filesystem::is_directory(pathToShow)){
         auto lead = std::string(level * 3, ' ');
         for (const auto& entry : filesystem::directory_iterator(pathToShow)){
             auto filename = entry.path().filename();
             if(filesystem::is_directory(entry.status()))
             {
-                files.push_back(make_shared<File>(filename,true, parentDir));
-                searchTree(entry, level + 1,files.back()->files_, parentDir);
+                files.push_back(make_shared<File>(filename, true, whichDir));
+                searchTree(entry, level + 1, files.back()->files_, whichDir);
             }   else if (filesystem::is_regular_file(entry.status())) {
-                files.push_back(make_shared<File>(filename, false, parentDir));
+                files.push_back(make_shared<File>(filename, false, whichDir));
             }
         }
     }
@@ -382,7 +382,7 @@ void SshDir::printTree(){
 
 
 
-void SshDir::search(ParentDir parentDir) {
+void SshDir::search(WhichDir parentDir) {
     cout <<"SEARCHING SSH DIR" << endl;
 }
 /*SshDir implementations ends here*/

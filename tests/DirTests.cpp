@@ -17,6 +17,30 @@ public:
     }
 };
 
+TEST_F(LocalDirTests, searchTest) {
+    vector v = dir->getFiles();
+    std::string myString = "tekst.txt";
+    auto it = find_if(v.begin(), v.end(), [&myString](const shared_ptr<File>& obj) {return obj->getName() == myString;});
+    if (it != v.end())
+    {
+        EXPECT_EQ(it->get()->getName(),myString);
+    //    cout << "znaleziono: " << it->get()->getName() << endl;
+     //   auto index = std::distance(v.begin(), it);
+    } else FAIL();
+}
+
+TEST_F(LocalDirTests, getPathTests){
+    vector v = dir->getFiles();
+    std::string myString = "tekst.txt";
+    std::string path = "/home/kddny/Desktop/ZPR/ZPR_projekt/tests/cmake-build-debug/dut";
+    auto it = find_if(v.begin(), v.end(), [&myString](const shared_ptr<File>& obj) {return obj->getName() == myString;});
+    if (it != v.end())
+    {
+        EXPECT_EQ(it->get()->getPath()+"/"+it->get()->getName(),path + "/tekst.txt");
+        //    cout << "znaleziono: " << it->get()->getName() << endl;
+        //   auto index = std::distance(v.begin(), it);
+    } else FAIL();
+}
 /*
 TEST_F(LocalDirTests, treeTest){
     testing::internal::CaptureStdout();

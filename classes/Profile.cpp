@@ -74,7 +74,7 @@ void Profile::lookForDifference(std::vector<std::shared_ptr<File>> vector1, std:
             lookForDifference(el->getFiles(), vector2.at(index)->getFiles());
         } else if (index==-1){
             string name = el->getName();
- //           differences.emplace_back(el->getName() + " in dir" + to_string(el->parent_dir_));
+ //           differences.emplace_back(el->getName() + " in dir" + to_string(el->which_dir_));
             differences_.emplace_back(el);
         }
     }

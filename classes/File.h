@@ -11,24 +11,27 @@
 
 #endif //UNTITLED1_FILE_H
 
-enum ParentDir{
+enum WhichDir{
     FIRST, SECOND
 };
 
 class File{
 public:
     File() = default;
-    File(const std::string &name, bool directory, ParentDir parentDir);
+    File(const std::string &name, bool directory, WhichDir whichDir);
+    WhichDir which_dir_;
+    std::vector<std::shared_ptr<File>> files_;
+
+    void setParentDir(WhichDir parentDir);
+    void setPath(const std::string &path);
+
+    bool isDirectory() const;
     const std::string &getName() const;
     const std::vector<std::shared_ptr<File>> &getFiles() const;
+    const std::string &getPath() const;
+private:
     std::string name_;
-    bool isDirectory() const;
-
-    void setParentDir(ParentDir parentDir);
-
-    ParentDir parent_dir_;
-    std::string path_;
-    std::vector<std::shared_ptr<File>> files_;
     bool directory_;
+
 };
 

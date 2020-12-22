@@ -76,11 +76,11 @@ void MainFrame::scanClicked(wxCommandEvent &event){
     list_ctrl_->DeleteAllItems();
     profile_->scan();
     for(const auto& el : profile_->getDif()) {
-        if (el->parent_dir_ == FIRST) {
+        if (el->which_dir_ == FIRST) {
             long itemIndex = list_ctrl_->InsertItem(0, el->getName());
             list_ctrl_->SetItem(itemIndex, 1, "     ->");
         }
-        if (el->parent_dir_ == SECOND) {
+        if (el->which_dir_ == SECOND) {
             long itemIndex = list_ctrl_->InsertItem(0, "");
             list_ctrl_->SetItem(itemIndex, 1, "     <-");
             list_ctrl_->SetItem(itemIndex, 2, el->getName());
