@@ -24,14 +24,18 @@ public:
 
     void setParentDir(WhichDir parentDir);
     void setPath(const std::string &path);
+    void genHash();
 
     bool isDirectory() const;
     const std::string &getName() const;
     const std::vector<std::shared_ptr<File>> &getFiles() const;
     const std::string &getPath() const;
+    WhichDir getWhichDir() const;
+    const std::string &getHash() const;
 private:
     std::string name_;
+    std::string path_;
     bool directory_;
-
+    std::string hash_;
 };
 

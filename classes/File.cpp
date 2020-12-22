@@ -30,3 +30,15 @@ const std::string &File::getPath() const {
 void File::setPath(const std::string &path) {
     File::path_ = path;
 }
+
+WhichDir File::getWhichDir() const {
+    return which_dir_;
+}
+
+const std::string &File::getHash() const {
+    return hash_;
+}
+
+void File::genHash() {
+
+}

@@ -53,7 +53,8 @@ public:
     void search(WhichDir whichDir) override;
     std::vector<std::shared_ptr<File>> getFiles();
 private:
-    void searchTree(const filesystem::path& pathToShow, int level, std::vector<std::shared_ptr<File>> &files, WhichDir whichDir);
+    void searchTree(const filesystem::path& pathToShow, int level, std::vector<std::shared_ptr<File>> &files,
+                    WhichDir whichDir, std::shared_ptr<File> prev);
 };
 
 //TO DO: file ma w konstrutorze informacje w którym dirze się znajduje, uwzględnić to w metodach sshdir

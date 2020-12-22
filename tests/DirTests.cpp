@@ -41,6 +41,26 @@ TEST_F(LocalDirTests, getPathTests){
         //   auto index = std::distance(v.begin(), it);
     } else FAIL();
 }
+
+TEST_F(LocalDirTests, getDeeperPathTest) {
+    vector v = dir->getFiles().back()->getFiles();
+    std::string myString = "WeNeedToGoDeeper";
+    std::string path = "/home/kddny/Desktop/ZPR/ZPR_projekt/tests/cmake-build-debug/dut/test (copy)";
+    auto it = find_if(v.begin(), v.end(),[&myString](const shared_ptr<File> &obj) { return obj->getName() == myString; });
+    if (it != v.end()) {
+        EXPECT_EQ(it->get()->getPath() + "/" + it->get()->getName(), path + "/" + myString);
+        //    cout << "znaleziono: " << it->get()->getName() << endl;
+        //   auto index = std::distance(v.begin(), it);
+    } else FAIL();
+}
+
+TEST_F(LocalDirTests, hashGenTest){
+    vector v = dir->getFiles().back()->getFiles().back()->getFiles().back()->getFiles();
+    v.back()->genHash();
+    string hash = v.back()->getHash();
+    EXPECT_EQ("c7c504f050af87e98b62c3b959b225e547f65c87", hash);
+}
+
 /*
 TEST_F(LocalDirTests, treeTest){
     testing::internal::CaptureStdout();
