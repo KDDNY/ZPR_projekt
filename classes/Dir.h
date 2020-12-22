@@ -64,10 +64,11 @@ public:
     void printTree() override;
     void search(ParentDir parentDir) override;
     int verify_knownhosts(ssh_session session);
-    int sftp_list_dir(ssh_session session, sftp_session sftp, string rootDir);
+    int sftp_list_dir(ssh_session session, sftp_session sftp, string rootDir,vector<shared_ptr<File>> &files);
     void buildTree(ssh_session session, sftp_session sftp, string rootDir);
     int checkIfDir(ssh_session session, sftp_session sftp, string rootDir);
     void listVector(std::vector<std::shared_ptr<File>> files);
+    void printDir();
 };
 
 
