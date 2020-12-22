@@ -5,6 +5,15 @@ project(untitled1)
 
 
 find_package(wxWidgets REQUIRED COMPONENTS net core base)
+find_package(OpenSSL REQUIRED)
+find_package(libssh REQUIRED)
+if (NOT TARGET ssh)
+    add_library(ssh SHARED IMPORTED)
+    set_target_properties(ssh
+            PROPERTIES
+            ​          IMPORTED_LOCATION "${LIBSSH_LIBRARIES}"
+            INTERFACE_INCLUDE_DIRECTORIES "${LIBSSH_INCLUDE_DIR}")
+endif()
 include(${wxWidgets_USE_FILE})
 
 
@@ -23,15 +32,4 @@ add_executable(main main.cpp
         "GUI classes/MainFrame.h"
         "GUI classes/ProfileDialog.cpp"
         "GUI classes/ProfileDialog.h" classes/Application.cpp classes/File.cpp classes/File.h)
-target_link_libraries(main ${wxWidgets_LIBRARIES})
-
-find_package(libssh REQUIRED)
-if (NOT TARGET ssh)
-    add_library(ssh SHARED IMPORTED)
-    set_target_properties(ssh
-            PROPERTIES
-            ​          IMPORTED_LOCATION "${LIBSSH_LIBRARIES}"
-            INTERFACE_INCLUDE_DIRECTORIES "${LIBSSH_INCLUDE_DIR}")
-endif()
-
-target_link_libraries(main ssh)
+target_link_libraries(main ${wxWidgets_LIBRARIES} ssh OpenSSL::Crypto)
