@@ -5,6 +5,9 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <openssl/sha.h> //For genrating Hash function
+#include <fstream> // for reading file
+
 
 #ifndef UNTITLED1_FILE_H
 #define UNTITLED1_FILE_H
