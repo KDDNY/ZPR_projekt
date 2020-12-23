@@ -72,15 +72,14 @@ void LocalDir::searchTree(const filesystem::path& pathToShow, int level, vector<
                 if(prev){
                     files.back()->setPath(prev->getPath() + "/" + prev->getName());
                 } else files.back()->setPath(this->path_);
-                prev = files.back();
-                searchTree(entry, level + 1, files.back()->files_, whichDir, prev);
-            }   else if (filesystem::is_regular_file(entry.status())) {
+       //         prev = files.back();
+                searchTree(entry, level + 1, files.back()->files_, whichDir, files.back());
+            }   else /*if (filesystem::is_regular_file(entry.status()))*/ {
                 files.push_back(make_shared<File>(filename, false, whichDir));
                 if(prev){
                     files.back()->setPath(prev->getPath() + "/" + prev->getName());
                 } else files.back()->setPath(this->path_);
             }
-            prev = nullptr;
         }
     }
 }

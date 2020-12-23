@@ -54,11 +54,29 @@ TEST_F(LocalDirTests, getDeeperPathTest) {
     } else FAIL();
 }
 
-TEST_F(LocalDirTests, hashGenTest){
+TEST_F(LocalDirTests, getDeeperPathTest2) {
     vector v = dir->getFiles().back()->getFiles().back()->getFiles().back()->getFiles();
-    v.back()->genHash();
+    std::string myString = "20z_Harmonogram_laboratorium_TWCz.pdf";
+    std::string path = "/home/kddny/Desktop/ZPR/ZPR_projekt/tests/cmake-build-debug/dut/test (copy)/WeNeedToGoDeeper/muchDeeper";
+    auto it = find_if(v.begin(), v.end(),[&myString](const shared_ptr<File> &obj) { return obj->getName() == myString; });
+    if (it != v.end()) {
+        EXPECT_EQ(it->get()->getPath() + "/" + it->get()->getName(), path + "/" + myString);
+        //    cout << "znaleziono: " << it->get()->getName() << endl;
+        //   auto index = std::distance(v.begin(), it);
+    } else FAIL();
+}
+
+TEST_F(LocalDirTests, TWCzhashGenTest){
+    vector v = dir->getFiles().back()->getFiles().back()->getFiles().back()->getFiles();
+    v.at(2)->genHash();
     string hash = v.back()->getHash();
-    EXPECT_EQ("c7c504f050af87e98b62c3b959b225e547f65c87", hash);
+    EXPECT_EQ("99577fc6825a6e791dec315070da55d501d809f7", hash);
+    if(HasFailure()){
+        for(const auto el : v){
+            cout << el->getName() << endl;
+            cout << el->getPath() << endl;
+        }
+    }
 }
 
 /*
