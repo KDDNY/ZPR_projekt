@@ -17,8 +17,14 @@ public:
 };
 
 TEST_F(ProfileTests, dir1Test){
-    if(!profile->getDir1()->getFiles().empty()){
-        EXPECT_EQ("test (copy)",profile->getDir1()->getFiles().back()->getName());
+    vector v = profile->getDir1()->getFiles();
+    string myString = "test";
+    auto it = find_if(v.begin(), v.end(), [&myString](const shared_ptr<File>& obj) {return obj->getName() == myString;});
+    if (it != v.end())
+    {
+        EXPECT_EQ(it->get()->getName(),myString);
+        //    cout << "znaleziono: " << it->get()->getName() << endl;
+        //   auto index = std::distance(v.begin(), it);
     } else FAIL();
 }
 

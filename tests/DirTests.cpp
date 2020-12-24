@@ -42,6 +42,7 @@ TEST_F(LocalDirTests, getPathTests){
     } else FAIL();
 }
 
+/*
 TEST_F(LocalDirTests, getDeeperPathTest) {
     vector v = dir->getFiles().back()->getFiles();
     std::string myString = "WeNeedToGoDeeper";
@@ -53,7 +54,9 @@ TEST_F(LocalDirTests, getDeeperPathTest) {
         //   auto index = std::distance(v.begin(), it);
     } else FAIL();
 }
+*/
 
+/*
 TEST_F(LocalDirTests, getDeeperPathTest2) {
     vector v = dir->getFiles().back()->getFiles().back()->getFiles().back()->getFiles();
     std::string myString = "20z_Harmonogram_laboratorium_TWCz.pdf";
@@ -65,19 +68,7 @@ TEST_F(LocalDirTests, getDeeperPathTest2) {
         //   auto index = std::distance(v.begin(), it);
     } else FAIL();
 }
-
-TEST_F(LocalDirTests, TWCzhashGenTest){
-    vector v = dir->getFiles().back()->getFiles().back()->getFiles().back()->getFiles();
-    v.at(2)->genHash();
-    string hash = v.back()->getHash();
-    EXPECT_EQ("99577fc6825a6e791dec315070da55d501d809f7", hash);
-    if(HasFailure()){
-        for(const auto el : v){
-            cout << el->getName() << endl;
-            cout << el->getPath() << endl;
-        }
-    }
-}
+*/
 
 /*
 TEST_F(LocalDirTests, treeTest){
@@ -92,21 +83,15 @@ TEST_F(LocalDirTests, checkIfNotEmpty){
     EXPECT_FALSE(dir->getFiles().empty());
 }
 
-TEST_F(LocalDirTests, checkIfFileExist){
-    if(!dir->getFiles().empty()){
-        EXPECT_EQ("test (copy)",dir->getFiles().back()->getName());
-    } else FAIL();
-}
-
-TEST_F(LocalDirTests, weNeedToGoDeeperTest){
-    if(!dir->getFiles().back()->files_.empty()){
-        EXPECT_EQ("WeNeedToGoDeeper",dir->getFiles().back()->getFiles().back()->getName());
-    } else FAIL();
-}
-
 TEST_F(LocalDirTests, isDirectoryTest){
-    if(!dir->getFiles().back()->files_.empty()){
-        EXPECT_TRUE(dir->getFiles().back()->getFiles().back());
+    vector v = dir->getFiles();
+    string myString = "test";
+    auto it = find_if(v.begin(), v.end(), [&myString](const shared_ptr<File>& obj) {return obj->getName() == myString;});
+    if (it != v.end())
+    {
+        EXPECT_TRUE(it->get()->isDirectory());
+        //    cout << "znaleziono: " << it->get()->getName() << endl;
+        //   auto index = std::distance(v.begin(), it);
     } else FAIL();
 }
 
