@@ -18,6 +18,9 @@ enum WhichDir{
     FIRST, SECOND
 };
 
+enum Action{
+    COPY, REMOVE, SKIP
+};
 class File{
 public:
     File() = default;
@@ -25,9 +28,15 @@ public:
     WhichDir which_dir_;
     std::vector<std::shared_ptr<File>> files_;
 
+    void copy(std::string dest);
+    void remove();
+
+    void genHash();
+
     void setParentDir(WhichDir parentDir);
     void setPath(const std::string &path);
-    void genHash();
+    void setAction(Action action);
+
 
     bool isDirectory() const;
     const std::string &getName() const;
@@ -35,10 +44,12 @@ public:
     const std::string &getPath() const;
     WhichDir getWhichDir() const;
     const std::string &getHash() const;
+    Action getAction() const;
 private:
     std::string name_;
     std::string path_;
     bool directory_;
     std::string hash_;
+    Action action = COPY;
 };
 

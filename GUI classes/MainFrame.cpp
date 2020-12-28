@@ -15,7 +15,7 @@ MainFrame::MainFrame(wxPoint pos, int index)
     profile_->printTree2();
 */
 
-    wxBoxSizer *vbox = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer *vbox = new wxBoxSizer(wxHORIZONTAL);
 
     wxMenuBar *menuBar = new wxMenuBar;
     wxMenu *file = new wxMenu;
@@ -56,15 +56,57 @@ MainFrame::MainFrame(wxPoint pos, int index)
     list_ctrl_->InsertColumn(2, *col2_);
     list_ctrl_->InsertColumn(3, *col3_);
 
-    mainHbox->Add(list_ctrl_,1, wxEXPAND);
+    mainHbox->Add(list_ctrl_, 0, wxEXPAND);
 
-    vbox->Add(mainHbox,1, wxLEFT | wxBOTTOM,15);
+    wxBoxSizer *rightVbox = new wxBoxSizer(wxVERTICAL);
+    wxButton* btn1 = new wxButton(this, 3, wxT("Zmień kierunek"));
+    wxButton* btn2 = new wxButton(this, 4, wxT("Synchronizuj"));
+    wxButton* btn3 = new wxButton(this, 5, wxT("Skanuj"));
+    wxButton* btn4 = new wxButton(this, 6, wxT("Pomiń"));
+    rightVbox->Add(btn1, 0, wxBOTTOM, 15);
+    rightVbox->Add(btn4, 0, wxBOTTOM, 15);
+    rightVbox->Add(btn2, 0, wxBOTTOM, 15);
+    rightVbox->Add(btn3, 0, wxBOTTOM, 15);
+
+
+    vbox->Add(mainHbox,1, wxLEFT | wxBOTTOM | wxTOP | wxEXPAND,15);
+    vbox->Add(rightVbox, 1, wxLEFT | wxBOTTOM | wxTOP | wxEXPAND, 15);
     this->SetSizer(vbox);
 
     Centre();
 
     Connect(1, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MainFrame::changeProfileClicked));
-    Connect(2,wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MainFrame::scanClicked));
+    Connect(2, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MainFrame::scanClicked));
+    Connect(3, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::changeClicked));
+    Connect(4, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::goClicked));
+    Connect(5, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::scanClicked));
+    Connect(6, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::skipClicked));
+}
+
+void MainFrame::skipClicked(wxCommandEvent &event){
+    long lSelectedItem = list_ctrl_->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+    int selection = profile_->getDif().size()-lSelectedItem-1;
+    if(lSelectedItem >= 0) {
+        profile_->getDif().at(selection)->setAction(SKIP);
+    }
+    fillListCtrl();
+}
+
+void MainFrame::changeClicked(wxCommandEvent &event){
+    long lSelectedItem = list_ctrl_->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+    int selection = profile_->getDif().size()-lSelectedItem-1;
+    if(lSelectedItem >= 0) {
+        if(profile_->getDif().at(selection)->getAction() == COPY) {
+            profile_->getDif().at(selection)->setAction(REMOVE);
+        } else {
+            profile_->getDif().at(selection)->setAction(COPY);
+        }
+    }
+    fillListCtrl();
+}
+
+void MainFrame::goClicked(wxCommandEvent &event){
+//    profile_.synchronize();
 }
 
 void MainFrame::changeProfileClicked(wxCommandEvent &event){
@@ -75,16 +117,24 @@ void MainFrame::changeProfileClicked(wxCommandEvent &event){
 }
 
 void MainFrame::scanClicked(wxCommandEvent &event){
-    list_ctrl_->DeleteAllItems();
     profile_->scan();
+    fillListCtrl();
+}
+
+void MainFrame::fillListCtrl() {
+    list_ctrl_->DeleteAllItems();
     for(const auto& el : profile_->getDif()) {
         if (el->which_dir_ == FIRST) {
             long itemIndex = list_ctrl_->InsertItem(0, el->getName());
-            list_ctrl_->SetItem(itemIndex, 1, "     ->");
+            if(el->getAction() == COPY) list_ctrl_->SetItem(itemIndex, 1, "     ->");
+            if(el->getAction() == REMOVE) list_ctrl_->SetItem(itemIndex, 1, "     <-");
+            if(el->getAction() == SKIP) list_ctrl_->SetItem(itemIndex, 1, "     --");
         }
         if (el->which_dir_ == SECOND) {
             long itemIndex = list_ctrl_->InsertItem(0, "");
-            list_ctrl_->SetItem(itemIndex, 1, "     <-");
+            if(el->getAction() == COPY) list_ctrl_->SetItem(itemIndex, 1, "     <-");
+            if(el->getAction() == REMOVE) list_ctrl_->SetItem(itemIndex, 1, "     ->");
+            if(el->getAction() == SKIP) list_ctrl_->SetItem(itemIndex, 1, "     --");
             list_ctrl_->SetItem(itemIndex, 2, el->getName());
         }
     }

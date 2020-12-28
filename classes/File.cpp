@@ -69,3 +69,11 @@ void File::genHash() {
     }
     hash_ = mdString.data();
 }
+
+Action File::getAction() const {
+    return action;
+}
+
+void File::setAction(Action action) {
+    File::action = action;
+}

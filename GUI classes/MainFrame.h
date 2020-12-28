@@ -20,6 +20,10 @@ public:
 private:
     void changeProfileClicked(wxCommandEvent &event);
     void scanClicked(wxCommandEvent &event);
+    void changeClicked(wxCommandEvent &event);
+    void goClicked(wxCommandEvent &event);
+    void skipClicked(wxCommandEvent &event);
+    void fillListCtrl();
     wxListBox* lb1_;
     wxListBox* lb2_;
     wxListBox* lb3_;
