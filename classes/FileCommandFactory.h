@@ -11,17 +11,17 @@ class File;
 class FileCommandFactory {
 public:
     virtual std::shared_ptr<FileCommand> createAction(const File& file) = 0;
-    virtual std::shared_ptr<FileCommand> createCopy() = 0;
-    virtual std::shared_ptr<FileCommand> createRemove() = 0;
-    virtual std::shared_ptr<FileCommand> createSkip() = 0;
+    virtual std::shared_ptr<FileCommand> createCopy(const File& file) = 0;
+    virtual std::shared_ptr<FileCommand> createRemove(const File& file) = 0;
+    virtual std::shared_ptr<FileCommand> createSkip(const File& file) = 0;
 };
 
 class LocalFileCommandFactory : public FileCommandFactory{
 public:
     std::shared_ptr<FileCommand> createAction(const File& file) override;
-    std::shared_ptr<FileCommand> createCopy() override;
-    std::shared_ptr<FileCommand> createRemove() override;
-    std::shared_ptr<FileCommand> createSkip() override;
+    std::shared_ptr<FileCommand> createCopy(const File& file) override;
+    std::shared_ptr<FileCommand> createRemove(const File& file) override;
+    std::shared_ptr<FileCommand> createSkip(const File& file) override;
 };
 
 
