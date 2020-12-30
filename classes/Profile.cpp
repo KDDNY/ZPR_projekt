@@ -84,13 +84,14 @@ int Profile::getIndex(std::vector<std::shared_ptr<File>> vector1, std::shared_pt
     for(int i=0; i<vector1.size(); i++){
         string name = file->getName();
         string name2 = vector1.at(i)->getName();
-        int xd = vector1.size();
         if(vector1.at(i)->getName() == file->getName() && file->isDirectory()){
             return i;
         } else if(vector1.at(i)->getName() == file->getName()){
             vector1.at(i)->genHash();
-            file->getHash();
-            if(file->getHash()==vector1.at(i)->getHash()) return i;
+            file->genHash();
+            string hash1 = vector1.at(i)->getHash();
+            string hash2 = file->getHash();
+            if(hash1 == hash2) return i;
         }
     }
     return -1;

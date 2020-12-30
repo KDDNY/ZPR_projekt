@@ -23,6 +23,7 @@ class File{
 public:
     File() = default;
     File(const std::string &name, bool directory, WhichDir whichDir);
+    File(const std::string &name, bool directory, WhichDir whichDir, std::string home_dir_path);
     WhichDir which_dir_;
     std::vector<std::shared_ptr<File>> files_;
 
@@ -36,6 +37,7 @@ public:
     const std::string &getName() const;
     const std::vector<std::shared_ptr<File>> &getFiles() const;
     const std::string &getPath() const;
+    std::string getRelPath();
     WhichDir getWhichDir() const;
     const std::string &getHash() const;
     Action getAction() const;
@@ -43,6 +45,7 @@ public:
 private:
     std::string name_;
     std::string path_;
+    std::string home_dir_path_;
     bool directory_;
     std::string hash_;
     Action action = COPY;

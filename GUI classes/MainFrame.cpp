@@ -131,6 +131,8 @@ void MainFrame::fillListCtrl() {
             if(el->getAction() == COPY) list_ctrl_->SetItem(itemIndex, 1, "     ->");
             if(el->getAction() == REMOVE) list_ctrl_->SetItem(itemIndex, 1, "     <-");
             if(el->getAction() == SKIP) list_ctrl_->SetItem(itemIndex, 1, "     --");
+            list_ctrl_->SetItem(itemIndex, 2, "");
+            list_ctrl_->SetItem(itemIndex, 3, el->getRelPath());
         }
         if (el->which_dir_ == SECOND) {
             long itemIndex = list_ctrl_->InsertItem(0, "");
@@ -138,6 +140,7 @@ void MainFrame::fillListCtrl() {
             if(el->getAction() == REMOVE) list_ctrl_->SetItem(itemIndex, 1, "     ->");
             if(el->getAction() == SKIP) list_ctrl_->SetItem(itemIndex, 1, "     --");
             list_ctrl_->SetItem(itemIndex, 2, el->getName());
+            list_ctrl_->SetItem(itemIndex, 3, el->getRelPath());
         }
     }
 }

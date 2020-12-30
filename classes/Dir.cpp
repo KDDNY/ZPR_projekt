@@ -67,7 +67,7 @@ void LocalDir::searchTree(const filesystem::path& pathToShow, int level, vector<
             auto filename = entry.path().filename();
             if(filesystem::is_directory(entry.status()))
             {
-                files.push_back(make_shared<File>(filename, true, whichDir));
+                files.push_back(make_shared<File>(filename, true, whichDir, path_));
                 if(prev){
                     files.back()->setPath(prev->getPath() + "/" + prev->getName());
                     files.back()->setCreator(make_shared<LocalFileCommandFactory>());
@@ -77,7 +77,7 @@ void LocalDir::searchTree(const filesystem::path& pathToShow, int level, vector<
                 }
                 searchTree(entry, level + 1, files.back()->files_, whichDir, files.back());
             }   else {
-                files.push_back(make_shared<File>(filename, false, whichDir));
+                files.push_back(make_shared<File>(filename, false, whichDir, path_));
                 if(prev){
                     files.back()->setPath(prev->getPath() + "/" + prev->getName());
                     files.back()->setCreator(make_shared<LocalFileCommandFactory>());

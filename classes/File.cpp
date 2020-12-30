@@ -12,8 +12,13 @@ const std::string &File::getName() const {
 
 File::File(const std::string &name, bool directory, WhichDir whichDir)
 : name_(name) , directory_(directory), which_dir_(whichDir){
-   // setCreator(make_shared<LocalFileCommandFactory>());
+
 }
+
+File::File(const string &name, bool directory, WhichDir whichDir, std::string home_dir_path)
+: name_(name) , directory_(directory), which_dir_(whichDir) , home_dir_path_(home_dir_path) {
+}
+
 
 const std::vector<std::shared_ptr<File>> &File::getFiles() const {
     return files_;
@@ -89,3 +94,9 @@ void File::setCreator(shared_ptr<LocalFileCommandFactory> creator) {
 std::shared_ptr<FileCommand> File::generateCommand() {
     return creator_->createAction(*this);
 }
+
+string File::getRelPath(){
+    string out = path_.substr(home_dir_path_.length(), path_.length());
+    return out;
+}
+
