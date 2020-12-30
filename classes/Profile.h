@@ -8,11 +8,13 @@
 
 
 #include "Dir.h"
+#include "Scanner.h"
 
 class Profile {
 public:
     Profile(Dir* directory1, Dir* directory2, std::string name);
     void scan();
+    void synchronize();
     void addDirectories(std::string path1, std::string path2,Choice flag1, Choice flag2);
     void summary();
     void printTree1();
@@ -32,7 +34,6 @@ private:
     Dir* dir1_;
     Dir* dir2_;
     void lookForDifference(std::vector<std::shared_ptr<File>> vector1, std::vector<std::shared_ptr<File>> vector2);
-
 };
 
 

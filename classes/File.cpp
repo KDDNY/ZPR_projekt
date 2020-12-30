@@ -4,12 +4,16 @@
 
 #include "File.h"
 
+using namespace std;
+
 const std::string &File::getName() const {
     return name_;
 }
 
 File::File(const std::string &name, bool directory, WhichDir whichDir)
-: name_(name) , directory_(directory), which_dir_(whichDir){}
+: name_(name) , directory_(directory), which_dir_(whichDir){
+   // setCreator(make_shared<LocalFileCommandFactory>());
+}
 
 const std::vector<std::shared_ptr<File>> &File::getFiles() const {
     return files_;
@@ -37,6 +41,14 @@ WhichDir File::getWhichDir() const {
 
 const std::string &File::getHash() const {
     return hash_;
+}
+
+Action File::getAction() const {
+    return action;
+}
+
+void File::setAction(Action action) {
+    File::action = action;
 }
 
 void File::genHash() {
@@ -70,10 +82,10 @@ void File::genHash() {
     hash_ = mdString.data();
 }
 
-Action File::getAction() const {
-    return action;
+void File::setCreator(shared_ptr<LocalFileCommandFactory> creator) {
+    creator_ = creator;
 }
 
-void File::setAction(Action action) {
-    File::action = action;
+std::shared_ptr<FileCommand> File::generateCommand() {
+    return creator_->createAction(*this);
 }

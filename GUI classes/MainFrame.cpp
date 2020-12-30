@@ -106,7 +106,7 @@ void MainFrame::changeClicked(wxCommandEvent &event){
 }
 
 void MainFrame::goClicked(wxCommandEvent &event){
-//    profile_.synchronize();
+    profile_->synchronize();
 }
 
 void MainFrame::changeProfileClicked(wxCommandEvent &event){
@@ -120,6 +120,8 @@ void MainFrame::scanClicked(wxCommandEvent &event){
     profile_->scan();
     fillListCtrl();
 }
+
+
 
 void MainFrame::fillListCtrl() {
     list_ctrl_->DeleteAllItems();

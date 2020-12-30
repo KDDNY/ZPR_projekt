@@ -114,4 +114,8 @@ Dir *Profile::getDir2() const {
     return dir2_;
 }
 
+void Profile::synchronize() {
+    Scanner::synchronize(differences_);
+}
+
 

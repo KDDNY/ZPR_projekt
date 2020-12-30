@@ -31,5 +31,10 @@ add_executable(main main.cpp
         "GUI classes/MainFrame.cpp"
         "GUI classes/MainFrame.h"
         "GUI classes/ProfileDialog.cpp"
-        "GUI classes/ProfileDialog.h" classes/Application.cpp classes/File.cpp classes/File.h)
+        "GUI classes/ProfileDialog.h"
+        classes/Application.cpp
+        classes/File.cpp
+        classes/File.h
+        classes/Scanner.cpp
+        classes/Scanner.h classes/FileCommandFactory.cpp classes/FileCommandFactory.h classes/FileCommand.cpp classes/FileCommand.h)
 target_link_libraries(main ${wxWidgets_LIBRARIES} ssh OpenSSL::Crypto)

@@ -3,7 +3,6 @@
 //
 
 #include "Dir.h"
-
 #include <utility>
 #include "Command.cpp"
 
@@ -71,13 +70,21 @@ void LocalDir::searchTree(const filesystem::path& pathToShow, int level, vector<
                 files.push_back(make_shared<File>(filename, true, whichDir));
                 if(prev){
                     files.back()->setPath(prev->getPath() + "/" + prev->getName());
-                } else files.back()->setPath(this->path_);
+                    files.back()->setCreator(make_shared<LocalFileCommandFactory>());
+                } else {
+                    files.back()->setPath(this->path_);
+                    files.back()->setCreator(make_shared<LocalFileCommandFactory>());
+                }
                 searchTree(entry, level + 1, files.back()->files_, whichDir, files.back());
             }   else {
                 files.push_back(make_shared<File>(filename, false, whichDir));
                 if(prev){
                     files.back()->setPath(prev->getPath() + "/" + prev->getName());
-                } else files.back()->setPath(this->path_);
+                    files.back()->setCreator(make_shared<LocalFileCommandFactory>());
+                } else {
+                    files.back()->setPath(this->path_);
+                    files.back()->setCreator(make_shared<LocalFileCommandFactory>());
+                }
             }
         }
     }
