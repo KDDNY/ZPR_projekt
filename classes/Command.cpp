@@ -3,6 +3,7 @@
 //
 
 #include "Command.h"
+#include "File.h"
 
 class LocalAdd : public Command{
 public:

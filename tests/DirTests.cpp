@@ -17,6 +17,59 @@ public:
     }
 };
 
+TEST_F(LocalDirTests, searchTest) {
+    vector v = dir->getFiles();
+    std::string myString = "tekst.txt";
+    auto it = find_if(v.begin(), v.end(), [&myString](const shared_ptr<File>& obj) {return obj->getName() == myString;});
+    if (it != v.end())
+    {
+        EXPECT_EQ(it->get()->getName(),myString);
+    //    cout << "znaleziono: " << it->get()->getName() << endl;
+     //   auto index = std::distance(v.begin(), it);
+    } else FAIL();
+}
+
+TEST_F(LocalDirTests, getPathTests){
+    vector v = dir->getFiles();
+    std::string myString = "tekst.txt";
+    std::string path = "/home/kddny/Desktop/ZPR/ZPR_projekt/tests/cmake-build-debug/dut";
+    auto it = find_if(v.begin(), v.end(), [&myString](const shared_ptr<File>& obj) {return obj->getName() == myString;});
+    if (it != v.end())
+    {
+        EXPECT_EQ(it->get()->getPath()+"/"+it->get()->getName(),path + "/tekst.txt");
+        //    cout << "znaleziono: " << it->get()->getName() << endl;
+        //   auto index = std::distance(v.begin(), it);
+    } else FAIL();
+}
+
+/*
+TEST_F(LocalDirTests, getDeeperPathTest) {
+    vector v = dir->getFiles().back()->getFiles();
+    std::string myString = "WeNeedToGoDeeper";
+    std::string path = "/home/kddny/Desktop/ZPR/ZPR_projekt/tests/cmake-build-debug/dut/test (copy)";
+    auto it = find_if(v.begin(), v.end(),[&myString](const shared_ptr<File> &obj) { return obj->getName() == myString; });
+    if (it != v.end()) {
+        EXPECT_EQ(it->get()->getPath() + "/" + it->get()->getName(), path + "/" + myString);
+        //    cout << "znaleziono: " << it->get()->getName() << endl;
+        //   auto index = std::distance(v.begin(), it);
+    } else FAIL();
+}
+*/
+
+/*
+TEST_F(LocalDirTests, getDeeperPathTest2) {
+    vector v = dir->getFiles().back()->getFiles().back()->getFiles().back()->getFiles();
+    std::string myString = "20z_Harmonogram_laboratorium_TWCz.pdf";
+    std::string path = "/home/kddny/Desktop/ZPR/ZPR_projekt/tests/cmake-build-debug/dut/test (copy)/WeNeedToGoDeeper/muchDeeper";
+    auto it = find_if(v.begin(), v.end(),[&myString](const shared_ptr<File> &obj) { return obj->getName() == myString; });
+    if (it != v.end()) {
+        EXPECT_EQ(it->get()->getPath() + "/" + it->get()->getName(), path + "/" + myString);
+        //    cout << "znaleziono: " << it->get()->getName() << endl;
+        //   auto index = std::distance(v.begin(), it);
+    } else FAIL();
+}
+*/
+
 /*
 TEST_F(LocalDirTests, treeTest){
     testing::internal::CaptureStdout();
@@ -30,21 +83,15 @@ TEST_F(LocalDirTests, checkIfNotEmpty){
     EXPECT_FALSE(dir->getFiles().empty());
 }
 
-TEST_F(LocalDirTests, checkIfFileExist){
-    if(!dir->getFiles().empty()){
-        EXPECT_EQ("test (copy)",dir->getFiles().back()->getName());
-    } else FAIL();
-}
-
-TEST_F(LocalDirTests, weNeedToGoDeeperTest){
-    if(!dir->getFiles().back()->files_.empty()){
-        EXPECT_EQ("WeNeedToGoDeeper",dir->getFiles().back()->getFiles().back()->getName());
-    } else FAIL();
-}
-
 TEST_F(LocalDirTests, isDirectoryTest){
-    if(!dir->getFiles().back()->files_.empty()){
-        EXPECT_TRUE(dir->getFiles().back()->getFiles().back());
+    vector v = dir->getFiles();
+    string myString = "test";
+    auto it = find_if(v.begin(), v.end(), [&myString](const shared_ptr<File>& obj) {return obj->getName() == myString;});
+    if (it != v.end())
+    {
+        EXPECT_TRUE(it->get()->isDirectory());
+        //    cout << "znaleziono: " << it->get()->getName() << endl;
+        //   auto index = std::distance(v.begin(), it);
     } else FAIL();
 }
 

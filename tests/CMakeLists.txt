@@ -13,7 +13,7 @@ if (NOT TARGET ssh)
             ​          IMPORTED_LOCATION "${LIBSSH_LIBRARIES}"
             INTERFACE_INCLUDE_DIRECTORIES "${LIBSSH_INCLUDE_DIR}")
 endif()
-
+find_package(OpenSSL REQUIRED)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -29,6 +29,12 @@ add_executable(tests main.cpp
         ../classes/Visitor.h
         ../classes/File.cpp
         ../classes/File.h
+        ../classes/Scanner.h
+        ../classes/Scanner.cpp
+        ../classes/FileCommandFactory.h
+        ../classes/FileCommandFactory.cpp
+        ../classes/FileCommand.h
+        ../classes/FileCommand.cpp
         "../GUI classes/StartFrame.cpp"
         "../GUI classes/StartFrame.h"
         "../GUI classes/MainFrame.cpp"
@@ -39,4 +45,4 @@ add_executable(tests main.cpp
         ProfileTests.cpp
         DirTests.cpp
         )
-target_link_libraries(tests ${wxWidgets_LIBRARIES} ${GTEST_LIBRARIES} pthread ssh)
+target_link_libraries(tests ${wxWidgets_LIBRARIES} ${GTEST_LIBRARIES} pthread ssh OpenSSL::Crypto)

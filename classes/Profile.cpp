@@ -59,6 +59,9 @@ const vector<shared_ptr<File>> &Profile::getDif() const{
 }
 
 void Profile::scan() {
+    dir1_->search(FIRST);
+    dir2_->search(SECOND);
+    differences_.clear();
     lookForDifference(dir1_->getFiles(),dir2_->getFiles());
     lookForDifference(dir2_->getFiles(),dir1_->getFiles());
 }
@@ -71,19 +74,24 @@ void Profile::lookForDifference(std::vector<std::shared_ptr<File>> vector1, std:
             lookForDifference(el->getFiles(), vector2.at(index)->getFiles());
         } else if (index==-1){
             string name = el->getName();
- //           differences.emplace_back(el->getName() + " in dir" + to_string(el->parent_dir_));
             differences_.emplace_back(el);
         }
     }
 }
 
+//pewnie da sie zrobic lepiej
 int Profile::getIndex(std::vector<std::shared_ptr<File>> vector1, std::shared_ptr<File> file) {
     for(int i=0; i<vector1.size(); i++){
         string name = file->getName();
         string name2 = vector1.at(i)->getName();
-        int xd = vector1.size();
-        if(vector1.at(i)->getName() ==file->getName()){
+        if(vector1.at(i)->getName() == file->getName() && file->isDirectory()){
             return i;
+        } else if(vector1.at(i)->getName() == file->getName()){
+            vector1.at(i)->genHash();
+            file->genHash();
+            string hash1 = vector1.at(i)->getHash();
+            string hash2 = file->getHash();
+            if(hash1 == hash2) return i;
         }
     }
     return -1;
@@ -105,6 +113,10 @@ Dir *Profile::getDir1() const {
 
 Dir *Profile::getDir2() const {
     return dir2_;
+}
+
+void Profile::synchronize() {
+    Scanner::synchronize(differences_);
 }
 
 

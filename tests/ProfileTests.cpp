@@ -17,8 +17,14 @@ public:
 };
 
 TEST_F(ProfileTests, dir1Test){
-    if(!profile->getDir1()->getFiles().empty()){
-        EXPECT_EQ("test (copy)",profile->getDir1()->getFiles().back()->getName());
+    vector v = profile->getDir1()->getFiles();
+    string myString = "test";
+    auto it = find_if(v.begin(), v.end(), [&myString](const shared_ptr<File>& obj) {return obj->getName() == myString;});
+    if (it != v.end())
+    {
+        EXPECT_EQ(it->get()->getName(),myString);
+        //    cout << "znaleziono: " << it->get()->getName() << endl;
+        //   auto index = std::distance(v.begin(), it);
     } else FAIL();
 }
 
@@ -61,12 +67,21 @@ TEST_F(ProfileTests, betterscanTest1){
     } else FAIL();
 }
 
+/*
 TEST_F(ProfileTests, betterscanTest2){
     profile->scan();
+
+    EXPECT_EQ(profile->getDif().size(),7);
+    if(HasFailure()){
     for(const auto& diff : profile->getDif()){
-        cout << diff->getName() << " in dir" <<diff->parent_dir_ <<endl;
-    }
-    EXPECT_EQ(profile->getDif().size(),6);
+        cout << diff->getName() << " in dir" <<diff->which_dir_ <<endl;
+    }}
+}
+*/
+
+TEST_F(ProfileTests, hashCompareTest){
+    profile->scan();
+
 }
 
 TEST_F(ProfileTests, addTest){

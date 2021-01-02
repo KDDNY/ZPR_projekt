@@ -20,11 +20,17 @@ class MainpApp : public wxApp{
 //        dir->assignFactory(make_shared<LocalFactory>());
 //        dir->addFile();
 
+
         //wxPoint pos;
         //start_frame_ = new StartFrame(pos);
         //start_frame_->Show(true);
 
         //TEST RJT
+
+     /*   wxPoint pos;
+        start_frame_ = new StartFrame(pos);
+        start_frame_->Show(true);*/
+
         Dir* dir = new SshDir();
         dir->assignPath("/home/mion/s/250/rtrybus");
         dir->printTree();
@@ -32,7 +38,7 @@ class MainpApp : public wxApp{
 
         return true;
     }
-    //StartFrame* start_frame_;
+    StartFrame* start_frame_;
 };
 
 wxIMPLEMENT_APP(MainpApp);
