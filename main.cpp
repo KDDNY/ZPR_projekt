@@ -20,16 +20,16 @@ class MainpApp : public wxApp{
 //        dir->assignFactory(make_shared<LocalFactory>());
 //        dir->addFile();
 
-        //wxPoint pos;
-        //start_frame_ = new StartFrame(pos);
-        //start_frame_->Show(true);
+     /*   wxPoint pos;
+        start_frame_ = new StartFrame(pos);
+        start_frame_->Show(true);*/
         Dir* dir = new SshDir();
         dir->assignPath("/home/mion/s/250/rtrybus");
         dir->printTree();
 
         return true;
     }
-    //StartFrame* start_frame_;
+    StartFrame* start_frame_;
 };
 
 wxIMPLEMENT_APP(MainpApp);

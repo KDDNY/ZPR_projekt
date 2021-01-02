@@ -29,6 +29,12 @@ add_executable(tests main.cpp
         ../classes/Visitor.h
         ../classes/File.cpp
         ../classes/File.h
+        ../classes/Scanner.h
+        ../classes/Scanner.cpp
+        ../classes/FileCommandFactory.h
+        ../classes/FileCommandFactory.cpp
+        ../classes/FileCommand.h
+        ../classes/FileCommand.cpp
         "../GUI classes/StartFrame.cpp"
         "../GUI classes/StartFrame.h"
         "../GUI classes/MainFrame.cpp"
