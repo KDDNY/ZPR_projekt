@@ -204,7 +204,9 @@ int SshDir::verify_knownhosts(ssh_session session){
 
 
 void SshDir::buildTree(ssh_session session, sftp_session sftp,string rootDir) {
-    sftp_list_dir(session,sftp,rootDir);
+    
+    sftp_list_dir(session,sftp,rootDir,files_);
+
 
 }
 
@@ -237,11 +239,12 @@ void SshDir::listVector(std::vector<std::shared_ptr<File>> files){
         cout << endl << element->getName();
 
 
+
     }
 
 }
 
-int SshDir::sftp_list_dir(ssh_session session, sftp_session sftp, string rootDir)
+int SshDir::sftp_list_dir(ssh_session session, sftp_session sftp, string rootDir,vector<shared_ptr<File>> &files)
 {
     sftp_dir dir;
     sftp_attributes attributes;
@@ -281,18 +284,17 @@ int SshDir::sftp_list_dir(ssh_session session, sftp_session sftp, string rootDir
             cout << name << " <- ok";
             if(checkIfDir(session,sftp,rootDir+"/"+attributes->name)){
                 cout <<"| DIR";
-                File *f = new File(attributes->name,true, FIRST);
-                files_.push_back(static_cast<const shared_ptr<File>>(f));
-                sftp_list_dir(session,sftp,rootDir+"/"+attributes->name);
-                //listVector(f->files_);
+                files.push_back(make_shared<File>(attributes->name,true, FIRST));
+                sftp_list_dir(session,sftp,rootDir+"/"+attributes->name,files.back()->files_);
+                //listVector(files_);
 
 
             }
             else{
                 cout << "| FILE";
-                File *f = new File(attributes->name,false,FIRST);
-                f->files_.push_back(static_cast<const shared_ptr<File>>(f));
-                listVector(f->files_);
+                files.push_back(make_shared<File>(attributes->name, false, FIRST));
+
+                //listVector(files_);
 
             }
 
@@ -325,6 +327,23 @@ int SshDir::sftp_list_dir(ssh_session session, sftp_session sftp, string rootDir
                 ssh_get_error(session));
         return rc;
     }
+}
+
+void SshDir::printDir() {
+
+    cout << endl << "xxxxxx " << endl;
+    for(const auto& element: files_){
+
+        if(element->isDirectory()){
+            cout << "*";
+        }
+        cout << element->getName()<<endl ;
+
+
+
+    }
+
+
 }
 
 void SshDir::printTree(){
@@ -383,7 +402,10 @@ void SshDir::printTree(){
     //scp_receive(my_ssh_session);
     cout << endl;
     buildTree(my_ssh_session,sftp,"/home/mion/s/250/rtrybus");
-    listVector(files_);
+    //listVector(files_);
+
+    printDir();
+
 
 
 
