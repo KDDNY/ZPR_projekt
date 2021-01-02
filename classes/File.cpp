@@ -19,7 +19,6 @@ File::File(const string &name, bool directory, WhichDir whichDir, std::string ho
 : name_(name) , directory_(directory), which_dir_(whichDir) , home_dir_path_(home_dir_path) {
 }
 
-
 const std::vector<std::shared_ptr<File>> &File::getFiles() const {
     return files_;
 }
