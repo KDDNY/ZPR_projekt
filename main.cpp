@@ -23,9 +23,12 @@ class MainpApp : public wxApp{
         //wxPoint pos;
         //start_frame_ = new StartFrame(pos);
         //start_frame_->Show(true);
+
+        //TEST RJT
         Dir* dir = new SshDir();
         dir->assignPath("/home/mion/s/250/rtrybus");
         dir->printTree();
+        //ENDOF TEST RJT
 
         return true;
     }

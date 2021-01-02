@@ -17,12 +17,13 @@ add_executable(main main.cpp
         classes/Profile.cpp
         classes/Profile.h
         classes/Visitor.h
+        classes/SshConnector.h
         "GUI classes/StartFrame.cpp"
         "GUI classes/StartFrame.h"
         "GUI classes/MainFrame.cpp"
         "GUI classes/MainFrame.h"
         "GUI classes/ProfileDialog.cpp"
-        "GUI classes/ProfileDialog.h" classes/Application.cpp classes/File.cpp classes/File.h)
+        "GUI classes/ProfileDialog.h" classes/Application.cpp classes/File.cpp classes/File.h classes/SshConnector.cpp classes/SshConnector.h)
 target_link_libraries(main ${wxWidgets_LIBRARIES})
 
 find_package(libssh REQUIRED)
