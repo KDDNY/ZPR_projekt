@@ -35,6 +35,8 @@ add_executable(tests main.cpp
         ../classes/FileCommandFactory.cpp
         ../classes/FileCommand.h
         ../classes/FileCommand.cpp
+        ../classes/SshConnector.cpp
+        ../classes/SshConnector.h
         "../GUI classes/StartFrame.cpp"
         "../GUI classes/StartFrame.h"
         "../GUI classes/MainFrame.cpp"

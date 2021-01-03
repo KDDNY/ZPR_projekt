@@ -4,9 +4,6 @@
 
 #ifndef UNTITLED1_PROFILE_H
 #define UNTITLED1_PROFILE_H
-
-
-
 #include "Dir.h"
 #include "Scanner.h"
 
@@ -21,14 +18,13 @@ public:
     void printTree2();
     ~Profile(){delete dir1_; delete dir2_;}
     std::string getName();
- //   const vector<std::string> &getDifferences() const;
     const vector<std::shared_ptr<File>> &getDif() const;
     Dir *getDir1() const;
     Dir *getDir2() const;
     bool findInVector(std::vector<std::shared_ptr<File>> vector1, std::shared_ptr<File> file);
     int getIndex(std::vector<std::shared_ptr<File>> vector1, std::shared_ptr<File> file);
+
 private:
-//    std::vector<std::string> differences;
     std::vector<std::shared_ptr<File>> differences_;
     std::string name_;
     Dir* dir1_;

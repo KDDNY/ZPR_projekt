@@ -26,7 +26,6 @@ Dir *Dir::make_dir(Choice flag)
 
 void Dir::assignPath(string path){
     path_ = path;
-
 }
 
 void Dir::assignFactory(std::shared_ptr<AbstractFactory> factory) {
@@ -52,7 +51,27 @@ const vector<std::shared_ptr<File>> &Dir::getFiles() const {
     return files_;
 }
 
+const shared_ptr<Profile> &Dir::getProfile() const {
+    return profile_;
+}
+
+void Dir::setProfile(const shared_ptr<Profile> &profile) {
+    profile_ = profile;
+}
+
+void Dir::setChoice(Choice choice) {
+    choice_ = choice;
+}
+
+const string &Dir::getPath() const {
+    return path_;
+}
+
 /*LocalDir implementations starts here*/
+LocalDir::LocalDir() {
+    setChoice(LOCAL);
+}
+
 void LocalDir::search(WhichDir whichDir) {
     files_.clear();
     std::filesystem::path pathToShow(path_);
@@ -71,9 +90,11 @@ void LocalDir::searchTree(const filesystem::path& pathToShow, int level, vector<
                 if(prev){
                     files.back()->setPath(prev->getPath() + "/" + prev->getName());
                     files.back()->setCreator(make_shared<LocalFileCommandFactory>());
+                    files.back()->setDir(this);
                 } else {
                     files.back()->setPath(this->path_);
                     files.back()->setCreator(make_shared<LocalFileCommandFactory>());
+                    files.back()->setDir(this);
                 }
                 searchTree(entry, level + 1, files.back()->files_, whichDir, files.back());
             }   else {
@@ -81,9 +102,11 @@ void LocalDir::searchTree(const filesystem::path& pathToShow, int level, vector<
                 if(prev){
                     files.back()->setPath(prev->getPath() + "/" + prev->getName());
                     files.back()->setCreator(make_shared<LocalFileCommandFactory>());
+                    files.back()->setDir(this);
                 } else {
                     files.back()->setPath(this->path_);
                     files.back()->setCreator(make_shared<LocalFileCommandFactory>());
+                    files.back()->setDir(this);
                 }
             }
         }

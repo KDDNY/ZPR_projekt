@@ -6,15 +6,14 @@
 #include "Profile.h"
 #include <vector>
 
-
-
-
-
 void Profile::addDirectories(std::string path1, std::string path2,Choice flag1, Choice flag2){
     dir1_ = Dir::make_dir(flag1);
+    cout << "addDricreroies bug" << endl;
+//    dir1_->setProfile(shared_ptr<Profile>(this));
     dir1_->assignPath(path1);
     dir1_->search(FIRST);
     dir2_ = Dir::make_dir(flag2);
+//    dir2_->setProfile(shared_ptr<Profile>(this));
     dir2_->assignPath(path2);
     dir2_->search(SECOND);
 }

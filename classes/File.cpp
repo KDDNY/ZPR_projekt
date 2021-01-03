@@ -4,6 +4,7 @@
 
 #include <array>
 #include "File.h"
+#include "Dir.h"
 
 using namespace std;
 
@@ -26,10 +27,6 @@ const std::vector<std::shared_ptr<File>> &File::getFiles() const {
 
 bool File::isDirectory() const {
     return directory_;
-}
-
-void File::setParentDir(WhichDir parentDir) {
-    which_dir_ = parentDir;
 }
 
 const std::string &File::getPath() const {
@@ -100,3 +97,10 @@ string File::getRelPath(){
     return out;
 }
 
+Dir* File::getDir() const{
+    return dir_;
+}
+
+void File::setDir(Dir* dir) {
+    dir_ = dir;
+}

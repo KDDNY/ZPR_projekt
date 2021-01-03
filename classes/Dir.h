@@ -18,6 +18,8 @@
 
 using namespace std;
 
+class Profile;
+
 enum Choice{
     LOCAL, SSH
 };
@@ -36,17 +38,26 @@ public:
     static Dir *make_dir(Choice flag);
     virtual void printTree() = 0;
     virtual void search(WhichDir parentDir) = 0;
-protected:
-public:
+    static Choice getFlag();
     const vector<std::shared_ptr<File>> &getFiles() const;
+    const shared_ptr<Profile> &getProfile() const;
+    void setProfile(const shared_ptr<Profile> &profile);
+    void setChoice(Choice choice);
+
+    const string &getPath() const;
+
+public:
 protected:
     string path_;
     std::shared_ptr<AbstractFactory> creator_;
     std::vector<std::shared_ptr<File>> files_;
+    std::shared_ptr<Profile> profile_;
+    Choice choice_;
 };
 
 class LocalDir : public Dir{
 public:
+    LocalDir();
     void printInfo() override;
     void printTree() override;
     void DisplayFileInfo(const filesystem::directory_entry & entry, string & lead, filesystem::path& file_name);
