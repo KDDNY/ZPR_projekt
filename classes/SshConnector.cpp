@@ -2,10 +2,78 @@
 // Created by Rafał Jan Trybus on 22/12/2020.
 //
 
-#include <iostream>
-#include <memory.h>
+
 #include "SshConnector.h"
 
+
+using namespace std;
+
+sftp_session SshConnector::fetchFiles() {
+
+    cout << "--> WILL PRINT SSH DIR TREE" << endl;
+
+
+    int rc;
+
+
+
+
+    // Open session and set options
+
+    if (this->my_ssh_session == NULL)
+        exit(-1);
+    ssh_options_set(this->my_ssh_session, SSH_OPTIONS_HOST, (this->_serverName).c_str());
+
+    // Connect to server
+    rc = ssh_connect(this->my_ssh_session);
+    if (rc != SSH_OK)
+    {
+        fprintf(stderr, "Error connecting to localhost: %s\n",
+                ssh_get_error(this->my_ssh_session));
+        ssh_free(this->my_ssh_session);
+        exit(-1);
+    }
+
+    // Verify the server's identity
+    // For the source code of verify_knowhost(), check previous example
+    if (this->verify_knownhosts(this->my_ssh_session) < 0)
+    {
+        ssh_disconnect(this->my_ssh_session);
+        ssh_free(this->my_ssh_session);
+        exit(-1);
+    }
+
+    // Authenticate ourselves
+    //password = getpass("Password: ");
+    //password = "mJzr7Ty";
+    rc = ssh_userauth_password(this->my_ssh_session, NULL, (this->_password).c_str());
+    if (rc != SSH_AUTH_SUCCESS)
+    {
+        fprintf(stderr, "Error authenticating with password: %s\n",
+                ssh_get_error(this->my_ssh_session));
+        ssh_disconnect(this->my_ssh_session);
+        ssh_free(this->my_ssh_session);
+        exit(-1);
+    }else{
+        printf("connected to SSH - ok");
+
+    }
+
+
+
+    sftp_session sftp;
+    sftp = sftp_new(this->my_ssh_session);
+    //scp_receive(my_ssh_session);
+    cout << endl;
+
+
+
+
+
+
+
+    return sftp;
+}
 int SshConnector::verify_knownhosts(ssh_session session){
     int state, hlen;
     unsigned char *hash = NULL;
@@ -76,4 +144,112 @@ int SshConnector::verify_knownhosts(ssh_session session){
     free(hash);
     return 0;
 
+}
+
+int SshConnector::checkIfDir(ssh_session session, sftp_session sftp, string path){
+    sftp_dir dir;
+    sftp_attributes attributes;
+    int rc;
+    int n = path.length();
+    char dirPath[n + 1];
+    strcpy(dirPath, path.c_str());
+
+
+    dir = sftp_opendir(sftp, dirPath);
+    if (!dir)
+    {
+        //cout << path + "<--- FILE";
+        return 0;
+
+    }
+    else{
+       // cout << path + "<--- DIR";
+        return 1;
+    }
+
+}
+
+int SshConnector::sftp_list_dir(ssh_session session, sftp_session sftp, string rootDir,vector<shared_ptr<File>> &files)
+{
+    sftp_dir dir;
+    sftp_attributes attributes;
+    int rc;
+    int n = rootDir.length();
+    char dirPath[n + 1];
+    strcpy(dirPath, rootDir.c_str());
+
+
+
+    dir = sftp_opendir(sftp, dirPath);
+    if (!dir)
+    {
+        fprintf(stderr, "Directory not opened: %s\n",
+                ssh_get_error(session));
+        return SSH_ERROR;
+    }
+
+   // printf("Name                       Size Perms    Owner\tGroup\n");
+
+
+    while ((attributes = sftp_readdir(sftp, dir)) != NULL)
+    {
+
+        /*printf("%-20s %10llu %.8o %s(%d)\t%s(%d)\n",
+               attributes->name,
+               (long long unsigned int) attributes->size,
+               attributes->permissions,
+               attributes->owner,
+               attributes->uid,
+               attributes->group,
+               attributes->gid);*/
+        //printf("\n");
+
+        string name = rootDir+"/"+attributes->name;
+        if(name.back() != '.'){
+            //cout << name << " <- ok";
+            if(checkIfDir(session,sftp,rootDir+"/"+attributes->name)){
+                //cout <<"| DIR";
+                files.push_back(make_shared<File>(attributes->name,true, FIRST));
+                sftp_list_dir(session,sftp,rootDir+"/"+attributes->name,files.back()->files_);
+                //listVector(files_);
+
+
+            }
+            else{
+                //cout << "| FILE";
+                files.push_back(make_shared<File>(attributes->name, false, FIRST));
+
+                //listVector(files_);
+
+            }
+
+        }else {
+            //cout << name << " <- bad";
+
+
+        }
+
+
+        sftp_attributes_free(attributes);
+
+    }
+
+
+
+
+    if (!sftp_dir_eof(dir))
+    {
+        fprintf(stderr, "Can't list directory: %s\n",
+                ssh_get_error(session));
+        sftp_closedir(dir);
+        return SSH_ERROR;
+    }
+
+    rc = sftp_closedir(dir);
+    if (rc != SSH_OK)
+    {
+        fprintf(stderr, "Can't close directory: %s\n",
+                ssh_get_error(session));
+        return rc;
+    }
 }

@@ -33,7 +33,9 @@ class MainpApp : public wxApp{
 
         Dir* dir = new SshDir();
         dir->assignPath("/home/mion/s/250/rtrybus");
-        dir->printTree();
+        dir->search(FIRST);
+        dir->printInfo();
+        //tutaj//dir->printDir();
         //ENDOF TEST RJT
 
         return true;

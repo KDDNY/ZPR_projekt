@@ -116,7 +116,7 @@ void LocalDir::DisplayDirTree(const filesystem::path& pathToShow, int level){
 }
 
 void LocalDir::printInfo(){
-    std::cout << "#LOCAL DIR PATH: " << path_ <<std::endl;
+
 }
 
 void LocalDir::printTree(){
@@ -127,41 +127,31 @@ void LocalDir::printTree(){
 
 /*SshDir implementations starts here*/
 void SshDir::printInfo(){
-    std::cout << "#SSH DIR PATH: " << path_ <<std::endl;
-}
+    std::cout << "#SSH DIR ROOT: " << path_ <<std::endl;
+    cout << endl;
+    for(const auto& element: files_){
+
+        if(element->isDirectory()){
+            cout << "*";
+        }
+        cout << element->getName()<<endl ;
 
 
-
-
-void SshDir::buildTree(ssh_session session, sftp_session sftp,string rootDir) {
-
-    sftp_list_dir(session,sftp,rootDir,files_);
-
-
-}
-
-int SshDir::checkIfDir(ssh_session session, sftp_session sftp, string path){
-    sftp_dir dir;
-    sftp_attributes attributes;
-    int rc;
-    int n = path.length();
-    char dirPath[n + 1];
-    strcpy(dirPath, path.c_str());
-
-
-    dir = sftp_opendir(sftp, dirPath);
-    if (!dir)
-    {
-        cout << path + "<--- FILE";
-        return 0;
 
     }
-    else{
-        cout << path + "<--- DIR";
-        return 1;
-    }
+}
+
+
+
+
+void SshDir::searchTree(SshConnector* s) {
+
+    s->sftp_list_dir(s->my_ssh_session,s->fetchFiles(),s->_sshFilePath,files_);
+
 
 }
+
+
 
 void SshDir::listVector(std::vector<std::shared_ptr<File>> files){
     cout << endl << "VECTOR ROOT: " << endl;
@@ -174,175 +164,20 @@ void SshDir::listVector(std::vector<std::shared_ptr<File>> files){
 
 }
 
-int SshDir::sftp_list_dir(ssh_session session, sftp_session sftp, string rootDir,vector<shared_ptr<File>> &files)
-{
-    sftp_dir dir;
-    sftp_attributes attributes;
-    int rc;
-    int n = rootDir.length();
-    char dirPath[n + 1];
-    strcpy(dirPath, rootDir.c_str());
 
-
-
-    dir = sftp_opendir(sftp, dirPath);
-    if (!dir)
-    {
-        fprintf(stderr, "Directory not opened: %s\n",
-                ssh_get_error(session));
-        return SSH_ERROR;
-    }
-
-    printf("Name                       Size Perms    Owner\tGroup\n");
-
-
-    while ((attributes = sftp_readdir(sftp, dir)) != NULL)
-    {
-
-        /*printf("%-20s %10llu %.8o %s(%d)\t%s(%d)\n",
-               attributes->name,
-               (long long unsigned int) attributes->size,
-               attributes->permissions,
-               attributes->owner,
-               attributes->uid,
-               attributes->group,
-               attributes->gid);*/
-        printf("\n");
-
-        string name = rootDir+"/"+attributes->name;
-        if(name.back() != '.'){
-            cout << name << " <- ok";
-            if(checkIfDir(session,sftp,rootDir+"/"+attributes->name)){
-                cout <<"| DIR";
-                files.push_back(make_shared<File>(attributes->name,true, FIRST));
-                sftp_list_dir(session,sftp,rootDir+"/"+attributes->name,files.back()->files_);
-                //listVector(files_);
-
-
-            }
-            else{
-                cout << "| FILE";
-                files.push_back(make_shared<File>(attributes->name, false, FIRST));
-
-                //listVector(files_);
-
-            }
-
-        }else {
-            cout << name << " <- bad";
-
-
-        }
-
-
-        sftp_attributes_free(attributes);
-
-    }
-
-
-
-
-    if (!sftp_dir_eof(dir))
-    {
-        fprintf(stderr, "Can't list directory: %s\n",
-                ssh_get_error(session));
-        sftp_closedir(dir);
-        return SSH_ERROR;
-    }
-
-    rc = sftp_closedir(dir);
-    if (rc != SSH_OK)
-    {
-        fprintf(stderr, "Can't close directory: %s\n",
-                ssh_get_error(session));
-        return rc;
-    }
-}
 
 void SshDir::printDir() {
 
-    cout << endl << "xxxxxx " << endl;
-    for(const auto& element: files_){
 
-        if(element->isDirectory()){
-            cout << "*";
-        }
-        cout << element->getName()<<endl ;
-
-
-
-    }
 
 
 }
 
 void SshDir::printTree(){
 
-    SshConnector s;
-
-    cout << "--> WILL PRINT SSH DIR TREE" << endl;
-
-
-    int rc;
-    char *password;
-
-    // Open session and set options
-
-    if (s.my_ssh_session == NULL)
-        exit(-1);
-    ssh_options_set(s.my_ssh_session, SSH_OPTIONS_HOST, "rtrybus@mion.elka.pw.edu.pl");
-
-    // Connect to server
-    rc = ssh_connect(s.my_ssh_session);
-    if (rc != SSH_OK)
-    {
-        fprintf(stderr, "Error connecting to localhost: %s\n",
-                ssh_get_error(s.my_ssh_session));
-        ssh_free(s.my_ssh_session);
-        exit(-1);
-    }
-
-    // Verify the server's identity
-    // For the source code of verify_knowhost(), check previous example
-    if (s.verify_knownhosts(s.my_ssh_session) < 0)
-    {
-        ssh_disconnect(s.my_ssh_session);
-        ssh_free(s.my_ssh_session);
-        exit(-1);
-    }
-
-    // Authenticate ourselves
-    //password = getpass("Password: ");
-    password = "mJzr7Ty";
-    rc = ssh_userauth_password(s.my_ssh_session, NULL, password);
-    if (rc != SSH_AUTH_SUCCESS)
-    {
-        fprintf(stderr, "Error authenticating with password: %s\n",
-                ssh_get_error(s.my_ssh_session));
-        ssh_disconnect(s.my_ssh_session);
-        ssh_free(s.my_ssh_session);
-        exit(-1);
-    }else{
-        printf("connected to SSH - ok");
-
-    }
 
 
 
-    sftp_session sftp;
-    sftp = sftp_new(s.my_ssh_session);
-    //scp_receive(my_ssh_session);
-    cout << endl;
-    buildTree(s.my_ssh_session,sftp,"/home/mion/s/250/rtrybus");
-    //listVector(files_);
-
-    printDir();
-
-
-
-
-    ssh_disconnect(s.my_ssh_session);
-    ssh_free(s.my_ssh_session);
 
 
 }
@@ -352,5 +187,9 @@ void SshDir::printTree(){
 
 void SshDir::search(WhichDir parentDir) {
     cout <<"SEARCHING SSH DIR" << endl;
+    SshConnector *s;
+    s = new SshConnector("rtrybus@mion.elka.pw.edu.pl","mJzr7Ty","/home/mion/s/250/rtrybus");
+
+    searchTree(s);
 }
 /*SshDir implementations ends here*/
