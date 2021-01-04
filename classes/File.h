@@ -37,7 +37,7 @@ public:
     const std::string &getName() const;
     const std::vector<std::shared_ptr<File>> &getFiles() const;
     const std::string &getPath() const;
-    std::string getRelPath();
+    std::string getRelPath() const;
     WhichDir getWhichDir() const;
     const std::string &getHash() const;
     Action getAction() const;

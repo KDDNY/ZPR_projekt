@@ -38,12 +38,11 @@ public:
     static Dir *make_dir(Choice flag);
     virtual void printTree() = 0;
     virtual void search(WhichDir parentDir) = 0;
-    static Choice getFlag();
+    Choice getFlag() const;
     const vector<std::shared_ptr<File>> &getFiles() const;
-    const shared_ptr<Profile> &getProfile() const;
-    void setProfile(const shared_ptr<Profile> &profile);
+    Profile* getProfile() const;
+    void setProfile(Profile* profile);
     void setChoice(Choice choice);
-
     const string &getPath() const;
 
 public:
@@ -51,7 +50,7 @@ protected:
     string path_;
     std::shared_ptr<AbstractFactory> creator_;
     std::vector<std::shared_ptr<File>> files_;
-    std::shared_ptr<Profile> profile_;
+    Profile* profile_;
     Choice choice_;
 };
 

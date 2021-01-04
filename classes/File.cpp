@@ -92,7 +92,7 @@ std::shared_ptr<FileCommand> File::generateCommand() {
     return creator_->createAction(*this);
 }
 
-string File::getRelPath(){
+string File::getRelPath() const{
     string out = path_.substr(home_dir_path_.length(), path_.length());
     return out;
 }

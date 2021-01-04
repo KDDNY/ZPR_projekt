@@ -84,6 +84,7 @@ TEST_F(ProfileTests, hashCompareTest){
 
 }
 
+/*
 TEST_F(ProfileTests, addTest){
     testing::internal::CaptureStdout();
     profile->addDirectories("path","path",LOCAL,LOCAL);
@@ -91,3 +92,4 @@ TEST_F(ProfileTests, addTest){
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_EQ("\n---------------------------\n#PROFILE SUMMARY:\n#name: \n#LOCAL DIR PATH: path\n#LOCAL DIR PATH: path\n",output);
 }
+*/

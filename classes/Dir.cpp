@@ -51,11 +51,11 @@ const vector<std::shared_ptr<File>> &Dir::getFiles() const {
     return files_;
 }
 
-const shared_ptr<Profile> &Dir::getProfile() const {
+Profile* Dir::getProfile() const {
     return profile_;
 }
 
-void Dir::setProfile(const shared_ptr<Profile> &profile) {
+void Dir::setProfile(Profile* profile) {
     profile_ = profile;
 }
 
@@ -65,6 +65,10 @@ void Dir::setChoice(Choice choice) {
 
 const string &Dir::getPath() const {
     return path_;
+}
+
+Choice Dir::getFlag() const {
+    return choice_;
 }
 
 /*LocalDir implementations starts here*/
