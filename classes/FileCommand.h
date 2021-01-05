@@ -4,6 +4,7 @@
 
 #ifndef UNTITLED1_FILECOMMAND_H
 #define UNTITLED1_FILECOMMAND_H
+#include <filesystem>
 
 class File;
 
@@ -18,6 +19,8 @@ class LocalCopyFileCommand : public FileCommand{
 public:
     LocalCopyFileCommand(const File& file) : FileCommand(file) {}
     void execute() override;
+private:
+    void CopyRecursive(const std::filesystem::path& src, const std::filesystem::path& target) noexcept;
 };
 
 class LocalSkipFileCommand : public FileCommand{

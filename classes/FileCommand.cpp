@@ -4,7 +4,7 @@
 
 #include "FileCommand.h"
 #include <iostream>
-#include <filesystem>
+
 using namespace std;
 #include "File.h"
 #include "Dir.h"
@@ -33,13 +33,29 @@ void LocalCopyFileCommand::execute() {
             cout << "from " << file_.getPath() << endl;
             cout << "to " << file_.getDir()->getProfile()->getDir2()->getPath() + file_.getRelPath() << endl;
             filesystem::path src = file_.getPath() + "/" + file_.getName();
-            filesystem::path target = file_.getDir()->getProfile()->getDir2()->getPath() + file_.getRelPath();
+            filesystem::path targetParent = file_.getDir()->getProfile()->getDir2()->getPath() + file_.getRelPath();
+            auto target = targetParent / src.filename();
+            CopyRecursive(src,target);
         } else {
             cout << "Local copy of " << file_.getName() << endl;
             cout << "from " << file_.getPath() << endl;
             cout << "to " << file_.getDir()->getProfile()->getDir1()->getPath() + file_.getRelPath() << endl;
             filesystem::path src = file_.getPath() + "/" + file_.getName();
-            filesystem::path target = file_.getDir()->getProfile()->getDir1()->getPath() + file_.getRelPath();
+            filesystem::path targetParent = file_.getDir()->getProfile()->getDir1()->getPath() + file_.getRelPath();
+            auto target = targetParent / src.filename();
+            CopyRecursive(src,target);
         }
+    }
+}
+
+void LocalCopyFileCommand::CopyRecursive(const filesystem::path& src, const filesystem::path& target) noexcept
+{
+    try
+    {
+        filesystem::copy(src, target, filesystem::copy_options::overwrite_existing | filesystem::copy_options::recursive);
+    }
+    catch (std::exception& e)
+    {
+        std::cout << e.what();
     }
 }
