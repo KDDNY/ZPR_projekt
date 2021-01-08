@@ -19,24 +19,33 @@
 using namespace std;
 
 class Profile;
-
+///Enum służące do określania wyboru użytkownika.
 enum Choice{
     LOCAL, SSH
 };
 
+///Klasa abstrakcyjna reprezentująca katalog. Przechowuje informacje takie jak ścieżka oraz pliki które zawiera.
+///Dostarcza metody do rekurencyjnego przeszukiwania katalogu.
 class Dir {
 public:
     Dir() = default;
     explicit Dir(std::string path);
     virtual ~Dir() = default;
     virtual void printInfo() = 0;
+    ///Przypisuje ścieżkę
+    ///@param path ścieżka do katalogu
     void assignPath(string path);
     void assignFactory(std::shared_ptr<AbstractFactory> factory);
     void addFile();
     void removeFile();
     void renameFile();
+    ///Tworzy pusty obiekt klasy Dir.
+    ///@param flag określa czy katalog jest lokalny czy na serwerze ssh
+    ///@return wskaźnik na utworzony katalog
     static Dir *make_dir(Choice flag);
     virtual void printTree() = 0;
+    ///Przeszukuje rekurencyjnie katalog i tworzy drzewiastą strukturę podfolderów.
+    ///@param parentDir określa który katalog jest przeszukiwany(pierwszy czy drugi)
     virtual void search(WhichDir parentDir) = 0;
     Choice getFlag() const;
     const vector<std::shared_ptr<File>> &getFiles() const;
@@ -44,16 +53,18 @@ public:
     void setProfile(Profile* profile);
     void setChoice(Choice choice);
     const string &getPath() const;
-
 public:
 protected:
     string path_;
     std::shared_ptr<AbstractFactory> creator_;
+    ///Wektor  przechowujący pliki katalogu jako wskaźniki do obiektów klasy File.
     std::vector<std::shared_ptr<File>> files_;
+    ///wskaźnik do profilu, w którym znajduje się katalog.
     Profile* profile_;
+    ///określa czy jest to katalog lokalny czy znajdujący sie na serwerze ssh.
     Choice choice_;
 };
-
+///Implementacja dla katalogu lokalnego.
 class LocalDir : public Dir{
 public:
     LocalDir();

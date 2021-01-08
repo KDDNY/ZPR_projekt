@@ -10,8 +10,12 @@
 #include "File.h"
 #include "FileCommandFactory.h"
 
+///Klasa implementująca operacje wykonywane w celu synchronizacji.
 class Scanner {
 public:
+    ///Synchronizuje dwa katalogi. Dla każdego pliku z dostarczonego wektora tworzy odpowiednią komendę (obiekt klasy
+    ///FileCommand) i wykonuje ją.
+    ///@param diff wektor wskaźników na pliki będących różnicami pomiędzy katalogami.
     static void synchronize(const std::vector<std::shared_ptr<File>>& diff);
 };
 

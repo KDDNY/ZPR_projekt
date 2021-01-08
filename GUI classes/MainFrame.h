@@ -11,9 +11,7 @@
 #include "../classes/Application.h"
 
 
-/// Implementuje główne okno programu.
-///
-/// Jest to okno w którym dokonuje się synchronizacji na wybranym profilu.
+///Implementuje główne okno programu.
 class MainFrame : public wxFrame{
 public:
     MainFrame(wxPoint pos, int index);
