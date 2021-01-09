@@ -20,7 +20,6 @@ public:
     ///dodaje wskaźnik do profilu do wektora
     ///@param wskaźnik do profilu, który ma zostać dodany
     static void addProfile(Profile* P);
-    void synchronize(std::shared_ptr<Profile> P);
 };
 
 

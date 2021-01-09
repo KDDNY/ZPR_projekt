@@ -139,6 +139,10 @@ void ProfileDialog::ConfrimSSHClicked(wxCommandEvent &event) {
     password_ = string(tc3_->GetValue().mb_str(wxConvUTF8));
     Profile* prof = new Profile(nullptr, nullptr, profile_name_);
 
+    //(jeszcze) nie działa
+/*    prof->addDirectories(path1_, "/home/mion/s/250/rtrybus", flag1_, flag2_);
+    Application::addProfile(prof);*/
+
     startFrame_->updateListBox();
     this->Close(true);
 }

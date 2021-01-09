@@ -18,8 +18,6 @@ include(${wxWidgets_USE_FILE})
 
 add_executable(main main.cpp
         classes/Application.h
-        classes/Command.cpp
-        classes/Command.h
         classes/Dir.cpp
         classes/Dir.h
         classes/Profile.cpp

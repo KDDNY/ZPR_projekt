@@ -4,14 +4,12 @@
 
 #include <gtest/gtest.h>
 #include "../classes/Dir.h"
-#include "../classes/Command.cpp"
 
 class LocalDirTests : public ::testing::Test{
 public:
     std::unique_ptr<LocalDir> dir;
     LocalDirTests(){
         dir = std::make_unique<LocalDir>();
-        dir->assignFactory(std::make_shared<LocalFactory>());
         dir->assignPath("/home/kddny/Desktop/ZPR/ZPR_projekt/tests/cmake-build-debug/dut");
         dir->search(FIRST);
     }
@@ -106,6 +104,7 @@ TEST(DirTests, AddSSH){
     EXPECT_TRUE(dynamic_cast<SshDir*>(dir));
 }
 
+/*
 TEST(DirTests, Assign){
     auto dir = Dir::make_dir(LOCAL);
     dir->assignPath("path");
@@ -114,7 +113,9 @@ TEST(DirTests, Assign){
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_EQ("#LOCAL DIR PATH: path\n",output);
 }
+*/
 
+/*
 TEST(DirTests, LocalAddCommand){
     auto dir = Dir::make_dir(LOCAL);
     testing::internal::CaptureStdout();
@@ -162,3 +163,4 @@ TEST(DirTests, SSHaddCommand){
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_EQ("SSH add\n",output);
 }
+*/

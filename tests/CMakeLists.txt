@@ -20,8 +20,6 @@ set(CMAKE_CXX_STANDARD 17)
 add_executable(tests main.cpp
         ../classes/Application.cpp
         ../classes/Application.h
-        ../classes/Command.cpp
-        ../classes/Command.h
         ../classes/Dir.cpp
         ../classes/Dir.h
         ../classes/Profile.cpp

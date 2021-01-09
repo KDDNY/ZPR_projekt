@@ -2,7 +2,6 @@
 #include <wx/wx.h>
 #include "GUI classes/StartFrame.h"
 #include "classes/Application.h"
-#include "classes/Command.cpp"
 
 /// Inicjuje bibliotekę graficzną
 class MainpApp : public wxApp{
@@ -28,13 +27,13 @@ class MainpApp : public wxApp{
         //TEST RJT
 
         wxPoint pos;
-//        start_frame_ = new StartFrame(pos);
-//        start_frame_->Show(true);
+        start_frame_ = new StartFrame(pos);
+        start_frame_->Show(true);
 
-        Dir* dir = new SshDir();
+ /*       Dir* dir = new SshDir();
         dir->assignPath("/home/mion/s/250/rtrybus");
         dir->search(FIRST);
-        dir->printInfo();
+        dir->printInfo();*/
 
         return true;
     }

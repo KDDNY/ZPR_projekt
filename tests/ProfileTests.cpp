@@ -4,7 +4,6 @@
 
 #include <gtest/gtest.h>
 #include "../classes/Profile.h"
-#include "../classes/Command.cpp"
 
 class ProfileTests : public ::testing::Test {
 public:

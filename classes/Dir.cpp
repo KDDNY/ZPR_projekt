@@ -4,7 +4,6 @@
 
 #include "Dir.h"
 #include <utility>
-#include "Command.cpp"
 
 Dir::Dir(std::string path) : path_(std::move(path)) {}
 
@@ -12,12 +11,13 @@ Dir *Dir::make_dir(Choice flag)
 {
     if (flag == LOCAL){
         LocalDir* local_directory = new LocalDir;
-        local_directory->assignFactory(make_shared<LocalFactory>());
         return local_directory;
     }
     else if (flag == SSH){
         SshDir* ssh_directory = new SshDir;
-        ssh_directory->assignFactory(make_shared<SshFactory>());
+        return ssh_directory;
+    /*    Dir* dir = new SshDir();
+        dir->assignPath("/home/mion/s/250/rtrybus");*/
         return ssh_directory;
     }
     else
@@ -26,25 +26,6 @@ Dir *Dir::make_dir(Choice flag)
 
 void Dir::assignPath(string path){
     path_ = path;
-}
-
-void Dir::assignFactory(std::shared_ptr<AbstractFactory> factory) {
-    creator_ = factory;
-}
-
-void Dir::addFile(){
-    std::shared_ptr<Command> command = creator_->createAdd();
-    command->execute();
-}
-
-void Dir::removeFile(){
-    std::shared_ptr<Command> command = creator_->createRemove();
-    command->execute();
-}
-
-void Dir::renameFile(){
-    std::shared_ptr<Command> command = creator_->createRename();
-    command->execute();
 }
 
 const vector<std::shared_ptr<File>> &Dir::getFiles() const {
@@ -213,6 +194,7 @@ void SshDir::printTree(){
 
 
 void SshDir::search(WhichDir parentDir) {
+    files_.clear();
     cout <<"SEARCHING SSH DIR" << endl;
     SshConnector *s;
     s = new SshConnector("rtrybus@mion.elka.pw.edu.pl","mJzr7Ty","/home/mion/s/250/rtrybus");

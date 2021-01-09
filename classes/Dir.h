@@ -7,7 +7,6 @@
 
 #include <filesystem>
 #include <iostream>
-#include "Command.h"
 #include <vector>
 #include "File.h"
 #include <libssh/libssh.h>
@@ -35,7 +34,6 @@ public:
     ///Przypisuje ścieżkę
     ///@param path ścieżka do katalogu
     void assignPath(string path);
-    void assignFactory(std::shared_ptr<AbstractFactory> factory);
     void addFile();
     void removeFile();
     void renameFile();
@@ -56,7 +54,6 @@ public:
 public:
 protected:
     string path_;
-    std::shared_ptr<AbstractFactory> creator_;
     ///Wektor  przechowujący pliki katalogu jako wskaźniki do obiektów klasy File.
     std::vector<std::shared_ptr<File>> files_;
     ///wskaźnik do profilu, w którym znajduje się katalog.
