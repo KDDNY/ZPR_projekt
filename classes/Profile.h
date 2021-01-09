@@ -26,6 +26,7 @@ public:
     ///@param path1 ścieżka do pierwszego katalogu
     ///@param path2 ścieżka do drugiego katalogu
     void addDirectories(std::string path1, std::string path2,Choice flag1, Choice flag2);
+    void addDirectories(std::string path1, std::string path2,Choice flag1, Choice flag2, std::string servername, std::string password);
     void summary();
     void printTree1();
     void printTree2();
