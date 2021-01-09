@@ -91,6 +91,10 @@ void File::setCreator(shared_ptr<LocalFileCommandFactory> creator) {
     creator_ = creator;
 }
 
+void File::setCreatorSSH(shared_ptr<SSHFileCommandFactory> creator) {
+    creator_ = creator;
+}
+
 std::shared_ptr<FileCommand> File::generateCommand() {
     return creator_->createAction(*this);
 }

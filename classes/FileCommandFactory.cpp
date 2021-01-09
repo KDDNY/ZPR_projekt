@@ -24,3 +24,23 @@ std::shared_ptr<FileCommand> LocalFileCommandFactory::createRemove(const File& f
 std::shared_ptr<FileCommand> LocalFileCommandFactory::createSkip(const File& file) {
     return make_shared<LocalSkipFileCommand>(file);
 }
+
+// SSH implementation
+
+std::shared_ptr<FileCommand> SSHFileCommandFactory::createAction(const File& file) {
+    if(file.getAction()==COPY) return createCopy(file);
+    if(file.getAction()==REMOVE) return createRemove(file);
+    else return createSkip(file);
+}
+
+std::shared_ptr<FileCommand> SSHFileCommandFactory::createCopy(const File& file) {
+    return make_shared<LocalCopyFileCommand>(file);
+}
+
+std::shared_ptr<FileCommand> SSHFileCommandFactory::createRemove(const File& file) {
+    return make_shared<LocalRemoveFileCommand>(file);
+}
+
+std::shared_ptr<FileCommand> SSHFileCommandFactory::createSkip(const File& file) {
+    return make_shared<LocalSkipFileCommand>(file);
+}

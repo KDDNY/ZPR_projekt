@@ -18,3 +18,17 @@ void LocalSkipFileCommand::execute() {
 void LocalCopyFileCommand::execute() {
     cout << "Local copy of " << file_.getName() << endl;
 }
+
+//SSH implementation
+
+void SSHRemoveFileCommand::execute() {
+    cout << "SSH remove of " << file_.getName() << endl;
+}
+
+void SSHSkipFileCommand::execute() {
+    cout << "SSH skip of " << file_.getName() << endl;
+}
+
+void SSHCopyFileCommand::execute() {
+    cout << "SSH copy of " << file_.getName() << endl;
+}

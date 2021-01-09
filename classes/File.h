@@ -32,6 +32,7 @@ public:
     void setPath(const std::string &path);
     void setAction(Action action);
     void setCreator(std::shared_ptr<LocalFileCommandFactory> creator);
+    void setCreatorSSH(std::shared_ptr<SSHFileCommandFactory> creator);
     bool isDirectory() const;
 
     const std::string &getName() const;

@@ -211,6 +211,7 @@ int SshConnector::sftp_list_dir(ssh_session session, sftp_session sftp, string r
                 //cout <<"| DIR";
                 files.push_back(make_shared<File>(attributes->name,true, FIRST));
                 sftp_list_dir(session,sftp,rootDir+"/"+attributes->name,files.back()->files_);
+                files.back()->setCreatorSSH(make_shared<SSHFileCommandFactory>());
                 //listVector(files_);
 
 
@@ -218,6 +219,7 @@ int SshConnector::sftp_list_dir(ssh_session session, sftp_session sftp, string r
             else{
                 //cout << "| FILE";
                 files.push_back(make_shared<File>(attributes->name, false, FIRST));
+                files.back()->setCreatorSSH(make_shared<SSHFileCommandFactory>());
 
                 //listVector(files_);
 

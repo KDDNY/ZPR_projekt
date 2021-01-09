@@ -32,4 +32,27 @@ public:
     void execute() override;
 };
 
+
+
+// SSH definitions
+
+
+class SSHCopyFileCommand : public FileCommand{
+public:
+    SSHCopyFileCommand(const File& file) : FileCommand(file) {}
+    void execute() override;
+};
+
+class SSHSkipFileCommand : public FileCommand{
+public:
+    SSHSkipFileCommand(const File& file) : FileCommand(file) {}
+    void execute() override;
+};
+
+class SSHRemoveFileCommand : public FileCommand{
+public:
+    SSHRemoveFileCommand(const File& file) : FileCommand(file) {}
+    void execute() override;
+};
+
 #endif //UNTITLED1_FILECOMMAND_H
