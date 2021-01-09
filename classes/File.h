@@ -41,6 +41,7 @@ public:
     void setDir(Dir* dir);
     ///Określa czy plik jest katalogiem.
     ///@return true jeśli plik jest katalogiem, false gdy nie nim nie jest
+    void setCreatorSSH(std::shared_ptr<SSHFileCommandFactory> creator);
     bool isDirectory() const;
     //Getters
     const std::string &getName() const;

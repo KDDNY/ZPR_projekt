@@ -34,5 +34,13 @@ public:
     std::shared_ptr<FileCommand> createSkip(const File& file) override;
 };
 
+class SSHFileCommandFactory : public FileCommandFactory{
+public:
+    std::shared_ptr<FileCommand> createAction(const File& file) override;
+    std::shared_ptr<FileCommand> createCopy(const File& file) override;
+    std::shared_ptr<FileCommand> createRemove(const File& file) override;
+    std::shared_ptr<FileCommand> createSkip(const File& file) override;
+};
+
 
 #endif //UNTITLED1_FILECOMMANDFACTORY_H

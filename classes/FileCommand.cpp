@@ -59,3 +59,15 @@ void LocalCopyFileCommand::CopyRecursive(const filesystem::path& src, const file
         std::cout << e.what();
     }
 }
+
+void SSHRemoveFileCommand::execute() {
+    cout << "SSH remove of " << file_.getName() << endl;
+}
+
+void SSHSkipFileCommand::execute() {
+    cout << "SSH skip of " << file_.getName() << endl;
+}
+
+void SSHCopyFileCommand::execute() {
+    cout << "SSH copy of " << file_.getName() << endl;
+}

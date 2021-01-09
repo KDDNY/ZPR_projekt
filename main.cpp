@@ -28,13 +28,13 @@ class MainpApp : public wxApp{
         //TEST RJT
 
         wxPoint pos;
-        start_frame_ = new StartFrame(pos);
-        start_frame_->Show(true);
+//        start_frame_ = new StartFrame(pos);
+//        start_frame_->Show(true);
 
-  /*      Dir* dir = new SshDir();
+        Dir* dir = new SshDir();
         dir->assignPath("/home/mion/s/250/rtrybus");
-        dir->printTree();*/
-        //ENDOF TEST RJT
+        dir->search(FIRST);
+        dir->printInfo();
 
         return true;
     }
