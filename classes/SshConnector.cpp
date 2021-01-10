@@ -7,8 +7,90 @@
 #include <strings.h>
 #include <string.h>
 
+#define MAX_XFER_BUF_SIZE 16384
 
 using namespace std;
+
+
+// server -> local
+int SshConnector::copyTest() {
+
+    int access_type;
+    sftp_file file;
+    char buffer[MAX_XFER_BUF_SIZE];
+    int nbytes, nwritten, rc;
+
+
+    access_type = O_RDONLY;
+    file = sftp_open(my_sftp_session, "/home/mion/s/250/rtrybus/capt_udp.txt",
+                     access_type, 0);
+
+    if (file == NULL) {
+        fprintf(stderr, "Can't open file for reading: %s\n",
+                ssh_get_error(my_ssh_session));
+        return SSH_ERROR;
+    }
+
+
+
+    FILE* fd = fopen("/Users/raftry/Desktop/[ZPR]/code/ZPR_projekt/capt_udp.txt", "ab+");
+
+
+    if (fd == NULL) {
+        perror("Failed: ");
+        return 1;
+    }
+
+    nbytes = sftp_read(file, buffer, sizeof(buffer));
+    nwritten = fwrite(buffer, sizeof(char), nbytes, fd);
+    sftp_close(file);
+    fclose(fd);
+
+    return 0;
+
+}
+
+
+// local -> server
+int SshConnector::copyTest2() {
+
+    ifstream fin("/Users/raftry/Desktop/[ZPR]/code/ZPR_projekt/CMakeLists.txt", ios::binary);
+    sftp_file file;
+    int access_type = O_WRONLY | O_CREAT | O_TRUNC;
+
+    file = sftp_open(my_sftp_session, "/home/mion/s/250/rtrybus/CMakeLists.txt",
+                     access_type, S_IRWXU);
+
+    if (file == NULL)
+    {
+        fprintf(stderr, "Can't open file for writing: %s\n",
+                ssh_get_error(my_ssh_session));
+        return SSH_ERROR;
+    }
+
+    while (fin)
+    {
+        char buffer[MAX_XFER_BUF_SIZE];
+        fin.read(buffer, sizeof(buffer));
+        if (fin.gcount() > 0)
+        {
+            ssize_t nwritten = sftp_write(file, buffer, fin.gcount());
+
+            if (nwritten != fin.gcount())
+            {
+                fprintf(stderr, "Can't write data to file: %s\n", ssh_get_error(my_ssh_session));
+                sftp_close(file);
+                return 1;
+            }
+        }
+    }
+
+
+
+    return 0;
+
+}
+
 
 sftp_session SshConnector::fetchFiles() {
 
@@ -71,7 +153,7 @@ sftp_session SshConnector::fetchFiles() {
 
 
 
-
+    this->my_sftp_session = sftp;
 
 
     return sftp;

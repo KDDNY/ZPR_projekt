@@ -24,17 +24,15 @@ class MainpApp : public wxApp{
         start_frame_ = new StartFrame(pos);
         start_frame_->Show(true);
 
-        //TEST RJT
 
-//        wxPoint pos;
-//        start_frame_ = new StartFrame(pos);
-//        start_frame_->Show(true);
 
- //    Dir* dir = new SshDir();
-   //     dir->assignPath("/home/mion/s/250/rtrybus");
-     //   dir->search(FIRST);
-       // dir->printInfo();
 
+
+        Dir* dir = new SshDir("rtrybus@mion.elka.pw.edu.pl","mJzr7Ty","/home/mion/s/250/rtrybus");
+        dir->printInfo();
+        dir->search(SECOND);
+
+        dir->printTree();
         return true;
     }
     StartFrame* start_frame_;
