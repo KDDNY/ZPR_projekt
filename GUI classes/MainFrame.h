@@ -1,5 +1,5 @@
 //
-// Created by kddny on 22.11.2020.
+// Created by Marcin Piotrowski on 22.11.2020.
 //
 
 #ifndef UNTITLED1_MAINFRAME_H
@@ -10,10 +10,12 @@
 #include "../classes/Profile.h"
 #include "../classes/Application.h"
 
-
-///Implementuje główne okno programu.
+///Implementuje główne okno programu
 class MainFrame : public wxFrame{
 public:
+    ///Konstruktor głównego okna.
+    ///@param pos współrzędne na ekranie na których ma pojawić się okno
+    ///@param index numer wybranego profilu na ekranie startowym
     MainFrame(wxPoint pos, int index);
 private:
     void changeProfileClicked(wxCommandEvent &event);
@@ -32,7 +34,5 @@ private:
     wxListCtrl* list_ctrl_;
     Profile* profile_;
 };
-
-
 
 #endif //UNTITLED1_MAINFRAME_H

@@ -1,5 +1,5 @@
 //
-// Created by kddny on 22.11.2020.
+// Created by Marcin Piotrowski on 22.11.2020.
 //
 
 #ifndef UNTITLED1_PROFILEDIALOG_H
@@ -10,9 +10,11 @@
 #include "StartFrame.h"
 #include "../classes/Dir.h"
 
-///Wyswietla kolejne okna interfejsu dodwania nowego profilu
+///Implementuje kolejne okna kreatora profili
 class ProfileDialog : public wxFrame{
 public:
+    ///Konstruktor
+    ///@param startFrame wskaźnik na okno startowe programu
     ProfileDialog(StartFrame *startFrame);
 private:
     void NextButtonClicked(wxCommandEvent& event);
