@@ -23,8 +23,10 @@ public:
 
 
 
-    SshConnector(std::string serverName, std::string password, std::string filePath) : _serverName(serverName), _password(password),
-    _sshFilePath(filePath) {my_ssh_session = ssh_new();}
+    SshConnector(std::string serverName, std::string password, std::string filePath, Dir* dir) : _serverName(serverName), _password(password),
+    _sshFilePath(filePath), dir_(dir){
+        my_ssh_session = ssh_new();
+    }
     ssh_session my_ssh_session;
     sftp_session my_sftp_session;
     int verify_knownhosts(ssh_session session);
@@ -38,6 +40,8 @@ public:
     void Siema(){
         std::cout << "Siema" << std::endl;
     }
+private:
+    Dir* dir_;
 };
 
 

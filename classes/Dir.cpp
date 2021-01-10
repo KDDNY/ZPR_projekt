@@ -225,8 +225,8 @@ void SshDir::search(WhichDir parentDir) {
     files_.clear();
     cout <<"SEARCHING SSH DIR" << endl;
     SshConnector *s;
-    s = new SshConnector(servername_,password_,path_);
-    sshConnector_ = new SshConnector(servername_,password_,path_);
+   // s = new SshConnector(servername_,password_,path_, this);
+    sshConnector_ = new SshConnector(servername_,password_,path_, this);
     searchTree(sshConnector_);
 }
 /*SshDir implementations ends here*/

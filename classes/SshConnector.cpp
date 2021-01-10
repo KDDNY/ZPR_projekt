@@ -57,7 +57,7 @@ void SshConnector::copySL(std::string source, std::string target) {
     int nbytes, nwritten, rc;
 
     access_type = O_RDONLY;
-    file = sftp_open(my_sftp_session, "/home/mion/s/250/rtrybus/capt_udp.txt",
+    file = sftp_open(my_sftp_session, source.c_str(),
                      access_type, 0);
 
     if (file == NULL) {
@@ -65,7 +65,7 @@ void SshConnector::copySL(std::string source, std::string target) {
                 ssh_get_error(my_ssh_session));
     }
 
-    FILE* fd = fopen("/home/kddny/Desktop/capt_udp.txt", "ab+");
+    FILE* fd = fopen(target.c_str(), "ab+");
 
     if (fd == NULL) {
         perror("Failed: ");
@@ -352,6 +352,7 @@ int SshConnector::sftp_list_dir(ssh_session session, sftp_session sftp, string r
                 files.push_back(make_shared<File>(attributes->name,true, SECOND));
                 sftp_list_dir(session,sftp,rootDir+"/"+attributes->name,files.back()->files_);
                 files.back()->setCreatorSSH(make_shared<SSHFileCommandFactory>());
+                files.back()->setDir(dir_);
                 //listVector(files_);
 
 
@@ -360,7 +361,7 @@ int SshConnector::sftp_list_dir(ssh_session session, sftp_session sftp, string r
                 //cout << "| FILE";
                 files.push_back(make_shared<File>(attributes->name, false, SECOND));
                 files.back()->setCreatorSSH(make_shared<SSHFileCommandFactory>());
-
+                files.back()->setDir(dir_);
                 //listVector(files_);
 
             }

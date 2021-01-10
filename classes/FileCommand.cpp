@@ -47,8 +47,8 @@ void LocalCopyFileCommand::execute() {
         }
     } else {
         cout << "Copy from local to ssh of " << file_.getName() << endl;
-        std::string source = file_.getPath() + "/" + file_.getName();
-        std::string target = file_.getDir()->getProfile()->getDir2()->getPath() + file_.getRelPath() + "/" + file_.getName();
+        string source = file_.getPath() + "/" + file_.getName();
+        string target = file_.getDir()->getProfile()->getDir2()->getPath() + file_.getRelPath() + "/" + file_.getName();
         cout << "from: " << source << endl;
         cout << "to: " << target << endl;
         file_.getDir()->getProfile()->getDir2()->getSshConnector()->copyLS(source,target);
@@ -77,4 +77,9 @@ void SSHSkipFileCommand::execute() {
 
 void SSHCopyFileCommand::execute() {
     cout << "SSH copy of " << file_.getName() << endl;
+    string source = file_.getDir()->getPath() + "/" + file_.getName();
+    string target = file_.getDir()->getProfile()->getDir1()->getPath() + file_.getRelPath() + "/" + file_.getName();
+    cout << "from: " << source << endl;
+    cout << "to: " << target << endl;
+    file_.getDir()->getSshConnector()->copySL(source, target);
 }
