@@ -28,11 +28,11 @@ class MainpApp : public wxApp{
 
 
 
-        Dir* dir = new SshDir("rtrybus@mion.elka.pw.edu.pl","mJzr7Ty","/home/mion/s/250/rtrybus");
+       /* Dir* dir = new SshDir("rtrybus@mion.elka.pw.edu.pl","mJzr7Ty","/home/mion/s/250/rtrybus");
         dir->printInfo();
         dir->search(SECOND);
 
-        dir->printTree();
+        dir->printTree();*/
         return true;
     }
     StartFrame* start_frame_;

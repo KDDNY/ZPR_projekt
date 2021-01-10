@@ -9,12 +9,6 @@ using namespace std;
 
 MainFrame::MainFrame(wxPoint pos, int index)
         : profile_(Application::getProfiles().at(index)) ,wxFrame(nullptr, wxID_ANY, "Uniklon", pos, wxSize(800,600) ) {
-/*
-    profile_->summary();
-    profile_->printTree1();
-    profile_->printTree2();
-*/
-
     wxBoxSizer *vbox = new wxBoxSizer(wxHORIZONTAL);
 
     wxMenuBar *menuBar = new wxMenuBar;
@@ -120,8 +114,6 @@ void MainFrame::scanClicked(wxCommandEvent &event){
     profile_->scan();
     fillListCtrl();
 }
-
-
 
 void MainFrame::fillListCtrl() {
     list_ctrl_->DeleteAllItems();

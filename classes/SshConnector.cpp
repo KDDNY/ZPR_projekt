@@ -33,7 +33,7 @@ int SshConnector::copyTest() {
 
 
 
-    FILE* fd = fopen("/Users/raftry/Desktop/[ZPR]/code/ZPR_projekt/capt_udp.txt", "ab+");
+    FILE* fd = fopen("/home/kddny/Desktop/capt_udp.txt", "ab+");
 
 
     if (fd == NULL) {
@@ -50,15 +50,42 @@ int SshConnector::copyTest() {
 
 }
 
+void SshConnector::copySL(std::string source, std::string target) {
+    int access_type;
+    sftp_file file;
+    char buffer[MAX_XFER_BUF_SIZE];
+    int nbytes, nwritten, rc;
+
+    access_type = O_RDONLY;
+    file = sftp_open(my_sftp_session, "/home/mion/s/250/rtrybus/capt_udp.txt",
+                     access_type, 0);
+
+    if (file == NULL) {
+        fprintf(stderr, "Can't open file for reading: %s\n",
+                ssh_get_error(my_ssh_session));
+    }
+
+    FILE* fd = fopen("/home/kddny/Desktop/capt_udp.txt", "ab+");
+
+    if (fd == NULL) {
+        perror("Failed: ");
+    }
+
+    nbytes = sftp_read(file, buffer, sizeof(buffer));
+    nwritten = fwrite(buffer, sizeof(char), nbytes, fd);
+    sftp_close(file);
+    fclose(fd);
+}
 
 // local -> server
 int SshConnector::copyTest2() {
 
-    ifstream fin("/Users/raftry/Desktop/[ZPR]/code/ZPR_projekt/CMakeLists.txt", ios::binary);
+    ifstream fin("/home/kddny/Desktop/1/test.txt", ios::binary);
     sftp_file file;
     int access_type = O_WRONLY | O_CREAT | O_TRUNC;
 
-    file = sftp_open(my_sftp_session, "/home/mion/s/250/rtrybus/CMakeLists.txt",
+
+    file = sftp_open(my_sftp_session, "/home/mion/s/222/mpiotro4/test.txt",
                      access_type, S_IRWXU);
 
     if (file == NULL)
@@ -90,7 +117,36 @@ int SshConnector::copyTest2() {
     return 0;
 
 }
+void SshConnector::copyLS(std::string source, std::string target) {
+    ifstream fin(source, ios::binary);
+    sftp_file file;
+    int access_type = O_WRONLY | O_CREAT | O_TRUNC;
 
+    file = sftp_open(my_sftp_session, target.c_str(),
+                     access_type, S_IRWXU);
+
+    if (file == NULL)
+    {
+        fprintf(stderr, "Can't open file for writing: %s\n",
+                ssh_get_error(my_ssh_session));
+    }
+
+    while (fin)
+    {
+        char buffer[MAX_XFER_BUF_SIZE];
+        fin.read(buffer, sizeof(buffer));
+        if (fin.gcount() > 0)
+        {
+            ssize_t nwritten = sftp_write(file, buffer, fin.gcount());
+
+            if (nwritten != fin.gcount())
+            {
+                fprintf(stderr, "Can't write data to file: %s\n", ssh_get_error(my_ssh_session));
+                sftp_close(file);
+            }
+        }
+    }
+}
 
 sftp_session SshConnector::fetchFiles() {
 

@@ -34,13 +34,13 @@ std::shared_ptr<FileCommand> SSHFileCommandFactory::createAction(const File& fil
 }
 
 std::shared_ptr<FileCommand> SSHFileCommandFactory::createCopy(const File& file) {
-    return make_shared<LocalCopyFileCommand>(file);
+    return make_shared<SSHCopyFileCommand>(file);
 }
 
 std::shared_ptr<FileCommand> SSHFileCommandFactory::createRemove(const File& file) {
-    return make_shared<LocalRemoveFileCommand>(file);
+    return make_shared<SSHRemoveFileCommand>(file);
 }
 
 std::shared_ptr<FileCommand> SSHFileCommandFactory::createSkip(const File& file) {
-    return make_shared<LocalSkipFileCommand>(file);
+    return make_shared<SSHSkipFileCommand>(file);
 }

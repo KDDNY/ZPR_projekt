@@ -7,6 +7,7 @@
 #include <filesystem>
 
 class File;
+
 ///Klasa abstrakcyjna ze wzorca projektowego komendy, reprezentująca operacje na pliku wykonywaną w celu synchronizacji.
 class FileCommand {
 public:
@@ -17,6 +18,7 @@ public:
     virtual void execute() = 0;
     const File& file_;
 };
+
 ///Implementuje wykonanie kopii dla lokalnego katalogu.
 class LocalCopyFileCommand : public FileCommand{
 public:
@@ -31,6 +33,7 @@ public:
     LocalSkipFileCommand(const File& file) : FileCommand(file) {}
     void execute() override;
 };
+
 ///Implementuje usunięcie lokalnego katalogu.
 class LocalRemoveFileCommand : public FileCommand{
 public:
@@ -38,10 +41,7 @@ public:
     void execute() override;
 };
 
-
-
 // SSH definitions
-
 
 class SSHCopyFileCommand : public FileCommand{
 public:

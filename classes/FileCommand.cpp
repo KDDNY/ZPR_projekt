@@ -45,6 +45,13 @@ void LocalCopyFileCommand::execute() {
             auto target = targetParent / src.filename();
             CopyRecursive(src,target);
         }
+    } else {
+        cout << "Copy from local to ssh of " << file_.getName() << endl;
+        std::string source = file_.getPath() + "/" + file_.getName();
+        std::string target = file_.getDir()->getProfile()->getDir2()->getPath() + file_.getRelPath() + "/" + file_.getName();
+        cout << "from: " << source << endl;
+        cout << "to: " << target << endl;
+        file_.getDir()->getProfile()->getDir2()->getSshConnector()->copyLS(source,target);
     }
 }
 

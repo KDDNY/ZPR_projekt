@@ -33,10 +33,11 @@ public:
     int sftp_list_dir(ssh_session session, sftp_session sftp, std::string rootDir,std::vector<std::shared_ptr<File>> &files);
     int copyTest();
     int copyTest2();
-    i
-
-
-
+    void copyLS(std::string source, std::string target);
+    void copySL(std::string source, std::string target);
+    void Siema(){
+        std::cout << "Siema" << std::endl;
+    }
 };
 
 

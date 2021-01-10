@@ -52,7 +52,7 @@ public:
     void setProfile(Profile* profile);
     void setChoice(Choice choice);
     const string &getPath() const;
-public:
+    SshConnector *getSshConnector() const;
 protected:
     string path_;
     ///Wektor  przechowujący pliki katalogu jako wskaźniki do obiektów klasy File.
@@ -61,6 +61,7 @@ protected:
     Profile* profile_;
     ///określa czy jest to katalog lokalny czy znajdujący sie na serwerze ssh.
     Choice choice_;
+    SshConnector* sshConnector_;
 };
 ///Implementacja dla katalogu lokalnego.
 class LocalDir : public Dir{
@@ -81,7 +82,9 @@ private:
 //Na razie wpisałem wszędzie wartość z enum FIRST aby sie kompilowalo
 class SshDir: public Dir{
 public:
-    SshDir(std::string serverN,std::string password,std::string path) : servername_(serverN), password_(password),path_(path) {};
+    SshDir(std::string serverN,std::string password,std::string path) : servername_(serverN), password_(password),path_(path) {
+        choice_ = SSH;
+    };
     void printInfo() override;
     void printTree() override;
 
@@ -89,12 +92,10 @@ public:
     void searchTree(SshConnector* s);
     void listVector(std::vector<std::shared_ptr<File>> files);
     void printDir();
-
 private:
     string servername_;
     string password_;
     string path_;
-
 };
 
 

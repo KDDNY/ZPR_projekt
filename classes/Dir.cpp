@@ -34,7 +34,6 @@ Dir *Dir::make_dir(Choice flag, std::string servername, std::string password, st
     else if (flag == SSH){
         SshDir* ssh_directory = new SshDir(servername,password,path);
 
-
         return ssh_directory;
         /*    Dir* dir = new SshDir();
             dir->assignPath("/home/mion/s/250/rtrybus");*/
@@ -73,6 +72,10 @@ const string &Dir::getPath() const {
 
 Choice Dir::getFlag() const {
     return choice_;
+}
+
+SshConnector *Dir::getSshConnector() const {
+    return sshConnector_;
 }
 
 /*LocalDir implementations starts here*/
@@ -180,13 +183,8 @@ void SshDir::searchTree(SshConnector* s) {
     sftp_session sp = s->fetchFiles();
     s->sftp_list_dir(s->my_ssh_session,sp,s->_sshFilePath,files_);
 
-    //s->copyTest();
-    s->copyTest2();
-
-
-
-
-
+  //  s->copyTest();
+  //  s->copyTest2();
 }
 
 
@@ -228,9 +226,7 @@ void SshDir::search(WhichDir parentDir) {
     cout <<"SEARCHING SSH DIR" << endl;
     SshConnector *s;
     s = new SshConnector(servername_,password_,path_);
-
-
-    searchTree(s);
-
+    sshConnector_ = new SshConnector(servername_,password_,path_);
+    searchTree(sshConnector_);
 }
 /*SshDir implementations ends here*/
