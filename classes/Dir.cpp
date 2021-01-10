@@ -5,6 +5,7 @@
 #include "Dir.h"
 #include <utility>
 
+
 Dir::Dir(std::string path) : path_(std::move(path)) {}
 
 Dir *Dir::make_dir(Choice flag)
@@ -14,7 +15,8 @@ Dir *Dir::make_dir(Choice flag)
         return local_directory;
     }
     else if (flag == SSH){
-        SshDir* ssh_directory = new SshDir;
+        SshDir* ssh_directory = new SshDir("rtrybus@mion.elka.pw.edu.pl","mJzr7Ty","/home/mion/s/250/rtrybus");
+
         return ssh_directory;
     /*    Dir* dir = new SshDir();
         dir->assignPath("/home/mion/s/250/rtrybus");*/
@@ -23,6 +25,26 @@ Dir *Dir::make_dir(Choice flag)
     else
         return nullptr;
 }
+
+Dir *Dir::make_dir(Choice flag, std::string servername, std::string password, std::string path){
+    if (flag == LOCAL){
+        LocalDir* local_directory = new LocalDir;
+        return local_directory;
+    }
+    else if (flag == SSH){
+        SshDir* ssh_directory = new SshDir(servername,password,path);
+
+        return ssh_directory;
+        /*    Dir* dir = new SshDir();
+            dir->assignPath("/home/mion/s/250/rtrybus");*/
+        return ssh_directory;
+    }
+    else
+        return nullptr;
+
+
+}
+
 
 void Dir::assignPath(string path){
     path_ = path;
@@ -197,7 +219,7 @@ void SshDir::search(WhichDir parentDir) {
     files_.clear();
     cout <<"SEARCHING SSH DIR" << endl;
     SshConnector *s;
-    s = new SshConnector("rtrybus@mion.elka.pw.edu.pl","mJzr7Ty","/home/mion/s/250/rtrybus");
+    s = new SshConnector(servername_,password_,path_);
 
     searchTree(s);
 }

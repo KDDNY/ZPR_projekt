@@ -41,6 +41,7 @@ public:
     ///@param flag określa czy katalog jest lokalny czy na serwerze ssh
     ///@return wskaźnik na utworzony katalog
     static Dir *make_dir(Choice flag);
+    static Dir *make_dir(Choice flag, std::string servername, std::string password, std::string path);
     virtual void printTree() = 0;
     ///Przeszukuje rekurencyjnie katalog i tworzy drzewiastą strukturę podfolderów.
     ///@param parentDir określa który katalog jest przeszukiwany(pierwszy czy drugi)
@@ -80,6 +81,7 @@ private:
 //Na razie wpisałem wszędzie wartość z enum FIRST aby sie kompilowalo
 class SshDir: public Dir{
 public:
+    SshDir(std::string serverN,std::string password,std::string path) : servername_(serverN), password_(password),path_(path) {};
     void printInfo() override;
     void printTree() override;
 
@@ -87,7 +89,14 @@ public:
     void searchTree(SshConnector* s);
     void listVector(std::vector<std::shared_ptr<File>> files);
     void printDir();
+
+private:
+    string servername_;
+    string password_;
+    string path_;
+
 };
+
 
 
 #endif //UNTITLED1_DIR_H

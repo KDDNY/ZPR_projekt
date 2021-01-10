@@ -20,20 +20,20 @@ class MainpApp : public wxApp{
 //        dir->addFile();
 
 
-        //wxPoint pos;
-        //start_frame_ = new StartFrame(pos);
-        //start_frame_->Show(true);
-
-        //TEST RJT
-
         wxPoint pos;
         start_frame_ = new StartFrame(pos);
         start_frame_->Show(true);
 
- /*       Dir* dir = new SshDir();
-        dir->assignPath("/home/mion/s/250/rtrybus");
-        dir->search(FIRST);
-        dir->printInfo();*/
+        //TEST RJT
+
+//        wxPoint pos;
+//        start_frame_ = new StartFrame(pos);
+//        start_frame_->Show(true);
+
+ //    Dir* dir = new SshDir();
+   //     dir->assignPath("/home/mion/s/250/rtrybus");
+     //   dir->search(FIRST);
+       // dir->printInfo();
 
         return true;
     }

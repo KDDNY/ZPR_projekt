@@ -17,6 +17,18 @@ void Profile::addDirectories(std::string path1, std::string path2,Choice flag1, 
     dir2_->search(SECOND);
 }
 
+void Profile::addDirectories(std::string path1, std::string path2,Choice flag1, Choice flag2, std::string servername, std::string password){
+
+    dir1_ = Dir::make_dir(flag1);
+    dir1_->setProfile(this);
+    dir1_->assignPath(path1);
+    dir1_->search(FIRST);
+    dir2_ = Dir::make_dir(flag2,servername,password,path2);
+    dir2_->setProfile(this);
+    dir2_->assignPath(path2);
+    dir2_->search(SECOND);
+}
+
 Profile::Profile(Dir* directory1, Dir* directory2, std::string name):
         dir1_(directory1), dir2_(directory2), name_(name) { }
 
