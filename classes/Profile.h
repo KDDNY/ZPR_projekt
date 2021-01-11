@@ -1,5 +1,5 @@
 //
-// Created by kddny on 09.11.2020.
+// Created by Marcin Piotrowski on 09.11.2020.
 //
 
 #ifndef UNTITLED1_PROFILE_H

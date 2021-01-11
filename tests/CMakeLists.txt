@@ -24,7 +24,6 @@ add_executable(tests main.cpp
         ../classes/Dir.h
         ../classes/Profile.cpp
         ../classes/Profile.h
-        ../classes/Visitor.h
         ../classes/File.cpp
         ../classes/File.h
         ../classes/Scanner.h

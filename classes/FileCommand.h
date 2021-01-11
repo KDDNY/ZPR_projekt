@@ -28,13 +28,14 @@ private:
     void CopyRecursive(const std::filesystem::path& src, const std::filesystem::path& target) noexcept;
 };
 
+///Implementuje pominięcie dla lokalnego katalogu.
 class LocalSkipFileCommand : public FileCommand{
 public:
     LocalSkipFileCommand(const File& file) : FileCommand(file) {}
     void execute() override;
 };
 
-///Implementuje usunięcie lokalnego katalogu.
+///Implementuje usunięcie dla lokalnego katalogu.
 class LocalRemoveFileCommand : public FileCommand{
 public:
     LocalRemoveFileCommand(const File& file) : FileCommand(file) {}
@@ -43,18 +44,21 @@ public:
 
 // SSH definitions
 
+///Implementuje wykonanie kopii dla lokalnego katalogu.
 class SSHCopyFileCommand : public FileCommand{
 public:
     SSHCopyFileCommand(const File& file) : FileCommand(file) {}
     void execute() override;
 };
 
+///Implementuje pominięcie dla lokalnego katalogu.
 class SSHSkipFileCommand : public FileCommand{
 public:
     SSHSkipFileCommand(const File& file) : FileCommand(file) {}
     void execute() override;
 };
 
+///Implementuje usunięcie dla lokalnego katalogu.
 class SSHRemoveFileCommand : public FileCommand{
 public:
     SSHRemoveFileCommand(const File& file) : FileCommand(file) {}

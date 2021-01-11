@@ -15,4 +15,3 @@ void Application::addProfile(Profile* P){
 std::vector<Profile *> Application::getProfiles() {
     return profiles;
 }
-

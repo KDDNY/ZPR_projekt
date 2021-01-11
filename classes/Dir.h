@@ -98,6 +98,4 @@ private:
     string path_;
 };
 
-
-
 #endif //UNTITLED1_DIR_H

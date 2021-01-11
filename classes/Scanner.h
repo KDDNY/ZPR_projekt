@@ -1,5 +1,5 @@
 //
-// Created by kddny on 29.12.2020.
+// Created by Marcin Piotrowski on 29.12.2020.
 //
 
 #ifndef UNTITLED1_SCANNER_H

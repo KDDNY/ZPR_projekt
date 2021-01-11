@@ -22,7 +22,6 @@ add_executable(main main.cpp
         classes/Dir.h
         classes/Profile.cpp
         classes/Profile.h
-        classes/Visitor.h
         classes/SshConnector.h
         classes/SshConnector.cpp
         "GUI classes/StartFrame.cpp"

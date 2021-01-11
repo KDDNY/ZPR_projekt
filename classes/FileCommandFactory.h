@@ -23,6 +23,9 @@ public:
     ///@param file obiekt na rzecz, którego ma być wykonana akcja.
     ///@return wskaźnik na obiekt klasy Command
     virtual std::shared_ptr<FileCommand> createRemove(const File& file) = 0;
+    ///Tworzy obiekt klasy Command, który ma na celu pominięcie.
+    ///@param file obiekt na rzecz, którego ma być wykonana akcja.
+    ///@return wskaźnik na obiekt klasy Command
     virtual std::shared_ptr<FileCommand> createSkip(const File& file) = 0;
 };
 ///Implementacja klasy abstrakcyjnej FileCommandFactory dla lokalnych katalogów.
@@ -33,7 +36,7 @@ public:
     std::shared_ptr<FileCommand> createRemove(const File& file) override;
     std::shared_ptr<FileCommand> createSkip(const File& file) override;
 };
-
+///Implementacja klasy abstrakcyjnej FileCommandFactory dla plików znajdujących się na serwerze SSH
 class SSHFileCommandFactory : public FileCommandFactory{
 public:
     std::shared_ptr<FileCommand> createAction(const File& file) override;
@@ -41,6 +44,5 @@ public:
     std::shared_ptr<FileCommand> createRemove(const File& file) override;
     std::shared_ptr<FileCommand> createSkip(const File& file) override;
 };
-
 
 #endif //UNTITLED1_FILECOMMANDFACTORY_H
