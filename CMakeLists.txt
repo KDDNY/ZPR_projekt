@@ -37,4 +37,3 @@ add_executable(main main.cpp
         classes/Scanner.h classes/FileCommandFactory.cpp classes/FileCommandFactory.h classes/FileCommand.cpp classes/FileCommand.h)
 target_link_libraries(main ${wxWidgets_LIBRARIES} ssh OpenSSL::Crypto)
 
-

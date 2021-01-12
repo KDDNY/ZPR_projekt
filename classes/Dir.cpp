@@ -18,9 +18,7 @@ Dir *Dir::make_dir(Choice flag)
         SshDir* ssh_directory = new SshDir("rtrybus@mion.elka.pw.edu.pl","mJzr7Ty","/home/mion/s/250/rtrybus");
 
         return ssh_directory;
-    /*    Dir* dir = new SshDir();
-        dir->assignPath("/home/mion/s/250/rtrybus");*/
-        return ssh_directory;
+
     }
     else
         return nullptr;
@@ -35,9 +33,8 @@ Dir *Dir::make_dir(Choice flag, std::string servername, std::string password, st
         SshDir* ssh_directory = new SshDir(servername,password,path);
 
         return ssh_directory;
-        /*    Dir* dir = new SshDir();
-            dir->assignPath("/home/mion/s/250/rtrybus");*/
-        return ssh_directory;
+
+
     }
     else
         return nullptr;
@@ -183,40 +180,11 @@ void SshDir::searchTree(SshConnector* s) {
     sftp_session sp = s->fetchFiles();
     s->sftp_list_dir(s->my_ssh_session,sp,s->_sshFilePath,files_, nullptr);
 
-  //  s->copyTest();
-  //  s->copyTest2();
-}
-
-
-
-void SshDir::listVector(std::vector<std::shared_ptr<File>> files){
-    cout << endl << "VECTOR ROOT: " << endl;
-    for(const auto& element: files){
-        cout << endl << element->getName();
-
-
-
-    }
 
 }
 
 
-
-void SshDir::printDir() {
-
-
-
-
-}
-
-void SshDir::printTree(){
-
-
-
-
-
-
-}
+void SshDir::printTree(){}
 /*SshDir implementations ends here*/
 
 
@@ -225,7 +193,6 @@ void SshDir::search(WhichDir parentDir) {
     files_.clear();
     cout <<"SEARCHING SSH DIR" << endl;
     SshConnector *s;
-   // s = new SshConnector(servername_,password_,path_, this);
     sshConnector_ = new SshConnector(servername_,password_,path_, this);
     searchTree(sshConnector_);
 }

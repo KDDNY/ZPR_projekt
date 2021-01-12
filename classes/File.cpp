@@ -1,5 +1,5 @@
 //
-// Created by kddny on 10.12.2020.
+// Created by Marcin Piotrowski on 10.12.2020.
 //
 
 #include <array>
