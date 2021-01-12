@@ -8,7 +8,7 @@
 
 #include <libgen.h>         // dirname
 #include <unistd.h>         // readlink
-#include <linux/limits.h>   // PATH_MAX
+//#include <linux/limits.h>   // PATH_MAX
 
 using namespace std;
 
@@ -58,7 +58,7 @@ void File::setAction(Action action) {
 }
 
 void File::genHash() {
-    if(dir_->getFlag() == LOCAL) {
+    /*if(dir_->getFlag() == LOCAL) {
         hash_ = calculateHash(path_ + "/" + name_);
     }
     if(dir_->getFlag() == SSH && !directory_){
@@ -82,11 +82,11 @@ void File::genHash() {
         } catch(exception e){
             cout << e.what() << endl;
         }
-    }
+    }*/
 }
 
 string File::calculateHash(std::string target) {
-    std::string *buffer = new std::string;
+    /*std::string *buffer = new std::string;
     buffer->reserve(1024);
     std::fstream fp;
 
@@ -113,7 +113,7 @@ string File::calculateHash(std::string target) {
     for(int i = 0 ; i < SHA_DIGEST_LENGTH ; ++i) {
         sprintf(&(mdString[i*2]),"%02x",(unsigned int)digest[i]);
     }
-    return mdString.data();
+    return mdString.data();*/
 }
 
 void File::setCreator(shared_ptr<LocalFileCommandFactory> creator) {

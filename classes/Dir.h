@@ -88,10 +88,12 @@ public:
     void printInfo() override;
     void printTree() override;
 
+    ////Funkcja inicializująca przeszukanie lokalizacji
     void search(WhichDir parentDir) override;
+    //// Funkcja przeszukująca zadaną lokalizację serwera ssh, zawartą w parametrze 's'
+    ////@param s obiekt klasy SshConnector zawierający połączenie z serwerem
     void searchTree(SshConnector* s);
-    void listVector(std::vector<std::shared_ptr<File>> files);
-    void printDir();
+
 private:
     string servername_;
     string password_;

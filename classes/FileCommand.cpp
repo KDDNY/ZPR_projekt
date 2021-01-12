@@ -26,32 +26,50 @@ void LocalSkipFileCommand::execute() {
 }
 
 void LocalCopyFileCommand::execute() {
-    if(file_.getDir()->getProfile()->getDir1()->getFlag() == LOCAL &&
-    file_.getDir()->getProfile()->getDir2()->getFlag() == LOCAL) {
-        if (file_.getWhichDir() == FIRST) {
-            cout << "Local copy of " << file_.getName() << endl;
-            cout << "from " << file_.getPath() << endl;
-            cout << "to " << file_.getDir()->getProfile()->getDir2()->getPath() + file_.getRelPath() << endl;
-            filesystem::path src = file_.getPath() + "/" + file_.getName();
-            filesystem::path targetParent = file_.getDir()->getProfile()->getDir2()->getPath() + file_.getRelPath();
-            auto target = targetParent / src.filename();
-            CopyRecursive(src,target);
+    if(file_.isDirectory()){
+        string source2 = file_.getPath() + "/" + file_.getName();
+        //string target = file_.getDir()->getProfile()->getDir1()->getPath() + file_.getRelPath() + "/" + file_.getName();
+        filesystem::path src = file_.getPath() + "/" + file_.getName();
+        filesystem::path targetParent = file_.getDir()->getProfile()->getDir2()->getPath() + file_.getRelPath();
+        auto target = targetParent / src.filename();
+        //CopyRecursive(src, target);
+         cout << "Komenda  -> Tworzenie na serwerze [katalogu] " + target.string() + "z lokalnej lokazlizacji:" + src.string();
+
+        file_.getDir()->getSshConnector()->copyDirLS(target.string());
+
+
+
+    }else {
+
+
+        if (file_.getDir()->getProfile()->getDir1()->getFlag() == LOCAL &&
+            file_.getDir()->getProfile()->getDir2()->getFlag() == LOCAL) {
+            if (file_.getWhichDir() == FIRST) {
+                cout << "Local copy of " << file_.getName() << endl;
+                cout << "from " << file_.getPath() << endl;
+                cout << "to " << file_.getDir()->getProfile()->getDir2()->getPath() + file_.getRelPath() << endl;
+                filesystem::path src = file_.getPath() + "/" + file_.getName();
+                filesystem::path targetParent = file_.getDir()->getProfile()->getDir2()->getPath() + file_.getRelPath();
+                auto target = targetParent / src.filename();
+                CopyRecursive(src, target);
+            } else {
+                cout << "Local copy of " << file_.getName() << endl;
+                cout << "from " << file_.getPath() << endl;
+                cout << "to " << file_.getDir()->getProfile()->getDir1()->getPath() + file_.getRelPath() << endl;
+                filesystem::path src = file_.getPath() + "/" + file_.getName();
+                filesystem::path targetParent = file_.getDir()->getProfile()->getDir1()->getPath() + file_.getRelPath();
+                auto target = targetParent / src.filename();
+                CopyRecursive(src, target);
+            }
         } else {
-            cout << "Local copy of " << file_.getName() << endl;
-            cout << "from " << file_.getPath() << endl;
-            cout << "to " << file_.getDir()->getProfile()->getDir1()->getPath() + file_.getRelPath() << endl;
-            filesystem::path src = file_.getPath() + "/" + file_.getName();
-            filesystem::path targetParent = file_.getDir()->getProfile()->getDir1()->getPath() + file_.getRelPath();
-            auto target = targetParent / src.filename();
-            CopyRecursive(src,target);
+            cout << "Copy from local to ssh of " << file_.getName() << endl;
+            string source = file_.getPath() + "/" + file_.getName();
+            string target =
+                    file_.getDir()->getProfile()->getDir2()->getPath() + file_.getRelPath() + "/" + file_.getName();
+            cout << "from: " << source << endl;
+            cout << "to: " << target << endl;
+            file_.getDir()->getProfile()->getDir2()->getSshConnector()->copyLS(source, target);
         }
-    } else {
-        cout << "Copy from local to ssh of " << file_.getName() << endl;
-        string source = file_.getPath() + "/" + file_.getName();
-        string target = file_.getDir()->getProfile()->getDir2()->getPath() + file_.getRelPath() + "/" + file_.getName();
-        cout << "from: " << source << endl;
-        cout << "to: " << target << endl;
-        file_.getDir()->getProfile()->getDir2()->getSshConnector()->copyLS(source,target);
     }
 }
 
@@ -69,6 +87,10 @@ void LocalCopyFileCommand::CopyRecursive(const filesystem::path& src, const file
 
 void SSHRemoveFileCommand::execute() {
     cout << "SSH remove of " << file_.getName() << endl;
+    string source2 = file_.getPath() + "/" + file_.getName();
+    string target = file_.getDir()->getProfile()->getDir1()->getPath() + file_.getRelPath() + "/" + file_.getName();
+    cout << "at " << source2;
+    file_.getDir()->getSshConnector()->removeSshDir(source2);
 }
 
 void SSHSkipFileCommand::execute() {
@@ -76,12 +98,28 @@ void SSHSkipFileCommand::execute() {
 }
 
 void SSHCopyFileCommand::execute() {
-    cout << "SSH copy of " << file_.getName() << endl;
-    string source2 = file_.getPath() + "/" + file_.getName();
-    string xD = file_.getRelPath();
-    string source = file_.getDir()->getPath() + "/" + file_.getName();
-    string target = file_.getDir()->getProfile()->getDir1()->getPath() + file_.getRelPath() + "/" + file_.getName();
-    cout << "from: " << source2 << endl;
-    cout << "to: " << target << endl;
-    file_.getDir()->getSshConnector()->copySL(source2, target);
+    if(file_.isDirectory()){
+        string target = file_.getDir()->getProfile()->getDir1()->getPath() + file_.getRelPath() + "/" + file_.getName();
+        cout << "Komenda  -> Tworzenie na lokalu [katalogu] " + target;
+
+
+        file_.getDir()->getSshConnector()->copyDirSL(target);
+
+
+    }else{
+
+        cout << "SSH copy of " << file_.getName() << endl;
+        string source2 = file_.getPath() + "/" + file_.getName();
+        string xD = file_.getRelPath();
+        string source = file_.getDir()->getPath() + "/" + file_.getName();
+        string target = file_.getDir()->getProfile()->getDir1()->getPath() + file_.getRelPath() + "/" + file_.getName();
+        cout << "from: " << source2 << endl;
+        cout << "to: " << target << endl;
+        file_.getDir()->getSshConnector()->copySL(source2, target);
+
+
+
+
+    }
+
 }
