@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 #include <memory>
-//#include <openssl/sha.h>
+#include <openssl/sha.h>
 #include <fstream>
 #include "FileCommandFactory.h"
 

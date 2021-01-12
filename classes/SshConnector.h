@@ -32,7 +32,7 @@ public:
     int verify_knownhosts(ssh_session session);
     sftp_session fetchFiles();
     int checkIfDir(ssh_session session, sftp_session sftp, std::string path);
-    int sftp_list_dir(ssh_session session, sftp_session sftp, std::string rootDir,std::vector<std::shared_ptr<File>> &files);
+    int sftp_list_dir(ssh_session session, sftp_session sftp, std::string rootDir,std::vector<std::shared_ptr<File>> &files, std::shared_ptr<File> prev);
     int copyTest();
     int copyTest2();
     void copyLS(std::string source, std::string target);

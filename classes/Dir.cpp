@@ -181,7 +181,7 @@ void SshDir::printInfo(){
 void SshDir::searchTree(SshConnector* s) {
 
     sftp_session sp = s->fetchFiles();
-    s->sftp_list_dir(s->my_ssh_session,sp,s->_sshFilePath,files_);
+    s->sftp_list_dir(s->my_ssh_session,sp,s->_sshFilePath,files_, nullptr);
 
   //  s->copyTest();
   //  s->copyTest2();

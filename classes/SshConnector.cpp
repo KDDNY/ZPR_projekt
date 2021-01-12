@@ -6,6 +6,7 @@
 #include "SshConnector.h"
 #include <strings.h>
 #include <string.h>
+#include "Dir.h"
 
 #define MAX_XFER_BUF_SIZE 16384
 
@@ -309,7 +310,7 @@ int SshConnector::checkIfDir(ssh_session session, sftp_session sftp, string path
 
 }
 
-int SshConnector::sftp_list_dir(ssh_session session, sftp_session sftp, string rootDir,vector<shared_ptr<File>> &files)
+int SshConnector::sftp_list_dir(ssh_session session, sftp_session sftp, string rootDir,vector<shared_ptr<File>> &files, shared_ptr<File> prev)
 {
     sftp_dir dir;
     sftp_attributes attributes;
@@ -318,8 +319,6 @@ int SshConnector::sftp_list_dir(ssh_session session, sftp_session sftp, string r
     char dirPath[n + 1];
     strcpy(dirPath, rootDir.c_str());
 
-
-
     dir = sftp_opendir(sftp, dirPath);
     if (!dir)
     {
@@ -327,13 +326,9 @@ int SshConnector::sftp_list_dir(ssh_session session, sftp_session sftp, string r
                 ssh_get_error(session));
         return SSH_ERROR;
     }
-
    // printf("Name                       Size Perms    Owner\tGroup\n");
-
-
     while ((attributes = sftp_readdir(sftp, dir)) != NULL)
     {
-
         /*printf("%-20s %10llu %.8o %s(%d)\t%s(%d)\n",
                attributes->name,
                (long long unsigned int) attributes->size,
@@ -343,43 +338,40 @@ int SshConnector::sftp_list_dir(ssh_session session, sftp_session sftp, string r
                attributes->group,
                attributes->gid);*/
         //printf("\n");
-
         string name = rootDir+"/"+attributes->name;
         if(name.back() != '.'){
             //cout << name << " <- ok";
-            if(checkIfDir(session,sftp,rootDir+"/"+attributes->name)){
+            if(checkIfDir(session,sftp,rootDir + "/" + attributes->name)){
                 //cout <<"| DIR";
-                files.push_back(make_shared<File>(attributes->name,true, SECOND));
-                sftp_list_dir(session,sftp,rootDir+"/"+attributes->name,files.back()->files_);
+                files.push_back(make_shared<File>(attributes->name,true, SECOND,  dir_->getPath()));
                 files.back()->setCreatorSSH(make_shared<SSHFileCommandFactory>());
                 files.back()->setDir(dir_);
+                if(prev){
+                    files.back()->setPath(prev->getPath() + "/" + prev->getName());
+                } else {
+                    files.back()->setPath(dir_->getPath());
+                }
                 //listVector(files_);
-
-
+                sftp_list_dir(session,sftp,rootDir+"/"+attributes->name,files.back()->files_, files.back());
             }
             else{
                 //cout << "| FILE";
-                files.push_back(make_shared<File>(attributes->name, false, SECOND));
+                files.push_back(make_shared<File>(attributes->name, false, SECOND, dir_->getPath()));
                 files.back()->setCreatorSSH(make_shared<SSHFileCommandFactory>());
                 files.back()->setDir(dir_);
+                if(prev){
+                    files.back()->setPath(prev->getPath() + "/" + prev->getName());
+                } else {
+                    files.back()->setPath(dir_->getPath());
+                }
                 //listVector(files_);
-
             }
 
         }else {
             //cout << name << " <- bad";
-
-
         }
-
-
         sftp_attributes_free(attributes);
-
     }
-
-
-
-
     if (!sftp_dir_eof(dir))
     {
         fprintf(stderr, "Can't list directory: %s\n",

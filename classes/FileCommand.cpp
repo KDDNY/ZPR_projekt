@@ -77,9 +77,11 @@ void SSHSkipFileCommand::execute() {
 
 void SSHCopyFileCommand::execute() {
     cout << "SSH copy of " << file_.getName() << endl;
+    string source2 = file_.getPath() + "/" + file_.getName();
+    string xD = file_.getRelPath();
     string source = file_.getDir()->getPath() + "/" + file_.getName();
     string target = file_.getDir()->getProfile()->getDir1()->getPath() + file_.getRelPath() + "/" + file_.getName();
-    cout << "from: " << source << endl;
+    cout << "from: " << source2 << endl;
     cout << "to: " << target << endl;
-    file_.getDir()->getSshConnector()->copySL(source, target);
+    file_.getDir()->getSshConnector()->copySL(source2, target);
 }

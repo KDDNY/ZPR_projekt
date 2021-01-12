@@ -3,7 +3,7 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17") # enable C++17 standard
 
 project(untitled1)
 
-
+find_package(OpenSSL REQUIRED)
 find_package(wxWidgets REQUIRED COMPONENTS net core base)
 find_package(libssh REQUIRED)
 if (NOT TARGET ssh)
@@ -35,6 +35,6 @@ add_executable(main main.cpp
         classes/File.h
         classes/Scanner.cpp
         classes/Scanner.h classes/FileCommandFactory.cpp classes/FileCommandFactory.h classes/FileCommand.cpp classes/FileCommand.h)
-target_link_libraries(main ${wxWidgets_LIBRARIES} ssh)
+target_link_libraries(main ${wxWidgets_LIBRARIES} ssh OpenSSL::Crypto)
 
 
