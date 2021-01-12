@@ -37,8 +37,6 @@ void LocalCopyFileCommand::execute() {
 
         file_.getDir()->getSshConnector()->copyDirLS(target.string());
 
-
-
     }else {
 
 

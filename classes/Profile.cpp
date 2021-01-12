@@ -58,12 +58,6 @@ void Profile::printTree2() {
     dir2_->printTree();
 }
 
-/*
-const vector<std::string> &Profile::getDifferences() const {
-    return differences;
-}
-*/
-
 const vector<shared_ptr<File>> &Profile::getDif() const{
     return differences_;
 }
@@ -89,7 +83,6 @@ void Profile::lookForDifference(std::vector<std::shared_ptr<File>> vector1, std:
     }
 }
 
-//pewnie da sie zrobic lepiej
 int Profile::getIndex(std::vector<std::shared_ptr<File>> vector1, std::shared_ptr<File> file) {
     for(int i=0; i<vector1.size(); i++){
         string name = file->getName();

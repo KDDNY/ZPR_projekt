@@ -172,9 +172,6 @@ void SshDir::printInfo(){
     }
 }
 
-
-
-
 void SshDir::searchTree(SshConnector* s) {
 
     sftp_session sp = s->fetchFiles();
@@ -183,11 +180,7 @@ void SshDir::searchTree(SshConnector* s) {
 
 }
 
-
 void SshDir::printTree(){}
-/*SshDir implementations ends here*/
-
-
 
 void SshDir::search(WhichDir parentDir) {
     files_.clear();

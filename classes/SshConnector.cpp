@@ -13,8 +13,6 @@
 using namespace std;
 
 
-
-
 void SshConnector::removeSshDir(std::string target) {
 
 
@@ -82,36 +80,20 @@ void SshConnector::copyLS(std::string source, std::string target) {
         }
     }
 }
-
 void SshConnector::copyDirLS(std::string target) {
 
     //nie działa
-
-
-
-
 }
 
 void SshConnector::copyDirSL(std::string target) {
     std::filesystem::create_directory(target);
 
-
-
-
 }
 
 sftp_session SshConnector::fetchFiles() {
-
     cout << "--> WILL PRINT SSH DIR TREE" << endl;
-
-
     int rc;
-
-
-
-
     // Open session and set options
-
     if (this->my_ssh_session == NULL)
         exit(-1);
     ssh_options_set(this->my_ssh_session, SSH_OPTIONS_HOST, (this->_serverName).c_str());
@@ -125,7 +107,6 @@ sftp_session SshConnector::fetchFiles() {
         ssh_free(this->my_ssh_session);
         exit(-1);
     }
-
     // Verify the server's identity
     // For the source code of verify_knowhost(), check previous example
     if (this->verify_knownhosts(this->my_ssh_session) < 0)
@@ -136,8 +117,6 @@ sftp_session SshConnector::fetchFiles() {
     }
 
     // Authenticate ourselves
-    //password = getpass("Password: ");
-    //password = "mJzr7Ty";
     rc = ssh_userauth_password(this->my_ssh_session, NULL, (this->_password).c_str());
     if (rc != SSH_AUTH_SUCCESS)
     {
@@ -150,19 +129,11 @@ sftp_session SshConnector::fetchFiles() {
         printf("connected to SSH - ok");
 
     }
-
-
-
     sftp_session sftp;
     sftp = sftp_new(this->my_ssh_session);
-    //scp_receive(my_ssh_session);
+
     cout << endl;
-
-
-
-
     this->my_sftp_session = sftp;
-
 
     return sftp;
 }
@@ -246,16 +217,12 @@ int SshConnector::checkIfDir(ssh_session session, sftp_session sftp, string path
     char dirPath[n + 1];
     strcpy(dirPath, path.c_str());
 
-
     dir = sftp_opendir(sftp, dirPath);
     if (!dir)
     {
-        //cout << path + "<--- FILE";
         return 0;
-
     }
     else{
-       // cout << path + "<--- DIR";
         return 1;
     }
 
@@ -277,23 +244,11 @@ int SshConnector::sftp_list_dir(ssh_session session, sftp_session sftp, string r
                 ssh_get_error(session));
         return SSH_ERROR;
     }
-   // printf("Name                       Size Perms    Owner\tGroup\n");
     while ((attributes = sftp_readdir(sftp, dir)) != NULL)
     {
-        /*printf("%-20s %10llu %.8o %s(%d)\t%s(%d)\n",
-               attributes->name,
-               (long long unsigned int) attributes->size,
-               attributes->permissions,
-               attributes->owner,
-               attributes->uid,
-               attributes->group,
-               attributes->gid);*/
-        //printf("\n");
         string name = rootDir+"/"+attributes->name;
         if(name.back() != '.'){
-            //cout << name << " <- ok";
             if(checkIfDir(session,sftp,rootDir + "/" + attributes->name)){
-                //cout <<"| DIR";
                 files.push_back(make_shared<File>(attributes->name,true, SECOND,  dir_->getPath()));
                 files.back()->setCreatorSSH(make_shared<SSHFileCommandFactory>());
                 files.back()->setDir(dir_);
@@ -302,11 +257,9 @@ int SshConnector::sftp_list_dir(ssh_session session, sftp_session sftp, string r
                 } else {
                     files.back()->setPath(dir_->getPath());
                 }
-                //listVector(files_);
                 sftp_list_dir(session,sftp,rootDir+"/"+attributes->name,files.back()->files_, files.back());
             }
             else{
-                //cout << "| FILE";
                 files.push_back(make_shared<File>(attributes->name, false, SECOND, dir_->getPath()));
                 files.back()->setCreatorSSH(make_shared<SSHFileCommandFactory>());
                 files.back()->setDir(dir_);
@@ -315,11 +268,7 @@ int SshConnector::sftp_list_dir(ssh_session session, sftp_session sftp, string r
                 } else {
                     files.back()->setPath(dir_->getPath());
                 }
-                //listVector(files_);
             }
-
-        }else {
-            //cout << name << " <- bad";
         }
         sftp_attributes_free(attributes);
     }
@@ -330,7 +279,6 @@ int SshConnector::sftp_list_dir(ssh_session session, sftp_session sftp, string r
         sftp_closedir(dir);
         return SSH_ERROR;
     }
-
     rc = sftp_closedir(dir);
     if (rc != SSH_OK)
     {

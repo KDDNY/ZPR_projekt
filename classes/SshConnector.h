@@ -12,20 +12,14 @@
 #include "File.h"
 #include <stdio.h>
 #include <sys/stat.h>
-//#include "libssh2_config.h"
-//#include <libssh2.h>
-//#include <libssh2_sftp.h>
 
 
 ///Klasa implementująca operacje odpowiedzialne za połączenie SSH
 class SshConnector {
 public:
-
     std::string _serverName;
     std::string _password;
     std::string _sshFilePath;
-
-
 
     SshConnector(std::string serverName, std::string password, std::string filePath, Dir* dir) : _serverName(serverName), _password(password),
     _sshFilePath(filePath), dir_(dir){
@@ -55,9 +49,6 @@ public:
     void copyDirLS(std::string target);
     //// Funkcja kopiuje pusty katalog w kierunku z serwera na maszynę lokalną
     void copyDirSL(std::string target);
-
-
-
 private:
     Dir* dir_;
 };
