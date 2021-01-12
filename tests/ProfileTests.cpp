@@ -22,8 +22,6 @@ TEST_F(ProfileTests, dir1Test){
     if (it != v.end())
     {
         EXPECT_EQ(it->get()->getName(),myString);
-        //    cout << "znaleziono: " << it->get()->getName() << endl;
-        //   auto index = std::distance(v.begin(), it);
     } else FAIL();
 }
 
@@ -42,22 +40,6 @@ TEST_F(ProfileTests, findInVectorTest){
     EXPECT_TRUE(profile->findInVector(vector1,vector2.at(0)));
 }
 
-/*
-TEST_F(ProfileTests, scanTest1){
-    profile->scan();
-    if(!profile->getDifferences().empty()) {
-        EXPECT_EQ(profile->getDifferences().back(), "difference in dir1");
-    } else FAIL();
-}
-
-TEST_F(ProfileTests, scanTest2){
-    profile->scan();
-    for(const auto& diff : profile->getDifferences()){
-        cout << diff << endl;
-    }
-    EXPECT_EQ(profile->getDifferences().size(),6);
-}
-*/
 
 TEST_F(ProfileTests, betterscanTest1){
     profile->scan();
@@ -66,29 +48,8 @@ TEST_F(ProfileTests, betterscanTest1){
     } else FAIL();
 }
 
-/*
-TEST_F(ProfileTests, betterscanTest2){
-    profile->scan();
-
-    EXPECT_EQ(profile->getDif().size(),7);
-    if(HasFailure()){
-    for(const auto& diff : profile->getDif()){
-        cout << diff->getName() << " in dir" <<diff->which_dir_ <<endl;
-    }}
-}
-*/
 
 TEST_F(ProfileTests, hashCompareTest){
     profile->scan();
 
 }
-
-/*
-TEST_F(ProfileTests, addTest){
-    testing::internal::CaptureStdout();
-    profile->addDirectories("path","path",LOCAL,LOCAL);
-    profile->summary();
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("\n---------------------------\n#PROFILE SUMMARY:\n#name: \n#LOCAL DIR PATH: path\n#LOCAL DIR PATH: path\n",output);
-}
-*/

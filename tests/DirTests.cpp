@@ -21,9 +21,7 @@ TEST_F(LocalDirTests, searchTest) {
     auto it = find_if(v.begin(), v.end(), [&myString](const shared_ptr<File>& obj) {return obj->getName() == myString;});
     if (it != v.end())
     {
-        EXPECT_EQ(it->get()->getName(),myString);
-    //    cout << "znaleziono: " << it->get()->getName() << endl;
-     //   auto index = std::distance(v.begin(), it);
+        EXPECT_EQ(it->get()->getName(),myString);;
     } else FAIL();
 }
 
@@ -35,47 +33,9 @@ TEST_F(LocalDirTests, getPathTests){
     if (it != v.end())
     {
         EXPECT_EQ(it->get()->getPath()+"/"+it->get()->getName(),path + "/tekst.txt");
-        //    cout << "znaleziono: " << it->get()->getName() << endl;
-        //   auto index = std::distance(v.begin(), it);
+
     } else FAIL();
 }
-
-/*
-TEST_F(LocalDirTests, getDeeperPathTest) {
-    vector v = dir->getFiles().back()->getFiles();
-    std::string myString = "WeNeedToGoDeeper";
-    std::string path = "/home/kddny/Desktop/ZPR/ZPR_projekt/tests/cmake-build-debug/dut/test (copy)";
-    auto it = find_if(v.begin(), v.end(),[&myString](const shared_ptr<File> &obj) { return obj->getName() == myString; });
-    if (it != v.end()) {
-        EXPECT_EQ(it->get()->getPath() + "/" + it->get()->getName(), path + "/" + myString);
-        //    cout << "znaleziono: " << it->get()->getName() << endl;
-        //   auto index = std::distance(v.begin(), it);
-    } else FAIL();
-}
-*/
-
-/*
-TEST_F(LocalDirTests, getDeeperPathTest2) {
-    vector v = dir->getFiles().back()->getFiles().back()->getFiles().back()->getFiles();
-    std::string myString = "20z_Harmonogram_laboratorium_TWCz.pdf";
-    std::string path = "/home/kddny/Desktop/ZPR/ZPR_projekt/tests/cmake-build-debug/dut/test (copy)/WeNeedToGoDeeper/muchDeeper";
-    auto it = find_if(v.begin(), v.end(),[&myString](const shared_ptr<File> &obj) { return obj->getName() == myString; });
-    if (it != v.end()) {
-        EXPECT_EQ(it->get()->getPath() + "/" + it->get()->getName(), path + "/" + myString);
-        //    cout << "znaleziono: " << it->get()->getName() << endl;
-        //   auto index = std::distance(v.begin(), it);
-    } else FAIL();
-}
-*/
-
-/*
-TEST_F(LocalDirTests, treeTest){
-    testing::internal::CaptureStdout();
-    dir->printTree();
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("[+] \"test\"\n[+] \"test (copy)\"\n   [+] \"WeNeedToGoDeeper\"\n",output);
-}
-*/
 
 TEST_F(LocalDirTests, checkIfNotEmpty){
     EXPECT_FALSE(dir->getFiles().empty());
@@ -88,8 +48,6 @@ TEST_F(LocalDirTests, isDirectoryTest){
     if (it != v.end())
     {
         EXPECT_TRUE(it->get()->isDirectory());
-        //    cout << "znaleziono: " << it->get()->getName() << endl;
-        //   auto index = std::distance(v.begin(), it);
     } else FAIL();
 }
 
@@ -103,64 +61,3 @@ TEST(DirTests, AddSSH){
     auto dir = Dir::make_dir(SSH);
     EXPECT_TRUE(dynamic_cast<SshDir*>(dir));
 }
-
-/*
-TEST(DirTests, Assign){
-    auto dir = Dir::make_dir(LOCAL);
-    dir->assignPath("path");
-    testing::internal::CaptureStdout();
-    dir->printInfo();
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("#LOCAL DIR PATH: path\n",output);
-}
-*/
-
-/*
-TEST(DirTests, LocalAddCommand){
-    auto dir = Dir::make_dir(LOCAL);
-    testing::internal::CaptureStdout();
-    dir->addFile();
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("Local add\n",output);
-}
-
-TEST(DirTests, LocalRemoveCommand){
-    auto dir = Dir::make_dir(LOCAL);
-    testing::internal::CaptureStdout();
-    dir->removeFile();
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("Local delete\n",output);
-}
-
-TEST(DirTests, LocalRenameCommand){
-    auto dir = Dir::make_dir(LOCAL);
-    testing::internal::CaptureStdout();
-    dir->renameFile();
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("Local rename\n",output);
-}
-
-TEST(DirTests, SSHRenameCommand){
-    auto dir = Dir::make_dir(SSH);
-    testing::internal::CaptureStdout();
-    dir->renameFile();
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("SSH rename\n",output);
-}
-
-TEST(DirTests, SSHRemoveCommand){
-    auto dir = Dir::make_dir(SSH);
-    testing::internal::CaptureStdout();
-    dir->removeFile();
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("SSH delete\n",output);
-}
-
-TEST(DirTests, SSHaddCommand){
-    auto dir = Dir::make_dir(SSH);
-    testing::internal::CaptureStdout();
-    dir->addFile();
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("SSH add\n",output);
-}
-*/
