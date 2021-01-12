@@ -59,49 +59,61 @@ void File::setAction(Action action) {
 
 void File::genHash() {
     if(dir_->getFlag() == LOCAL) {
-        std::string *buffer = new std::string;
-        buffer->reserve(1024);
-        std::fstream fp;
-
-        fp.open(path_ + "/" + name_,std::ios::in);
-        if(!(fp.is_open())){
-            fprintf(stderr,"Unable to open the file\n");
-            exit(EXIT_FAILURE);
-        }
-        else {
-            std::string line;
-            while(fp >> line){
-                buffer->append(line);
-            }
-        }
-        fp.close();
-
-        std::array<unsigned char,SHA_DIGEST_LENGTH> digest;
-        SHA_CTX ctx;
-        SHA1_Init(&ctx);
-        SHA1_Update(&ctx, buffer->c_str(), buffer->size());
-        SHA1_Final(digest.data(),&ctx);
-        delete buffer;
-        std::array<char,SHA_DIGEST_LENGTH * 2 +1> mdString;
-        for(int i = 0 ; i < SHA_DIGEST_LENGTH ; ++i) {
-            sprintf(&(mdString[i*2]),"%02x",(unsigned int)digest[i]);
-        }
-        hash_ = mdString.data();
+        hash_ = calculateHash(path_ + "/" + name_);
     }
-    if(dir_->getFlag() == SSH){
-        hash_ = "SSH" ;
-        string source = dir_->getPath() + "/" + path_ + name_;
+    if(dir_->getFlag() == SSH && !directory_){
+        string source = path_ + "/" + name_;
+
         string target;
-        char result[PATH_MAX];
-        ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
-        const char *path;
-        if (count != -1) {
-            path = dirname(result);
-        }
-        target = path;
+        char result[ PATH_MAX ];
+        ssize_t count = readlink( "/proc/self/exe", result, PATH_MAX );
+        std::string appPath = std::string( result, (count > 0) ? count : 0 );
+
+        std::size_t found = appPath.find_last_of("/\\");
+        target = appPath.substr(0,found);
         target += "/" + name_;
+
         dir_->getSshConnector()->copySL(source,target);
+
+        hash_ = calculateHash(target);
+
+        try{
+            filesystem::remove_all(target);
+        } catch(exception e){
+            cout << e.what() << endl;
+        }
     }
+}
+
+string File::calculateHash(std::string target) {
+    std::string *buffer = new std::string;
+    buffer->reserve(1024);
+    std::fstream fp;
+
+    fp.open(target,std::ios::in);
+    if(!(fp.is_open())){
+        fprintf(stderr,"Unable to open the file\n");
+        exit(EXIT_FAILURE);
+    }
+    else {
+        std::string line;
+        while(fp >> line){
+            buffer->append(line);
+        }
+    }
+    fp.close();
+
+    std::array<unsigned char,SHA_DIGEST_LENGTH> digest;
+    SHA_CTX ctx;
+    SHA1_Init(&ctx);
+    SHA1_Update(&ctx, buffer->c_str(), buffer->size());
+    SHA1_Final(digest.data(),&ctx);
+    delete buffer;
+    std::array<char,SHA_DIGEST_LENGTH * 2 +1> mdString;
+    for(int i = 0 ; i < SHA_DIGEST_LENGTH ; ++i) {
+        sprintf(&(mdString[i*2]),"%02x",(unsigned int)digest[i]);
+    }
+    return mdString.data();
 }
 
 void File::setCreator(shared_ptr<LocalFileCommandFactory> creator) {

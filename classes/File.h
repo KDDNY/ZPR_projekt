@@ -66,6 +66,7 @@ public:
     ///Generuje funkcje skrótu dla pliku i zapisuje ją.
     void genHash();
 private:
+    std::string calculateHash(std::string target);
     std::string name_;
     std::string path_;
     std::string home_dir_path_;
