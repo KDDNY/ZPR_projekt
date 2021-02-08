@@ -20,3 +20,5 @@ Dokumentacja końcowa powinna jasno określić jak wykrywane są różnice w pli
 
 scan: "Can't open file for writing: Remote channel is closed"
 synchronizacja: "Naruszenie ochrony pamięci (zrzut pamięci)" - może dlatego nie działa że w kodzie jest: "new SshDir("rtrybus@mion.elka.pw.edu.pl","mJzr7Ty","/home/mion/s/250/rtrybus")".
+
+Dodać angielską wersje językową i wywalić cały polski z dokumentacji
