@@ -1,0 +1,22 @@
+Do zrobienia:
+
+poprawienie obecnych testów i dopisanie nowych
+
+Dokończenie ssh
+
+"SshConnector.cpp:289:1: warning: control reaches end of non-void function" -to naprawdę źle wygląda.
+
+To nie dobrze że program nie zapamiętuje profili.
+
+Jak nie ma katalogu to powinien być stosowny komunikat.
+
+"W menu opcje pomoc i wyjście nie działają"
+
+Po modyfikacji pliku w katalogu docelowym program nadpisuje go plikiem z katalogu źródłowego a potem kopiuje to znów do katalogu źródłowego.
+
+Calculate_hash zakłada pliki tekstowe, po drugie "new string" jest bez sensu- albo string albo "new char".
+
+Dokumentacja końcowa powinna jasno określić jak wykrywane są różnice w plikach - oraz co podać w okienkach przy połączeniu ssh (jak nie działało normalnie musiałem wypróbować wiele potencjalnie rozsądnych możliwości).
+
+scan: "Can't open file for writing: Remote channel is closed"
+synchronizacja: "Naruszenie ochrony pamięci (zrzut pamięci)" - może dlatego nie działa że w kodzie jest: "new SshDir("rtrybus@mion.elka.pw.edu.pl","mJzr7Ty","/home/mion/s/250/rtrybus")".
