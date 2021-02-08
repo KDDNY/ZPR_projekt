@@ -1,2 +1,1 @@
-# ZPR_projekt
-# Uniclone by MP & RJT
+# Uniklon by MP & RJT
